@@ -1,6 +1,6 @@
 public class Demonstrate {
     public static void main(String[] args){
-        Transport ped=new Pedestrian("Иван","Разинкин",12,21,15);
+        Pedestrian ped=new Pedestrian("Иван","Разинкин",12,21,15);
         System.out.println(ped);
         Bicycle zubr=new Bicycle("Zubr","Pegas",40,30);
         System.out.println(zubr);
