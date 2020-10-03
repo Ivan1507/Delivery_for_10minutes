@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -32,7 +33,7 @@ public class Vertex {
         Edges = edges;
     }
 
-    public void setRoot(Pane root) {
+    public void setRoot(Group root) {
         this.root = root;
     }
 
@@ -44,7 +45,7 @@ public class Vertex {
         X=x;
         Y=y;
 }
-   private Pane root;
+   private Group root;
 
     public double getX() {
         return X;
@@ -69,7 +70,7 @@ public class Vertex {
         return Objects.hash(X, Y, Name);
     }
 
-    public void addUI(Pane rt){
+    public void addUI(Group rt){
         root = rt;
         Circle circle = new Circle(this.X,this.Y,3);
         circle.setStroke(Color.BLACK);
@@ -81,6 +82,7 @@ public class Vertex {
         //circleText.setTranslateY(this.Y);
         circleText.setTextAlignment(TextAlignment.JUSTIFY);
         rt.getChildren().addAll(circle,circleText);
+
     }
     public void setPos( double x, double y){
        X=x;
@@ -152,9 +154,9 @@ public class Vertex {
 
                     if (!key.isEmpty() && !value.isEmpty()) {
                         switch (key) {
-                            case "X" -> this.setX(Double.parseDouble(value));
-                            case "Y" -> this.setY(Double.parseDouble(value));
-                            case "Name" ->this.setName(value);
+                            case "X": {this.setX(Double.parseDouble(value)); break;}
+                            case "Y": {this.setY(Double.parseDouble(value)); break;}
+                            case "Name": {this.setName(value); break;}
                         }
                     }
                 }

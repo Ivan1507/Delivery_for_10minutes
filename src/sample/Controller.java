@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -29,7 +28,7 @@ public class Controller implements Initializable {
 
     }
 
-    private Graph borderPaneMapGraph = new Graph(borderPaneMap);
+    //private Graph borderPaneMapGraph = new Graph(borderPaneMap);
     //{
     //Graph bMapgraph = new Graph(borderPaneMap);
 
