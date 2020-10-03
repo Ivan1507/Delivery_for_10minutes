@@ -140,7 +140,6 @@ public class Vertex {
             int i;
             while ((temp = br.readLine()) != "" & temp != null) {
                 if (temp.contains("Vertex{")) {
-//Устанавливаем признак начала разбора строк
                     temp=br.readLine();
                     s= true;
                 } else if (temp.length() == 0) {
