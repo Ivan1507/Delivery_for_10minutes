@@ -152,9 +152,9 @@ public class Vertex {
 
                     if (!key.isEmpty() && !value.isEmpty()) {
                         switch (key) {
-                            case "X" -> this.setX(Double.parseDouble(value));
-                            case "Y" -> this.setY(Double.parseDouble(value));
-                            case "Name" ->this.setName(value);
+                            case "X": {this.setX(Double.parseDouble(value)); break;}
+                            case "Y": {this.setY(Double.parseDouble(value)); break;}
+                            case "Name": {this.setName(value); break;}
                         }
                     }
                 }
