@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 // Вершина
-public class Vertex {
+public class Vertex implements Serializable {
     public Vertex() {
 
     }
@@ -33,7 +34,7 @@ public class Vertex {
         Edges = edges;
     }
 
-    public void setRoot(Group root) {
+    public void setRoot(Pane root) {
         this.root = root;
     }
 
@@ -45,7 +46,9 @@ public class Vertex {
         X=x;
         Y=y;
 }
-   private Group root;
+   private transient Pane root;
+
+
 
     public double getX() {
         return X;
@@ -70,18 +73,18 @@ public class Vertex {
         return Objects.hash(X, Y, Name);
     }
 
-    public void addUI(Group rt){
+    public void addUI(Pane rt){
         root = rt;
         Circle circle = new Circle(this.X,this.Y,3);
         circle.setStroke(Color.BLACK);
         //circle.setTranslateX( this.X);
         //circle.setTranslateY(this.Y);
 
-        Text circleText = new Text(this.X,this.Y-10,this.getName());
-        //circleText.setTranslateX(this.X);
-        //circleText.setTranslateY(this.Y);
-        circleText.setTextAlignment(TextAlignment.JUSTIFY);
-        rt.getChildren().addAll(circle,circleText);
+       // Text circleText = new Text(this.X,this.Y-10,this.getName());
+       // circleText.setTranslateX(this.X);
+       // circleText.setTranslateY(this.Y);
+       // circleText.setTextAlignment(TextAlignment.JUSTIFY);
+        rt.getChildren().addAll(circle);
 
     }
     public void setPos( double x, double y){
@@ -164,14 +167,5 @@ public class Vertex {
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }
-    }
-    @Override
-    public String toString() {
-        return "Vertex{" +
-                "\nX=" + X +
-                "\nY=" + Y +
-                "\nName=" + Name +
-                "\nEdges=" + Edges +
-                "\nroot=" + root +'\n';
     }
 }

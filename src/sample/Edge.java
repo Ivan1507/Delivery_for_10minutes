@@ -1,12 +1,13 @@
 package sample;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
 // Ребро
 // Todo: Refactor class name to 'Road'
-public class Edge {
+public class Edge implements Serializable {
 
     private Vertex From;
     private Vertex To;
@@ -24,6 +25,7 @@ public class Edge {
         Directed = directed;
         Quality_road=q;
     }
+
 
     public Vertex getAnotherPoint(Vertex Base) {
         if (!Base.equals(To)) {return  To;}

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,16 +20,20 @@ public class Controller implements Initializable {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private BorderPane borderPaneMap;
+    private Pane pane12;
     // @FXML
     private Button SafeButton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
-    //private Graph borderPaneMapGraph = new Graph(borderPaneMap);
+    private Graph mapGraph;
+    {
+
+    }
     //{
     //Graph bMapgraph = new Graph(borderPaneMap);
 
@@ -37,12 +42,14 @@ public class Controller implements Initializable {
 
     @FXML
     public void OnClicked(Event E) throws IOException {
+        // Инициализация фрейма
         System.out.println("123");
         Parent root = FXMLLoader.load(getClass().getResource("map.fxml"));
         borderPane.setCenter(root);
-       // if(SafeButton!=null){
-         //   SafeButton.setStyle("-fx-background-color: #999");
-        //}
+        //mapGraph.setRoot( pane12 );
+
+        System.out.println(pane12);
+
 
 
     }
@@ -56,12 +63,6 @@ public class Controller implements Initializable {
         SafeButton.setStyle("-fx-background-color: #1c8494");
 
 
-           // SafeButton = ((Button) E.getSource());
-
-
-        //Point.setUserData(new ButtonUserData(btnTypes.valueOf("Production")));
-        //  System.out.println("Успешно!");
-        // System.out.println(((ButtonUserData)Point.getUserData()).getType());
     }
 
     @FXML
@@ -69,7 +70,7 @@ public class Controller implements Initializable {
         if (SafeButton != null && E.getButton()== MouseButton.SECONDARY) {
             GlobalUserData.clear();
             clearStylesheet();
-           // return;
+
         }
 
     }
@@ -80,10 +81,14 @@ public class Controller implements Initializable {
             clearStylesheet();
             return;
         }
+
         System.out.println("Был вызван " + GlobalUserData.getType());
         GlobalUserData.clear();
 
+        mapGraph = Graph.getInstance(pane12);
 
+        mapGraph.addPoint("undefined",E.getX(),E.getY());
+        System.out.println(mapGraph);
     }
 
     @FXML

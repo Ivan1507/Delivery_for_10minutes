@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.awt.*;
@@ -10,18 +11,32 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Graph implements Serializable {
-    private transient Group root;
+    private transient Pane root;
     private HashMap<String,Vertex> Points = new HashMap<>(200,0.75f);
     private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
 
-    public void setRoot(Group root) {
+    public void setRoot(Pane root) {
         this.root = root;
     }
 
-    public Graph(Group root) {
+    public Graph(Pane root) {
         this.root = root;
     }
     public Graph() {
+
+    }
+    private static Graph Singleton;
+    public static Graph getInstance(Pane root)
+    {
+
+        if (Singleton != null) {
+            return Singleton;
+        }
+            else {
+
+                return new Graph(root);
+            }
+
 
     }
 
@@ -44,20 +59,25 @@ public class Graph implements Serializable {
         A1.addUI(root);
         Points.put(name,A1);
     }
+
     public void connectPoint(String From, String To,Quality_Road quality_road){
         Points.get(From).connectTo(Points.get(To),quality_road);
     }
 
-    public void SaveObject(String name) throws IOException {
-        FileOutputStream fileOutputStream = new FileOutputStream(new File("Graph"));
+    public  void SaveObject(String name) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(new File("Graph.dat"));
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject( this );
+        objectOutputStream.writeObject(this);
         objectOutputStream.close();
     }
 
 
-    public Graph LoadObject() throws IOException{
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File("Graph")));
-        return new Graph();
+    public void LoadObject(String name) throws IOException, ClassNotFoundException {
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File("Graph.dat")));
+        Graph readed = (Graph) objectInputStream.readObject();
+        System.out.println(readed.Points.size());
     }
+}
+class User implements Serializable{
+    public int s;
 }

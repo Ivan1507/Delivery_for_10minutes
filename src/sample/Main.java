@@ -13,8 +13,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
+
+        //.setController(this);
+        Parent root = loader.load();
         primaryStage.setTitle("Hello World");
+
        //BorderPane root = new BorderPane();
        // Vertex v=new Vertex(1,2);
        // v.setName("MIET");
@@ -22,13 +26,13 @@ public class Main extends Application {
         //Vertex v1=new Vertex();
        // v1.getFromFile("src\\save.txt");
         //System.out.println(v1);
-       //Graph Map = new Graph(root);
+      // Graph Map = new Graph(root);
 
         //Map.addPoint("A",45,40);
-        //Map.addPoint("B",80,40);
-        //Map.connectPoint("A","B",Quality_Road.Very_bad);
+       // Map.addPoint("B",80,40);
+       // Map.connectPoint("A","B",Quality_Road.Very_bad);
 
-        //Map.SaveObject("");
+        //Map.LoadObject("");
 
 
         primaryStage.setScene(new Scene(root));
