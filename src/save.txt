@@ -1,0 +1,1 @@
+Vertex{X=1.0, Y=2.0, Name=null, Edges=[], root=null}Vertex{X=1.0, Y=2.0, Name=null, Edges=[], root=null}
