@@ -12,15 +12,17 @@ public class Edge {
     private Vertex To;
     private boolean Directed;
     private double Traffic_jam=0d;
+    private Quality_Road Quality_road;
     private HashMap<Integer,Double> Traffic = new HashMap<>();
     {
         Traffic.put(15,0.25);
 
     }
-    public Edge(Vertex from, Vertex to, boolean directed) {
+    public Edge(Vertex from, Vertex to, boolean directed,Quality_Road q) {
         From = from;
         To = to;
         Directed = directed;
+        Quality_road=q;
     }
 
     public Vertex getAnotherPoint(Vertex Base) {
@@ -30,9 +32,9 @@ public class Edge {
             return From;
         }
     }
-    public static Edge ConnectVertexes(Vertex from, Vertex to, boolean directed){
+    public static Edge ConnectVertexes(Vertex from, Vertex to, boolean directed,Quality_Road q){
         //A.setDistance(Distance);
-        return new Edge(from,to,directed);
+        return new Edge(from,to,directed,q);
     }
 
     public double Traffic( int T) {

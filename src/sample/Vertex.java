@@ -16,12 +16,24 @@ import java.util.Objects;
 
 // Вершина
 public class Vertex {
+    public Vertex() {
+
+    }
+
     public void setX(double x) {
         X = x;
     }
 
     public void setY(double y) {
         Y = y;
+    }
+
+    public void setEdges(ArrayList<Edge> edges) {
+        Edges = edges;
+    }
+
+    public void setRoot(Pane root) {
+        this.root = root;
     }
 
     private double X;
@@ -96,9 +108,9 @@ public class Vertex {
            System.out.println("Точка " + Name + " уже не имеет связей");
        }
     }
-    public void connectTo( Vertex To){
+    public void connectTo( Vertex To,Quality_Road q){
         //double Distance = Math.sqrt(Math.pow(this.getX()-To.getX(),2) + Math.pow(this.getY() - To.getY(),2));
-       Edge A =  Edge.ConnectVertexes(this,To,false);
+       Edge A =  Edge.ConnectVertexes(this,To,false,q);
        Edges.add( A );
 
        try {
@@ -111,7 +123,7 @@ public class Vertex {
        }
        catch (NullPointerException nptr){}
     }
-    public void SavetoFile(String path) throws IOException {
+    public void SaveToFile(String path) throws IOException {
         try(FileWriter fw=new FileWriter(path,true)){
             fw.append(this.toString());
         }catch(IOException e){
@@ -121,10 +133,31 @@ public class Vertex {
     public void getFromFile(String path){
         try(FileReader fd=new FileReader(path)){
             BufferedReader br=new BufferedReader(new FileReader(path));
+            String temp="";
+            String key="";
+            String value="";
+            boolean s=true;
             int i;
-            while((i=br.read())!=-1){
-                switch ((char)i){
-                    //case 'X'->this.setX();
+            while ((temp = br.readLine()) != "" & temp != null) {
+                if (temp.contains("Vertex{")) {
+//Устанавливаем признак начала разбора строк
+                    temp=br.readLine();
+                    s= true;
+                } else if (temp.length() == 0) {
+                    s= false;
+                }
+
+                if (s) {
+                    key = temp.substring(0, temp.indexOf('='));
+                    value = temp.substring(temp.indexOf('=') +1);
+
+                    if (!key.isEmpty() && !value.isEmpty()) {
+                        switch (key) {
+                            case "X" -> this.setX(Double.parseDouble(value));
+                            case "Y" -> this.setY(Double.parseDouble(value));
+                            case "Name" ->this.setName(value);
+                        }
+                    }
                 }
             }
         }catch(Exception ex){
@@ -134,11 +167,10 @@ public class Vertex {
     @Override
     public String toString() {
         return "Vertex{" +
-                "X=" + X +
-                ", Y=" + Y +
-                ", Name=" + Name +
-                ", Edges=" + Edges +
-                ", root=" + root +
-                '}';
+                "\nX=" + X +
+                "\nY=" + Y +
+                "\nName=" + Name +
+                "\nEdges=" + Edges +
+                "\nroot=" + root +'\n';
     }
 }

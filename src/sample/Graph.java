@@ -24,7 +24,7 @@ public class Graph {
         A1.addUI(root);
         Points.put(name,A1);
     }
-    public void connectPoint(String From, String To){
-        Points.get(From).connectTo(Points.get(To));
+    public void connectPoint(String From, String To,Quality_Road quality_road){
+        Points.get(From).connectTo(Points.get(To),quality_road);
     }
 }
