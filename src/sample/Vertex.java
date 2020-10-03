@@ -10,12 +10,21 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
 // Вершина
 public class Vertex {
-   private double X;
+    public void setX(double x) {
+        X = x;
+    }
+
+    public void setY(double y) {
+        Y = y;
+    }
+
+    private double X;
    private double Y;
    private String Name;
    private ArrayList<Edge> Edges = new ArrayList<>();
@@ -102,5 +111,34 @@ public class Vertex {
        }
        catch (NullPointerException nptr){}
     }
-
+    public void SavetoFile(String path) throws IOException {
+        try(FileWriter fw=new FileWriter(path,true)){
+            fw.append(this.toString());
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void getFromFile(String path){
+        try(FileReader fd=new FileReader(path)){
+            BufferedReader br=new BufferedReader(new FileReader(path));
+            int i;
+            while((i=br.read())!=-1){
+                switch ((char)i){
+                    //case 'X'->this.setX();
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    @Override
+    public String toString() {
+        return "Vertex{" +
+                "X=" + X +
+                ", Y=" + Y +
+                ", Name=" + Name +
+                ", Edges=" + Edges +
+                ", root=" + root +
+                '}';
+    }
 }
