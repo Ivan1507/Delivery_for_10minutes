@@ -63,7 +63,7 @@
       </VBox>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="374.0" prefWidth="905.0" VBox.vgrow="ALWAYS">
          <children>
-            <BorderPane layoutX="149.0" layoutY="-1.0" prefHeight="630.0" prefWidth="918.0" fx:id="borderPane" />
+            <BorderPane fx:id="borderPane" layoutX="149.0" layoutY="-1.0" prefHeight="630.0" prefWidth="918.0" />
             <VBox alignment="BASELINE_CENTER" layoutX="-8.0" prefHeight="630.0" prefWidth="158.0" style="-fx-background-color: #535363;">
                <children>
                   <Pane prefHeight="65.0" prefWidth="150.0" />
@@ -77,10 +77,10 @@
                         <Font name="AR BERKLEY" size="13.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="130.0" text="Карта" onAction="#OnClicked" />
+                  <Button mnemonicParsing="false" onAction="#OnClicked" prefHeight="66.0" prefWidth="130.0" text="Карта" />
                   <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Объекты" />
                   <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Заказы" />
-                  <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Статистика" />
+                  <Button mnemonicParsing="false" onAction="#button_stat_clicked" prefHeight="34.0" prefWidth="130.0" text="Статистика" />
                   <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Настройки" />
                </children>
             </VBox>

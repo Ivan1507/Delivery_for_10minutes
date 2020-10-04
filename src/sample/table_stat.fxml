@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <TableView layoutX="-1.0" layoutY="-1.0" prefHeight="622.0" prefWidth="751.0">
+        <columns>
+          <TableColumn prefWidth="112.0" text="Номер Заказа" />
+          <TableColumn prefWidth="102.0" text="Адрес Доставки" />
+            <TableColumn prefWidth="149.0" text="Стоимость заказа" />
+            <TableColumn prefWidth="102.0" text="Исполнитель" />
+            <TableColumn prefWidth="137.0" text="Статус Заказа" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

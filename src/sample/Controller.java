@@ -52,9 +52,14 @@ public class Controller implements Initializable {
 
 
     }
+    @FXML
+    public void button_stat_clicked() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("table_stat.fxml"));
+        borderPane.setCenter(root);
+    }
 
     @FXML
-    public void buttonClicked(ActionEvent E) {
+    public void button_Point_Clicked(ActionEvent E) {
         try {
             ActionType Action = ActionType.valueOf((String) ((Button) E.getSource()).getUserData());
 
