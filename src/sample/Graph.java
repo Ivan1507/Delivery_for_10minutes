@@ -12,8 +12,8 @@ import java.util.Objects;
 
 public class Graph implements Serializable {
     private transient Pane root;
-    private HashMap<String,Vertex> Points = new HashMap<>(200,0.75f);
-    private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
+    private HashMap<String,FPoint> Points = new HashMap<>(200,0.75f);
+    private transient HashMap<String,FPoint> ConnectedPoints = new HashMap<>(200,0.75f);
 
     public void setRoot(Pane root) {
         this.root = root;
@@ -33,11 +33,8 @@ public class Graph implements Serializable {
             return Singleton;
         }
             else {
-
                 return new Graph(root);
             }
-
-
     }
 
     @Override
@@ -54,7 +51,7 @@ public class Graph implements Serializable {
     }
 
     public void addPoint(String name, double X, double Y){
-        Vertex A1 = new Vertex(X,Y);
+        FPoint A1 = new FPoint(X,Y);
         A1.setName(name);
         A1.addUI(root);
         Points.put(name,A1);
@@ -77,7 +74,4 @@ public class Graph implements Serializable {
         Graph readed = (Graph) objectInputStream.readObject();
         System.out.println(readed.Points.size());
     }
-}
-class User implements Serializable{
-    public int s;
 }

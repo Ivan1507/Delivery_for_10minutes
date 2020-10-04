@@ -13,7 +13,7 @@
       <ToolBar prefHeight="40.0" prefWidth="918.0" onMouseClicked="#clearData">
         <items>
           <Button mnemonicParsing="false" text="Point" onAction="#buttonClicked" onMouseClicked="#clearData"   userData="Point"/>
-            <Button mnemonicParsing="false" text="Production" onAction="#buttonClicked" onMouseClicked="#clearData" userData="Production"/>
+            <Button mnemonicParsing="false" text="Production" onAction="#buttonClicked" onMouseClicked="#clearData" userData=""/>
 
         </items>
          <opaqueInsets>

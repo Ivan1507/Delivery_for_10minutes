@@ -1,7 +1,6 @@
 package sample;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,12 +37,12 @@ public class Controller implements Initializable {
     //Graph bMapgraph = new Graph(borderPaneMap);
 
     // }
-    private ButtonUserData GlobalUserData = new ButtonUserData();
+    private ButtonUserData ActionUserData = new ButtonUserData();
 
     @FXML
     public void OnClicked(Event E) throws IOException {
         // Инициализация фрейма
-        System.out.println("123");
+        //System.out.println("123");
         Parent root = FXMLLoader.load(getClass().getResource("map.fxml"));
         borderPane.setCenter(root);
         //mapGraph.setRoot( pane12 );
@@ -56,19 +55,25 @@ public class Controller implements Initializable {
 
     @FXML
     public void buttonClicked(ActionEvent E) {
-        GlobalUserData.setType(btnTypes.valueOf((String) ((Button) E.getSource()).getUserData()));
+        try {
+            ActionType Action = ActionType.valueOf((String) ((Button) E.getSource()).getUserData());
 
-        clearStylesheet();
-        SafeButton = ((Button) E.getSource());
-        SafeButton.setStyle("-fx-background-color: #1c8494");
+            ActionUserData.setType(Action);
 
+            clearStylesheet();
+            SafeButton = ((Button) E.getSource());
+            SafeButton.setStyle("-fx-background-color: #1c8494");
+        } catch (IllegalArgumentException s){
+            System.out.println("Не существует такого типа ActionType");
+            ActionUserData.setType(ActionType.NULL);
+        }
 
     }
 
     @FXML
     public void clearData(MouseEvent E) {
         if (SafeButton != null && E.getButton()== MouseButton.SECONDARY) {
-            GlobalUserData.clear();
+            ActionUserData.clear();
             clearStylesheet();
 
         }
@@ -76,18 +81,17 @@ public class Controller implements Initializable {
     }
 
     public void insertObject(MouseEvent E) {
-        if (SafeButton != null && E.getButton()== MouseButton.SECONDARY) {
-            GlobalUserData.clear();
-            clearStylesheet();
+        if (SafeButton == null ){
             return;
         }
 
-        System.out.println("Был вызван " + GlobalUserData.getType());
-        GlobalUserData.clear();
+        System.out.println("Был вызван " + ActionUserData.getType());
+        ActionUserData.clear();
+        clearStylesheet();
 
         mapGraph = Graph.getInstance(pane12);
-
         mapGraph.addPoint("undefined",E.getX(),E.getY());
+        SafeButton = null;
         System.out.println(mapGraph);
     }
 
@@ -100,16 +104,16 @@ public class Controller implements Initializable {
 }
 
 class ButtonUserData{
-    private btnTypes type;
-    public ButtonUserData(  btnTypes btnTypes){
-        type = btnTypes;
+    private ActionType type;
+    public ButtonUserData(  ActionType actionType){
+        type = actionType;
     }
     public ButtonUserData( ){
     }
-    public btnTypes getType() {
+    public ActionType getType() {
         return type;
     }
-    public void setType(btnTypes type){
+    public void setType(ActionType type){
         this.type=type;
     }
     public void clear(){
@@ -118,14 +122,34 @@ class ButtonUserData{
     }
 }
 
-enum btnTypes {
+enum PointType {
     Point("Point"),Production("Production") ;
 
     String Type;
-    btnTypes(String type){
+    PointType(String type){
         Type=type;
     }
-    btnTypes(){
+    PointType(){
+
+    }
+    public String getType() {
+        return Type;
+    }
+
+    @Override
+    public String toString() {
+        return Type;
+    }
+}
+
+enum ActionType{
+    Point("Point"),Road("Road"), Empty("Empty"),NULL("null") ;
+
+    String Type;
+    ActionType(String type){
+        Type=type;
+    }
+    ActionType(){
 
     }
     public String getType() {
