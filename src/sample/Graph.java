@@ -28,14 +28,8 @@ public class Graph implements Serializable {
     private static Graph Singleton;
     public static Graph getInstance(Pane root)
     {
-
-        if (Singleton != null) {
-            return Singleton;
-        }
-            else {
-                return new Graph(root);
-            }
-    }
+        return Singleton!=null ? Singleton : new Graph(root);
+    };
 
     @Override
     public boolean equals(Object o) {
@@ -53,7 +47,7 @@ public class Graph implements Serializable {
     public void addPoint(String name, double X, double Y){
         FPoint A1 = new FPoint(X,Y);
         A1.setName(name);
-        A1.addUI(root);
+        A1.AddToGUI(root);
         Points.put(name,A1);
     }
 

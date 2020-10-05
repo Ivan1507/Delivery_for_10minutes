@@ -21,6 +21,20 @@ import java.util.Objects;
 
 // Вершина
 public class Vertex implements Serializable {
+
+
+    private double X;
+   private double Y;
+   private String Name;
+   private ArrayList<Edge> Edges = new ArrayList<>();
+   public Vertex(double x, double y){
+        X=x;
+        Y=y;
+}
+   private transient Pane root;
+
+
+
     public Vertex() {
 
     }
@@ -40,16 +54,6 @@ public class Vertex implements Serializable {
     public void setRoot(Pane root) {
         this.root = root;
     }
-
-    private double X;
-   private double Y;
-   private String Name;
-   private ArrayList<Edge> Edges = new ArrayList<>();
-   public Vertex(double x, double y){
-        X=x;
-        Y=y;
-}
-   private transient Pane root;
 
 
 
@@ -76,8 +80,9 @@ public class Vertex implements Serializable {
         return Objects.hash(X, Y, Name);
     }
 
-    public void addUI(Pane rt){
+    public void AddToGUI(Pane rt){
         root = rt;
+
         Circle circle = new Circle(this.X,this.Y,3);
         circle.setStroke(Color.BLACK);
         //circle.setTranslateX( this.X);
