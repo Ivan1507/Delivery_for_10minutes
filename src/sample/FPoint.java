@@ -8,11 +8,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.awt.event.InputEvent;
+
 
 public class FPoint extends Vertex{
     private PointType pointType;
@@ -34,17 +35,30 @@ public class FPoint extends Vertex{
         //circle.setTranslateX( this.X);
         //circle.setTranslateY(this.Y);
 
-        Text circleText = new Text(this.getX(),this.getY()-10,this.getName());
+        Text Text1 = new Text(this.getX(),this.getY()-10,this.getName());
 
-        circleText.setOnMouseClicked(OpenSettings());
+       // Text1.setOnMouseClicked(OpenSettings());
         //circle.setOnDragDropped(OnDragged());
-        circle.setOnDragDetected(OnDragStarted());
+       // circle.setOnDragDetected(OnDragStarted(circle));
 
-        circle.setOnDragDone(OnDragOver());
-        //circle.setOnDragDone(OnDragged());
+        DragObject dragObject = DragObject.NewObject();
+        dragObject.setSource(circle);
+        dragObject.setText( Text1 ) ;
+        dragObject.setTarget(rt);
+        dragObject.init();
+//        circle.setOnDragDetected(evt -> {
+//            circle.startFullDrag();
+//
+//        });
+//
+//        rt.setOnMouseDragReleased(evt -> {
+//            System.out.println("over");
+//            circle.setCenterX(evt.getX());
+//            circle.setCenterY(evt.getY());
+//        });
 
-        circleText.setTextAlignment(TextAlignment.JUSTIFY);
-        rt.getChildren().addAll(circle,circleText);
+        //Text1.setTextAlignment(TextAlignment.JUSTIFY);
+       getRoot().getChildren().addAll(circle,Text1);
     }
 
 
@@ -65,52 +79,6 @@ public class FPoint extends Vertex{
             //newWindow.setY(100);
 
             newWindow.show();
-        };
-    }
-
-    public EventHandler<DragEvent> OnDragged(){
-
-        return (dragEvent -> {
-
-            var source = dragEvent.getSource().getClass();
-            System.out.println("1234");
-            System.out.println(source);
-            dragEvent.setDropCompleted(true);
-            dragEvent.consume();
-        });
-    }
-    public EventHandler<MouseEvent> OnDragStarted(){
-        return mouseEvent -> {
-            Dragboard db = ((Circle)mouseEvent.getSource()).startDragAndDrop(TransferMode.MOVE);
-
-            /* Put a string on a dragboard */
-            ClipboardContent content = new ClipboardContent();
-            content.putString(String.valueOf((Circle)((Circle) mouseEvent.getSource()).getUserData()));
-            db.setContent(content);
-
-            mouseEvent.consume();
-        };
-    }
-
-    public EventHandler<DragEvent> OnDragOver(){
-        return dragEvent -> {
-
-          //  if (dragEvent.getGestureSource() != (Circle)( dragEvent.getSource()) &&
-          //          dragEvent.getDragboard().hasString()) {
-                /* allow for both copying and moving, whatever user chooses */
-                //dragEvent.acceptTransferModes(TransferMode.MOVE);
-                //dragEvent.setDropCompleted(true);
-          //  }
-            System.out.println("2");
-            System.out.println(dragEvent.getScreenX());
-            System.out.println(dragEvent.getX());
-           // System.out.println(dragEvent.getScreenX());
-
-            ((Circle) dragEvent.getSource()).setCenterX(dragEvent.getX());
-            ((Circle) dragEvent.getSource()).setCenterY(dragEvent.getY());
-            dragEvent.consume();
-
-
         };
     }
 

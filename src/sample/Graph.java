@@ -28,8 +28,16 @@ public class Graph implements Serializable {
     private static Graph Singleton;
     public static Graph getInstance(Pane root)
     {
-        return Singleton!=null ? Singleton : new Graph(root);
-    };
+        //return Singleton!=null ? Singleton : new Graph(root);
+        if (Singleton == null) {
+            Singleton = new Graph(root);
+            return Singleton;
+        }
+        else
+        {
+            return Singleton;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

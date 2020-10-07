@@ -55,7 +55,9 @@ public class Vertex implements Serializable {
         this.root = root;
     }
 
-
+    public Pane getRoot() {
+        return root;
+    }
 
     public double getX() {
         return X;
