@@ -13,7 +13,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class DragObject {
+// Класс обработчиков событий (нажатий на кнопку, перетаскивания)
+public class EHandler {
 
   private Pane root;
 
