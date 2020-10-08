@@ -12,7 +12,7 @@ public class Edge implements Serializable {
     private Vertex From;
     private Vertex To;
     private boolean Directed;
-    private double Traffic_jam=0d;
+    private double Traffic_jam=0d; // Remove
     private Quality_Road Quality_road;
     private HashMap<Integer,Double> Traffic = new HashMap<>();
     {

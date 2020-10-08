@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
-import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Objects;

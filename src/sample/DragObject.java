@@ -1,61 +1,73 @@
 package sample;
 
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class DragObject {
 
+  private Pane root;
 
-    private Circle source;
-    private Pane target;
-    private Text Text1;
-
-    public Text getText() {
-        return Text1;
+    public Pane getRoot() {
+        return root;
     }
 
-    public void setText(Text text1) {
-        Text1 = text1;
+    public void setRoot(Pane root) {
+        this.root = root;
     }
 
-    public Circle getSource() {
-        return source;
-    }
+    public void init(UI_Wrapper ui_wrapper) {
 
-    public void setSource(Circle source) {
-        this.source = source;
-    }
+        EventHandler<MouseEvent> dragEvent = dragEvent1 -> {
+                ui_wrapper.getCircle().startFullDrag();
+                getRoot().setUserData(ui_wrapper); // Сохраняем объект-обертку элементов управления, чтобы из него достать окружность
+                // и текст
+        };
+        ui_wrapper.getText().setOnDragDetected(dragEvent);
+        ui_wrapper.getCircle().setOnDragDetected(dragEvent);
 
-    public Pane getTarget() {
-        return target;
-    }
-
-    public void setTarget(Pane target) {
-        this.target = target;
-    }
-
-    static public DragObject NewObject() {
-        return new DragObject();
-    }
-
-    public void init() {
-
-        getSource().setOnDragDetected(evt -> {
-            source.startFullDrag();
-
+        getRoot().setOnMouseDragReleased(evt -> {
+            (((UI_Wrapper)getRoot().getUserData()).getCircle()).setCenterX(evt.getX());
+            (((UI_Wrapper)getRoot().getUserData()).getCircle()).setCenterY(evt.getY());
+            (((UI_Wrapper)getRoot().getUserData()).getText()).setX(evt.getX());
+            (((UI_Wrapper)getRoot().getUserData()).getText()).setY(evt.getY()-10);
         });
 
-        getTarget().setOnMouseDragReleased(evt -> {
-           // System.out.println("over");
-            (source).setCenterX(evt.getX());
-            ( source).setCenterY(evt.getY());
+        EventHandler<MouseEvent> eventEventHandler = (e)->{
+            StackPane secondaryLayout = new StackPane();
+            Scene secondScene = new Scene(secondaryLayout, 450, 100);
 
-            getText().setX(evt.getX());
-            getText().setY(evt.getY()-10);
+            // New window (Stage)
+            Stage newWindow = new Stage();
+            try {
+                newWindow.setTitle("Свойства точки " + ((Text) e.getSource()).getText());
+            } catch (ClassCastException exp) {
+                System.out.println("Свойства точки");
+                newWindow.setTitle("Свойства точки " );
 
-        });
+            }
+            newWindow.centerOnScreen();
+            newWindow.setScene(secondScene);
+
+            // Set position of second window, related to primary window.
+            //newWindow.setX( 200);
+            //newWindow.setY(100);
+
+            newWindow.show();
+        };
+
+        ui_wrapper.getText().setOnMouseClicked(eventEventHandler);
+        ui_wrapper.getCircle().setOnMouseClicked(eventEventHandler);
+
 
     }
 }

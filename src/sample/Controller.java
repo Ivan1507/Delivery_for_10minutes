@@ -46,10 +46,7 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("map.fxml"));
         borderPane.setCenter(root);
         //mapGraph.setRoot( pane12 );
-
         System.out.println(pane12);
-
-
 
     }
     @FXML
@@ -95,6 +92,7 @@ public class Controller implements Initializable {
         clearStylesheet();
 
         mapGraph = Graph.getInstance(pane12);
+        mapGraph.setRoot(pane12);
         mapGraph.addPoint("undefined",E.getX(),E.getY());
         SafeButton = null;
         System.out.println(mapGraph);

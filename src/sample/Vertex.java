@@ -21,9 +21,7 @@ import java.util.Objects;
 
 // Вершина
 public class Vertex implements Serializable {
-
-
-    private double X;
+   private double X;
    private double Y;
    private String Name;
    private ArrayList<Edge> Edges = new ArrayList<>();
@@ -32,8 +30,6 @@ public class Vertex implements Serializable {
         Y=y;
 }
    private transient Pane root;
-
-
 
     public Vertex() {
 
@@ -83,35 +79,6 @@ public class Vertex implements Serializable {
     }
 
     public void AddToGUI(Pane rt){
-        root = rt;
-
-        Circle circle = new Circle(this.X,this.Y,3);
-        circle.setStroke(Color.BLACK);
-        //circle.setTranslateX( this.X);
-        //circle.setTranslateY(this.Y);
-
-       Text circleText = new Text(this.X,this.Y-10,this.getName());
-       // circleText.setTranslateX(this.X);
-        //circleText.setTranslateY(this.Y);
-        circleText.setOnMouseClicked(e->{
-            StackPane secondaryLayout = new StackPane();
-            Scene secondScene = new Scene(secondaryLayout, 450, 100);
-
-            // New window (Stage)
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Свойства точки " + ((Text)e.getSource()).getText());
-            newWindow.centerOnScreen();
-            newWindow.setScene(secondScene);
-
-            // Set position of second window, related to primary window.
-            //newWindow.setX( 200);
-            //newWindow.setY(100);
-
-            newWindow.show();
-
-        });
-        circleText.setTextAlignment(TextAlignment.JUSTIFY);
-        rt.getChildren().addAll(circle,circleText);
 
     }
     public void setPos( double x, double y){

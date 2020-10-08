@@ -26,61 +26,21 @@ public class FPoint extends Vertex{
         setName("Undefined #");
     }
 
+
+    // Добавляет на Pane элементы управления (точки)
     @Override
     public void AddToGUI(Pane rt) {
-        this.setRoot(rt);
+        //this.setRoot(rt);
+        UI_Wrapper wrapper = new UI_Wrapper(rt);
+        wrapper.Init(this);
 
-        Circle circle = new Circle(this.getX(),this.getY(),3);
-        circle.setStroke(Color.BLACK);
-        //circle.setTranslateX( this.X);
-        //circle.setTranslateY(this.Y);
+        DragObject dragObject =  new DragObject();
+        dragObject.setRoot(rt);
+        dragObject.init( wrapper );
 
-        Text Text1 = new Text(this.getX(),this.getY()-10,this.getName());
-
-       // Text1.setOnMouseClicked(OpenSettings());
-        //circle.setOnDragDropped(OnDragged());
-       // circle.setOnDragDetected(OnDragStarted(circle));
-
-        DragObject dragObject = DragObject.NewObject();
-        dragObject.setSource(circle);
-        dragObject.setText( Text1 ) ;
-        dragObject.setTarget(rt);
-        dragObject.init();
-//        circle.setOnDragDetected(evt -> {
-//            circle.startFullDrag();
-//
-//        });
-//
-//        rt.setOnMouseDragReleased(evt -> {
-//            System.out.println("over");
-//            circle.setCenterX(evt.getX());
-//            circle.setCenterY(evt.getY());
-//        });
-
-        //Text1.setTextAlignment(TextAlignment.JUSTIFY);
-       getRoot().getChildren().addAll(circle,Text1);
     }
 
 
-    public EventHandler<MouseEvent> OpenSettings(){
-
-        return (event)->{
-            StackPane secondaryLayout = new StackPane();
-            Scene secondScene = new Scene(secondaryLayout, 450, 100);
-
-            // New window (Stage)
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Свойства точки " + ((Text)event.getSource()).getText());
-            newWindow.centerOnScreen();
-            newWindow.setScene(secondScene);
-
-            // Set position of second window, related to primary window.
-            //newWindow.setX( 200);
-            //newWindow.setY(100);
-
-            newWindow.show();
-        };
-    }
 
 
     }
