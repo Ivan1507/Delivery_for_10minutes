@@ -24,6 +24,7 @@ public class EHandler {
 
     public void setRoot(Pane root) {
         this.root = root;
+        System.out.println(root.toString());
     }
 
     public void init(UI_Wrapper ui_wrapper) {
