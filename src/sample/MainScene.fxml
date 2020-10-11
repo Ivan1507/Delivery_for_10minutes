@@ -79,7 +79,7 @@
                   </Text>
                   <Button mnemonicParsing="false" onAction="#OnClicked" prefHeight="66.0" prefWidth="130.0" text="Карта" />
                   <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Объекты" />
-                  <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Заказы" />
+                  <Button mnemonicParsing="false" onAction="#button_delivery_clicked" prefHeight="34.0" prefWidth="130.0" text="Заказы" />
                   <Button mnemonicParsing="false" onAction="#button_stat_clicked" prefHeight="34.0" prefWidth="130.0" text="Статистика" />
                   <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Настройки" />
                </children>

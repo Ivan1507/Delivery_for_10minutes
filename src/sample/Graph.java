@@ -7,13 +7,15 @@ import javafx.scene.layout.Pane;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Graph implements Serializable {
     private transient Pane root;
     private HashMap<String,FPoint> Points = new HashMap<>(200,0.75f);
     private transient HashMap<String,FPoint> ConnectedPoints = new HashMap<>(200,0.75f);
-
+    HashSet<HashSet<Vertex>> graph=new HashSet<>();
     public void setRoot(Pane root) {
         this.root = root;
     }
@@ -36,6 +38,10 @@ public class Graph implements Serializable {
         {
             return Singleton;
         }
+    }
+    public void InputGraph(int vertex,int edges){
+        System.out.println("Введите количество вершин и количество ребер:");
+
     }
 
     @Override
