@@ -65,7 +65,7 @@ public class Graph implements Serializable {
     }
 
     public void connectPoint(String From, String To,Quality_Road quality_road){
-        Points.get(From).connectTo(Points.get(To),quality_road);
+        //Points.get(From).connectTo(Points.get(To),quality_road);
     }
 
     public  void SaveObject(String name) throws IOException {

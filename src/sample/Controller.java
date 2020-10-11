@@ -133,61 +133,6 @@ public class Controller implements Initializable {
     }
 }
 
-class ButtonUserData{
-    private ActionType type;
-    public ButtonUserData(  ActionType actionType){
-        type = actionType;
-    }
-    public ButtonUserData( ){
-    }
-    public ActionType getType() {
-        return type;
-    }
-    public void setType(ActionType type){
-        this.type=type;
-    }
-    public void clear(){
-        type = null;
-        System.gc();
-    }
-}
 
-enum PointType {
-    Point("Point"),Production("Production") ;
 
-    String Type;
-    PointType(String type){
-        Type=type;
-    }
-    PointType(){
 
-    }
-    public String getType() {
-        return Type;
-    }
-
-    @Override
-    public String toString() {
-        return Type;
-    }
-}
-
-enum ActionType{
-    Point("Point"),Road("Road"), Empty("Empty"),NULL("null") ;
-
-    String Type;
-    ActionType(String type){
-        Type=type;
-    }
-    ActionType(){
-
-    }
-    public String getType() {
-        return Type;
-    }
-
-    @Override
-    public String toString() {
-        return Type;
-    }
-}

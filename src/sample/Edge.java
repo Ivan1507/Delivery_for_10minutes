@@ -7,6 +7,7 @@ import java.util.Objects;
 
 // Ребро
 // Todo: Refactor class name to 'Road'
+@Deprecated
 public class Edge implements Serializable {
 
     private Vertex From;

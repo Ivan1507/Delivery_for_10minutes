@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
+// Обертка над элементами управлени точки
 public class UI_Wrapper {
     private Circle circle ;
 
