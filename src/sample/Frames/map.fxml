@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane fx:controller="sample.Controllers.MapController" maxHeight="-1.0" maxWidth="-1.0" prefHeight="630.0" prefWidth="918.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="630.0" prefWidth="918.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <BorderPane prefHeight="639.0" prefWidth="918.0" BorderPane.alignment="CENTER">
+               <bottom>
+                  <TableView prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="№ Заказа" />
+                      <TableColumn prefWidth="93.60003662109375" text="Исполнитель" />
+                        <TableColumn prefWidth="70.4000244140625" text="Статус заказа" />
+                        <TableColumn prefWidth="61.59999084472656" text="Время оформления" />
+                        <TableColumn prefWidth="147.199951171875" text="Время выполнения" />
+                        <TableColumn prefWidth="158.4000244140625" text="Column X" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </bottom>
+               <center>
+                  <BorderPane fx:id="Map" prefHeight="600.0" prefWidth="918.0">
+                     <bottom>
+                        <ScrollBar value="50.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                     <right>
+                        <ScrollBar orientation="VERTICAL" value="50.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </center>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
