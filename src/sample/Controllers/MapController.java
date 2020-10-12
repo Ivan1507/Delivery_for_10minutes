@@ -1,5 +1,6 @@
 package sample.Controllers;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,11 +10,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import sample.Delivery;
+import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
+import sample.MapLogic.Delivery.DeliverySerializer;
 import sample.MapLogic.Graphic.PointType;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -65,13 +70,28 @@ public class MapController implements Initializable {
 
         // заполняем таблицу данными
         ObservableList<Delivery> DeliveryData = FXCollections.observableArrayList();
-        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10"));
-        DeliveryData.add(new Delivery(75,"Иванов","В процессе", "22","22:10"));
-        DeliveryData.add(new Delivery(25,"Иванов","В процессе", "22","22:10"));
-        DeliveryData.add(new Delivery(3,"Ивhgasанов","В процессе", "22","22:10"));
-        DeliveryData.add(new Delivery(574747,"Иванов","В процессе", "22","22:10"));
-        DeliveryData.add(new Delivery(255,"fag","В процессе", "22","22:10"));
-        DeliveryData.add(new Delivery(426,"Иванов","В прdоцессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(75,"Иванов","В процессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(25,"Иванов","В процессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(3,"Ивhgasанов","В процессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(574747,"Иванов","В процессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(255,"fag","В процессе", "22","22:10"));
+//        DeliveryData.add(new Delivery(426,"Иванов","В прdоцессе", "22","22:10"));
+
+//        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
+//        try {
+//            serializer2.SaveObject("Active");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        ObservableList<Delivery> DeliveryData1;
+        DeliverySerializer serializer = new DeliverySerializer();
+        try {
+        DeliveryData =  serializer.LoadObject("Active");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        ;
 
         DeliveryData.sort(new Comparator<Delivery>() {
             @Override
@@ -80,19 +100,21 @@ public class MapController implements Initializable {
             }
         });
 
-        HashMap<Integer,Integer> Id_to_Delivery = new HashMap<>();
-
-        Function<HashMap,HashMap> d = (map)->{
-               map.clear();
-               int index = 0;
-               for( var a: DeliveryData){
-                   map.put(a.getId(),index++);
-               }
-               return map;
-        };
-        Id_to_Delivery = d.apply( Id_to_Delivery );
-        System.out.println( DeliveryData.get(Id_to_Delivery.get(426)) );
+//        HashMap<Integer,Integer> Id_to_Delivery = new HashMap<>();
+//
+//        ObservableList<Delivery> finalDeliveryData = DeliveryData;
+//        Function<HashMap,HashMap> d = (map)->{
+//               map.clear();
+//               int index = 0;
+//               for( var a: finalDeliveryData){
+//                   map.put(a.getId(),index++);
+//               }
+//               return map;
+//        };
+//        Id_to_Delivery = d.apply( Id_to_Delivery );
+//        System.out.println( DeliveryData.get(Id_to_Delivery.get(426)) );
         table.setItems(DeliveryData);
+
 
       //  ObservableList<String> list2= FXCollections.observableArrayList("Тортик","Пироженое");
 

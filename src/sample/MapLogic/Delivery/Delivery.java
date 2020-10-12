@@ -1,6 +1,8 @@
-package sample;
+package sample.MapLogic.Delivery;
 
-public class Delivery {
+import java.io.Serializable;
+
+public class Delivery implements Serializable {
 
     private int id;
     private String executor;
