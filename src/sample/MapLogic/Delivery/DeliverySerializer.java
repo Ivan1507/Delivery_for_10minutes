@@ -1,6 +1,7 @@
 package sample.MapLogic.Delivery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import jdk.jfr.Name;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class DeliverySerializer implements Serializable {
         return DList;
     }
 
+
     public  void SaveObject(String name) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(new File( "Delivery" + name + ".dat"));
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -28,7 +30,7 @@ public class DeliverySerializer implements Serializable {
 
     public ObservableList<Delivery> LoadObject(String name) throws IOException, ClassNotFoundException {
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File("Delivery" + name + ".dat")));
-       ArrayList<Delivery> DList = (ArrayList) objectInputStream.readObject();
+       ArrayList<Delivery> DList = (ArrayList<Delivery>) objectInputStream.readObject();
         //System.out.println(DList.size());
         return FXCollections.observableArrayList(DList);
     }
