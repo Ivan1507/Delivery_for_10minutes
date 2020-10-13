@@ -2,20 +2,18 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sample.MapLogic.Graph;
+import sample.MapLogic.Graphic.PointType;
 
 public class Main extends Application {
 
+    public static Graph map = new Graph();
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScene.fxml"));
-
-        //.setController(this);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Frames/MainScene.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Hello World");
 
@@ -34,6 +32,9 @@ public class Main extends Application {
 
         //Map.LoadObject("");
 
+        map.addPoint("1",124,85, PointType.Triangle);
+        map.addPoint("2",45,55, PointType.Square);
+        map.addPoint("3",94,55, PointType.TwoCricle);
 
 
         primaryStage.setScene(new Scene(root));

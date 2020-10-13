@@ -1,4 +1,4 @@
-package sample;
+package sample.MapLogic;
 
 public enum Quality_Road {
     Very_bad(0.2),

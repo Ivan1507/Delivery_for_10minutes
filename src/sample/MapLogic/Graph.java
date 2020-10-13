@@ -1,20 +1,20 @@
-package sample;
+package sample.MapLogic;
 
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import sample.MapLogic.Graphic.PointType;
+import sample.Transport.BaseTransport;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class Graph implements Serializable {
     private transient Pane root;
-    private HashMap<String,FPoint> Points = new HashMap<>(200,0.75f);
-    private transient HashMap<String,FPoint> ConnectedPoints = new HashMap<>(200,0.75f);
+    private HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
+    private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
+    //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
     HashSet<HashSet<Vertex>> graph=new HashSet<>();
     public void setRoot(Pane root) {
         this.root = root;
@@ -26,22 +26,8 @@ public class Graph implements Serializable {
     public Graph() {
 
     }
-    private static Graph Singleton;
-    public static Graph getInstance(Pane root)
-    {
-        //return Singleton!=null ? Singleton : new Graph(root);
-        if (Singleton == null) {
-            Singleton = new Graph(root);
-            return Singleton;
-        }
-        else
-        {
-            return Singleton;
-        }
-    }
     public void InputGraph(int vertex,int edges){
         System.out.println("Введите количество вершин и количество ребер:");
-
     }
 
     @Override
@@ -57,14 +43,19 @@ public class Graph implements Serializable {
         return Objects.hash(Points);
     }
 
-    public void addPoint(String name, double X, double Y){
-        FPoint A1 = new FPoint(X,Y);
+    public void addPoint(String name, double X, double Y, PointType type){
+        Vertex A1 = new Vertex(X,Y);
         A1.setName(name);
-        A1.AddToGUI(root);
+        A1.setPointType(type);
         Points.put(name,A1);
     }
 
-    public void connectPoint(String From, String To,Quality_Road quality_road){
+    public void draw(){
+    for(Map.Entry<String,Vertex> point : Points.entrySet())
+        point.getValue().placeTo(root);
+    }
+
+    public void connectPoint(String From, String To, Quality_Road quality_road){
         //Points.get(From).connectTo(Points.get(To),quality_road);
     }
 

@@ -1,22 +1,10 @@
-package sample;
+package sample.MapLogic;
 
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
+import sample.MapLogic.Graphic.PointType;
+import sample.MapLogic.Graphic.UI_Wrapper;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Objects;
 
 // Вершина
@@ -24,6 +12,8 @@ public class Vertex implements Serializable {
    private double X;
    private double Y;
    private String Name;
+   private PointType pointType;
+   private UI_Wrapper wrapper = new UI_Wrapper();
    //private ArrayList<Edge> Edges = new ArrayList<>();
    public Vertex(double x, double y){
         X=x;
@@ -43,10 +33,14 @@ public class Vertex implements Serializable {
         Y = y;
     }
 
-
     public void setRoot(Pane root) {
         this.root = root;
     }
+
+    public void setPointType(PointType pointType) {
+        this.pointType = pointType;
+    }
+
 
     public Pane getRoot() {
         return root;
@@ -59,6 +53,12 @@ public class Vertex implements Serializable {
     public double getY() {
         return Y;
     }
+
+    public PointType getPointType() {
+        return pointType;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -75,7 +75,9 @@ public class Vertex implements Serializable {
         return Objects.hash(X, Y, Name);
     }
 
-    public void AddToGUI(Pane rt){
+    public void placeTo(Pane rt){
+        wrapper.setPane(rt);
+        wrapper.Init(this);
 
     }
     public void setPos( double x, double y){

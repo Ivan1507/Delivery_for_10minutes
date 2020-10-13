@@ -1,9 +1,10 @@
 package sample;
 
+import sample.MapLogic.Quality_Road;
+import sample.MapLogic.Vertex;
+
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Objects;
 
 // Ребро
 // Todo: Refactor class name to 'Road'
