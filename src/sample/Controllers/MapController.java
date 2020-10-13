@@ -46,7 +46,8 @@ public class MapController implements Initializable {
     @FXML
     private TableColumn time_end;
 
-
+    @FXML
+    private TableColumn goods;
 
 
     @Override
@@ -54,12 +55,8 @@ public class MapController implements Initializable {
         Pane root = new Pane();
         Map.setCenter(root);
         Main.map.setRoot( root );
-
-
-        Main.map.addPoint("1",124,85, PointType.Triangle);
-        Main.map.addPoint("2",45,55, PointType.Square);
-        Main.map.addPoint("3",94,55, PointType.TwoCricle);
         Main.map.draw();
+
         System.out.println("Добавилось");
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
@@ -67,10 +64,10 @@ public class MapController implements Initializable {
         status.setCellValueFactory(new PropertyValueFactory<Delivery, String>("status"));
         time_start.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_start"));
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_end"));
-
+        goods.setCellValueFactory(new PropertyValueFactory<Delivery, String>("goods"));
         // заполняем таблицу данными
         ObservableList<Delivery> DeliveryData = FXCollections.observableArrayList();
-//        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10"));
+      //  DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка"));
 //        DeliveryData.add(new Delivery(75,"Иванов","В процессе", "22","22:10"));
 //        DeliveryData.add(new Delivery(25,"Иванов","В процессе", "22","22:10"));
 //        DeliveryData.add(new Delivery(3,"Ивhgasанов","В процессе", "22","22:10"));
@@ -78,12 +75,12 @@ public class MapController implements Initializable {
 //        DeliveryData.add(new Delivery(255,"fag","В процессе", "22","22:10"));
 //        DeliveryData.add(new Delivery(426,"Иванов","В прdоцессе", "22","22:10"));
 
-//        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
-//        try {
-//            serializer2.SaveObject("Active");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
+        try {
+            serializer2.SaveObject("Active");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         ObservableList<Delivery> DeliveryData1;
         DeliverySerializer serializer = new DeliverySerializer();
         try {

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.MapLogic.Graph;
+import sample.MapLogic.Graphic.PointType;
 
 public class Main extends Application {
 
@@ -31,6 +32,9 @@ public class Main extends Application {
 
         //Map.LoadObject("");
 
+        map.addPoint("1",124,85, PointType.Triangle);
+        map.addPoint("2",45,55, PointType.Square);
+        map.addPoint("3",94,55, PointType.TwoCricle);
 
 
         primaryStage.setScene(new Scene(root));

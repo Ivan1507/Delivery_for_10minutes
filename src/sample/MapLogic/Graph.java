@@ -2,6 +2,7 @@ package sample.MapLogic;
 
 import javafx.scene.layout.Pane;
 import sample.MapLogic.Graphic.PointType;
+import sample.Transport.BaseTransport;
 
 import java.io.*;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Objects;
 public class Graph implements Serializable {
     private transient Pane root;
     private HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
+    private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
     HashSet<HashSet<Vertex>> graph=new HashSet<>();
     public void setRoot(Pane root) {
@@ -26,7 +28,6 @@ public class Graph implements Serializable {
     }
     public void InputGraph(int vertex,int edges){
         System.out.println("Введите количество вершин и количество ребер:");
-
     }
 
     @Override
