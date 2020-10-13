@@ -1,17 +1,20 @@
 package sample;
 
-import java.util.Date;
+import sample.MapLogic.Quality_Road;
+import sample.MapLogic.Vertex;
+
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Objects;
 
 // Ребро
 // Todo: Refactor class name to 'Road'
-public class Edge {
+@Deprecated
+public class Edge implements Serializable {
 
     private Vertex From;
     private Vertex To;
     private boolean Directed;
-    private double Traffic_jam=0d;
+    private double Traffic_jam=0d; // Remove
     private Quality_Road Quality_road;
     private HashMap<Integer,Double> Traffic = new HashMap<>();
     {
@@ -24,6 +27,7 @@ public class Edge {
         Directed = directed;
         Quality_road=q;
     }
+
 
     public Vertex getAnotherPoint(Vertex Base) {
         if (!Base.equals(To)) {return  To;}
