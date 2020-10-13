@@ -12,6 +12,7 @@ import java.util.Objects;
 
 public class Graph implements Serializable {
     private transient Pane root;
+
     private HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
