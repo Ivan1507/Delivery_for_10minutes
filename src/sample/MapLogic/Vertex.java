@@ -91,8 +91,14 @@ public class Vertex implements Serializable {
        return Name;
     }
 
+    @Override
+    public String toString() {
+        return "Vertex{" +
+                "Name='" + Name + '\'' +
+                '}';
+    }
 
-//    public void SaveToFile(String path) throws IOException {
+    //    public void SaveToFile(String path) throws IOException {
 //        try(FileWriter fw=new FileWriter(path,true)){
 //            fw.append(this.toString());
 //        }catch(IOException e){

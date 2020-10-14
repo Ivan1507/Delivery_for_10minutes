@@ -18,7 +18,7 @@ public class Graph implements Serializable {
     private HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
-    HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
+    public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public void setRoot(Pane root) {
         this.root = root;
     }
