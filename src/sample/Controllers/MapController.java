@@ -55,6 +55,7 @@ public class MapController implements Initializable {
         Pane root = new Pane();
         Map.setCenter(root);
         Main.map.setRoot( root );
+        Main.map.DrawGraph();
         Main.map.draw();
 
         System.out.println("Добавилось");
