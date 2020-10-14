@@ -1,6 +1,0 @@
-Vertex{
-X=1.0
-Y=2.0
-Name=MIET
-Edges=[]
-root=null

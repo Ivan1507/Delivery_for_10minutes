@@ -49,20 +49,20 @@ public class UI_Wrapper {
 
                 break;
             case Square:
-                Rectangle rectangle = new Rectangle(25,25,Color.RED);
+                Rectangle rectangle = new Rectangle(10,10,Color.RED);
                 rectangle.setX(self.getX()-12.5);
                 rectangle.setY(self.getY()-12.5);
                 pane.getChildren().add( rectangle );
                 break;
             case TwoCricle:
                 Circle circle = new Circle();
-                circle.setRadius(8);
+                circle.setRadius(6);
                 circle.setCenterX(self.getX());
                 circle.setCenterY(self.getY());
                 circle.setStroke(Color.BLUE);
                 circle.setFill(Color.WHITE);
                 Circle mark = new Circle();
-                mark.setRadius(4);
+                mark.setRadius(3);
                 mark.setCenterX(self.getX());
                 mark.setCenterY(self.getY());
                 mark.setFill(Color.BLACK);

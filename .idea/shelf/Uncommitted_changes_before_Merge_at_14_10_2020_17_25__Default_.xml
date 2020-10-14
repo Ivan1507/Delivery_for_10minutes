@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Merge_at_14_10_2020_17_25_[Default]" date="1602685548090" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_14_10_2020_17_25_[Default]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 14.10.2020 17:25 [Default]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Delivery_task/sample/Edge.class" />
+    <option name="AFTER_PATH" value="out/production/Delivery_task/sample/Edge.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_14_10_2020_17_25_[Default]/Edge.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Delivery_task/sample/Main.class" />
+    <option name="AFTER_PATH" value="out/production/Delivery_task/sample/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_14_10_2020_17_25_[Default]/Main.class" />
+  </binary>
+</changelist>

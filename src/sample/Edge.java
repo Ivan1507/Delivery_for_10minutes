@@ -5,6 +5,7 @@ import sample.MapLogic.Vertex;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 // Ребро
 // Todo: Refactor class name to 'Road'
@@ -28,7 +29,6 @@ public class Edge implements Serializable {
         Quality_road=q;
     }
 
-
     public Vertex getAnotherPoint(Vertex Base) {
         if (!Base.equals(To)) {return  To;}
         else
@@ -37,7 +37,6 @@ public class Edge implements Serializable {
         }
     }
     public static Edge ConnectVertexes(Vertex from, Vertex to, boolean directed,Quality_Road q){
-        //A.setDistance(Distance);
         return new Edge(from,to,directed,q);
     }
 

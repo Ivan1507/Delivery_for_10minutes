@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_rebase_[Default]" date="1602685645321" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before rebase [Default]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Delivery_task/sample/Edge.class" />
+    <option name="AFTER_PATH" value="out/production/Delivery_task/sample/Edge.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default]/Edge.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/Delivery_task/sample/Main.class" />
+    <option name="AFTER_PATH" value="out/production/Delivery_task/sample/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default]/Main.class" />
+  </binary>
+</changelist>

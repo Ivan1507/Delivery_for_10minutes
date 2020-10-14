@@ -68,13 +68,8 @@ public class MapController implements Initializable {
         goods.setCellValueFactory(new PropertyValueFactory<Delivery, String>("goods"));
         // заполняем таблицу данными
         ObservableList<Delivery> DeliveryData = FXCollections.observableArrayList();
-      //  DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка"));
-//        DeliveryData.add(new Delivery(75,"Иванов","В процессе", "22","22:10"));
-//        DeliveryData.add(new Delivery(25,"Иванов","В процессе", "22","22:10"));
-//        DeliveryData.add(new Delivery(3,"Ивhgasанов","В процессе", "22","22:10"));
-//        DeliveryData.add(new Delivery(574747,"Иванов","В процессе", "22","22:10"));
-//        DeliveryData.add(new Delivery(255,"fag","В процессе", "22","22:10"));
-//        DeliveryData.add(new Delivery(426,"Иванов","В прdоцессе", "22","22:10"));
+        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка\n123"));
+
 
         DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
         try {

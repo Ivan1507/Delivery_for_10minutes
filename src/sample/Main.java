@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
+import sample.MapLogic.Quality_Road;
+import sample.MapLogic.Vertex;
 
 public class Main extends Application {
 
@@ -40,11 +42,17 @@ public class Main extends Application {
         map.FillGraph("1","2");
 
 
+
+        Vertex[] vertices = new Vertex[] { new Vertex(24,4),
+                new Vertex(224,4),
+        };
+        //delivery.getAddress();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
     }
 
+        map.connectPoint("1","2", Quality_Road.Very_bad);
 
     public static void main(String[] args) {
         launch(args);
