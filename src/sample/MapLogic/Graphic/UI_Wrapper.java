@@ -36,9 +36,9 @@ public class UI_Wrapper {
             case Triangle:
                 Polygon polygon = new Polygon();
                 polygon.getPoints().addAll(new Double[]{
-                        0.0, 0.0,
-                        10.0, 20.0,
-                        20.0, 00.0 });
+                        -10.0, -10.0,
+                        0.0, 10.0,
+                        10.0, -10.0 });
                 polygon.setTranslateX(self.getX());
                 polygon.setTranslateY(self.getY());
                 polygon.setFill(Color.BLACK);
@@ -50,8 +50,8 @@ public class UI_Wrapper {
                 break;
             case Square:
                 Rectangle rectangle = new Rectangle(25,25,Color.RED);
-                rectangle.setX(self.getX());
-                rectangle.setY(self.getY());
+                rectangle.setX(self.getX()-12.5);
+                rectangle.setY(self.getY()-12.5);
                 pane.getChildren().add( rectangle );
                 break;
             case TwoCricle:
@@ -83,7 +83,7 @@ public class UI_Wrapper {
         }
 
 
-        Text Text1 = new Text(self.getX(),self.getY()-10,self.getName());
+        Text Text1 = new Text(self.getX(),self.getY()-15,self.getName());
         Text1.setText(self.getName());
         pane.getChildren().addAll(Text1);
     }

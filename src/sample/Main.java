@@ -16,7 +16,6 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Frames/MainScene.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Hello World");
-
        //BorderPane root = new BorderPane();
        // Vertex v=new Vertex(1,2);
        // v.setName("MIET");
@@ -33,8 +32,12 @@ public class Main extends Application {
         //Map.LoadObject("");
 
         map.addPoint("1",124,85, PointType.Triangle);
+        map.addPoint("4",150,185, PointType.TwoCricle);
         map.addPoint("2",45,55, PointType.Square);
         map.addPoint("3",94,55, PointType.TwoCricle);
+        map.FillGraph("1","3");
+        map.FillGraph("1","4");
+        map.FillGraph("1","2");
 
 
         primaryStage.setScene(new Scene(root));
