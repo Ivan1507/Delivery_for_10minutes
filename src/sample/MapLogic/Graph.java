@@ -1,12 +1,19 @@
 package sample.MapLogic;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 import sample.MapLogic.Graphic.PointType;
 import sample.Transport.BaseTransport;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.Deque;
 
@@ -17,9 +24,9 @@ public class Graph implements Serializable {
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
     public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
-    public HashMap<Vertex,HashMap<Vertex,Double>> quality_road=new HashMap<>();
-    public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic=new HashMap<>();
-
+    public HashMap<Vertex,HashMap<Vertex,Quality_Road>> quality_road=new HashMap<>();
+    public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>> Traffic=new HashMap<>();
+    private ArrayList<Line> lines = new ArrayList<>();
     // {
      //   V: {
          //  k: U, v: 0.1;
@@ -52,7 +59,19 @@ public class Graph implements Serializable {
         for(Map.Entry<Vertex,HashSet<Vertex>> x:graph.entrySet()){
             for(Vertex y:x.getValue()){
                 Line l=new Line(x.getKey().getX(),x.getKey().getY(),y.getX(),y.getY());
-                l.setStroke(Color.GREY);
+                try {
+                   // Quality_Road quality = quality_road.get(y).get(x);
+                    Color c = quality_road.get(x.getKey()).get(y).getColor();
+                   // System.out.println( quality_road.get(x));
+                   // System.out.println(quality.toString());
+                    l.setStroke(c);
+                }catch (NullPointerException e){
+                    System.out.println("Err");
+                    //System.out.println(y);
+                }
+                l.setStrokeWidth(1.7);
+                //System.out.println(quality.getColor());
+                //l.setStroke(Quality_Road.average.getColor());
                 root.getChildren().addAll(l);
             }
         }
@@ -61,7 +80,7 @@ public class Graph implements Serializable {
         Vertex v=Points.get(s);
 
     }
-    public ArrayList<String> find_min_path(String star, String en){
+    public ArrayList<String> find_min_path(String star, String en,BaseTransport transport){
         Vertex start=Points.get(star);
         Vertex end=Points.get(en);
         Map<Vertex,Double> shortest_distances=new HashMap<Vertex,Double>();
@@ -74,12 +93,25 @@ public class Graph implements Serializable {
         d.add(start);
         while(d.size()!=0){
             Vertex cur_v= (Vertex) d.pop();
+            Integer Curtime = LocalTime.now().getHour();
+
             for(Vertex u:graph.get(cur_v)){
-                Double cost=Math.sqrt(Math.pow((u.getX()-cur_v.getX()),2)+Math.pow((u.getY()-cur_v.getY()),2));
+                Double length=Math.sqrt(Math.pow((u.getX()-cur_v.getX()),2)+Math.pow((u.getY()-cur_v.getY()),2));
+                Double quality = quality_road.get(u).get(cur_v).getStatus();
+                Double traffic = 0.0;//
 
+                if(Traffic.get(u).get(cur_v) != null){
+                    traffic = Traffic.get(u).get(cur_v).get(Curtime);
+                }
+                // Traffic.get(u).get(cur_v).get(15);
+                //System.out.println();
+                Traffic.forEach( (k,v)->{
+                  //  System.out.println(k+" " + v);
+                } );
 
-                if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+cost < shortest_distances.get(u)){
-                    shortest_distances.put(u,shortest_distances.get(cur_v)+cost);
+                Double time = length*transport.getAvgSpeed()*(1+traffic)/(quality);
+                if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+time < shortest_distances.get(u)){
+                    shortest_distances.put(u,shortest_distances.get(cur_v)+time);
                     d.add(u);
                     parents.put(u,cur_v);
                 }
@@ -97,6 +129,43 @@ public class Graph implements Serializable {
     public void InputGraph(int vertex,int edges){
         System.out.println("Введите количество вершин и количество ребер:");
     }
+
+    public void DrawPath( ArrayList<String> path){
+
+        SequentialTransition sequentialTransition = new SequentialTransition();
+
+        sequentialTransition.setCycleCount(1);
+        sequentialTransition.setAutoReverse(false);
+
+
+
+        int size = path.size();
+        for (int i = 0; i < size-1; i++) {
+
+            Vertex x = Points.get(path.get(i));
+            Vertex y = Points.get(path.get(i+1));
+            Line l = new Line(x.getX(), x.getY(), y.getX(), y.getY());
+            l.setStroke(Color.GOLD);
+            l.setStrokeWidth(3);
+
+            root.getChildren().addAll(l);
+
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(1500), l);
+            fadeTransition.setFromValue(0f);
+            fadeTransition.setToValue(1f);
+            fadeTransition.setCycleCount(1);
+            fadeTransition.setAutoReverse(true);
+            sequentialTransition.getChildren().addAll(fadeTransition);
+        }
+
+
+
+        sequentialTransition.play();
+        }
+
+
+
+
 
  //   public Map<Vertex,HashSet<HashMap<Vertex,Double>>> quality_road=new HashMap<>();
   //  public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic=new HashMap<>();
@@ -123,9 +192,11 @@ public class Graph implements Serializable {
             quality_road.put(ver2, new HashMap<>());
         }
 
-        quality_road.get(ver1).put(ver2,qr.getStatus());
-        quality_road.get(ver2).put(ver1,qr.getStatus());
+        quality_road.get(ver1).put(ver2,qr);
+        quality_road.get(ver2).put(ver1,qr);
 
+        quality_road.get(ver1).put(ver1,qr);
+        quality_road.get(ver2).put(ver2,qr);
 
         // Пробки
         //HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>
@@ -138,6 +209,8 @@ public class Graph implements Serializable {
         Traffic.get(ver1).put(ver2,traffic);
         Traffic.get(ver2).put(ver1,traffic);
 
+        Traffic.get(ver1).put(ver1,traffic);
+        Traffic.get(ver2).put(ver2,traffic);
 
     }
     @Override

@@ -14,6 +14,7 @@ import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
 import sample.MapLogic.Delivery.DeliverySerializer;
 import sample.MapLogic.Graphic.PointType;
+import sample.Transport.BaseTransport;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -57,6 +58,17 @@ public class MapController implements Initializable {
         Main.map.setRoot( root );
         Main.map.DrawGraph();
         Main.map.draw();
+
+        ArrayList<String> path= Main.map.find_min_path("1","10", new BaseTransport());
+        for(String s:path){
+            System.out.println(s);
+        }
+
+
+            Main.map.DrawPath( path );
+
+
+
 
         System.out.println("Добавилось");
 

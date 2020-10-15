@@ -11,6 +11,7 @@ import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
+import sample.Transport.BaseTransport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +51,7 @@ public class Main extends Application {
         //map.addPoint("2",45,55, PointType.Square);
         map.addPoint("7",350,100, PointType.TwoCricle);
         map.addPoint("8",470,80, PointType.TwoCricle);
+        map.addPoint("8.5",(470+720) / 2,45, PointType.TwoCricle);
         map.addPoint("9",720,90, PointType.TwoCricle);
         map.addPoint("10",545,140, PointType.TwoCricle);
         map.addPoint("11",625,210, PointType.TwoCricle);
@@ -57,37 +59,49 @@ public class Main extends Application {
         Quality_Road q = Quality_Road.good;
         HashMap<Integer,Double> traffic = new HashMap<>();
         for( int i =1; i<=24;i++ ){
-            traffic.put(i,0.0);
+            double traffic_value = switch(i) {
+                case 1, 3, 2, 4, 5, 6, 12, 11 -> 0.05;
+                case 7, 9 -> 0.10;
+                case 8, 17 -> 0.15;
+                case 10 -> 0.07;
+                case 13, 14 -> 0.08;
+                case 15, 16, 20 -> 0.09;
+                case 18 -> 0.18;
+                case 19 -> 0.20;
+                default -> 0.04;
+            };
+
+            traffic.put(i,traffic_value);
         }
-        traffic.put(15,0.1);
-        map.FillGraph("1","3",q,traffic);
-        map.FillGraph("1","2",q,traffic);
-        map.FillGraph("2","3",q,traffic);
-        map.FillGraph("6","13",q,traffic);
-        map.FillGraph("5","13",q,traffic);
-        map.FillGraph("3","4",q,traffic);
-        map.FillGraph("4","5",q,traffic);
-        map.FillGraph("5","6",q,traffic);
-        map.FillGraph("6","7",q,traffic);
-        map.FillGraph("1","7",q,traffic);
-        map.FillGraph("1","8",q,traffic);
-        map.FillGraph("8","9",q,traffic);
-        map.FillGraph("9","10",q,traffic);
-        map.FillGraph("2","11",q,traffic);
-        map.FillGraph("11","12",q,traffic);
-        map.FillGraph("9","12",q,traffic);
-        map.FillGraph("10","11",q,traffic);
-        map.FillGraph("1","4",q,traffic);
+
+
+        map.FillGraph("1","3",Quality_Road.average,traffic);
+        map.FillGraph("1","2",Quality_Road.average,traffic);
+        map.FillGraph("2","3",Quality_Road.average,traffic);
+        map.FillGraph("6","13",Quality_Road.average,traffic);
+        map.FillGraph("5","13",Quality_Road.good,traffic);
+        map.FillGraph("3","4",Quality_Road.average,traffic);
+        map.FillGraph("4","5",Quality_Road.good,traffic);
+        map.FillGraph("8.5","8",Quality_Road.very_bad,traffic);
+        map.FillGraph("8.5","9",Quality_Road.bad,traffic);
+        map.FillGraph("8.5","10",Quality_Road.very_bad,traffic);
+
+        map.FillGraph("5","6",Quality_Road.average,traffic);
+        map.FillGraph("6","7",Quality_Road.average,traffic);
+        map.FillGraph("1","7",Quality_Road.average,traffic);
+        map.FillGraph("1","8",Quality_Road.average,traffic);
+        map.FillGraph("8","9",Quality_Road.average,traffic);
+        map.FillGraph("9","10",Quality_Road.average,traffic);
+        map.FillGraph("2","11",Quality_Road.average,traffic);
+        map.FillGraph("11","12",Quality_Road.average,traffic);
+        map.FillGraph("9","12",Quality_Road.average,traffic);
+        map.FillGraph("10","11",Quality_Road.average,traffic);
+        map.FillGraph("1","4",Quality_Road.average,traffic);
         for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
             //System.out.print(x);
             //System.out.println();
         }
-      ArrayList<String> path=map.find_min_path("1","6");
-        for(String s:path){
-            System.out.println(s);
-        }
-
-
+;
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
