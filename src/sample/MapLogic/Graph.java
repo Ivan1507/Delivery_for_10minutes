@@ -27,6 +27,8 @@ public class Graph implements Serializable {
     public HashMap<Vertex,HashMap<Vertex,Quality_Road>> quality_road=new HashMap<>();
     public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>> Traffic=new HashMap<>();
     private ArrayList<Line> lines = new ArrayList<>();
+    public Map<Vertex,Double> shortest_distance=new HashMap<Vertex,Double>();
+
     // {
      //   V: {
          //  k: U, v: 0.1;
@@ -80,7 +82,7 @@ public class Graph implements Serializable {
         Vertex v=Points.get(s);
 
     }
-    public ArrayList<String> find_min_path(String star, String en,BaseTransport transport){
+    public ArrayList<String>  find_min_path(String star, String en,BaseTransport transport){
         Vertex start=Points.get(star);
         Vertex end=Points.get(en);
         Map<Vertex,Double> shortest_distances=new HashMap<Vertex,Double>();
@@ -103,13 +105,8 @@ public class Graph implements Serializable {
                 if(Traffic.get(u).get(cur_v) != null){
                     traffic = Traffic.get(u).get(cur_v).get(Curtime);
                 }
-                // Traffic.get(u).get(cur_v).get(15);
-                //System.out.println();
-                Traffic.forEach( (k,v)->{
-                  //  System.out.println(k+" " + v);
-                } );
 
-                Double time = length*transport.getAvgSpeed()*(1+traffic)/(quality);
+                Double time = length/(transport.getAvgSpeed()*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
                 if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+time < shortest_distances.get(u)){
                     shortest_distances.put(u,shortest_distances.get(cur_v)+time);
                     d.add(u);
@@ -117,6 +114,7 @@ public class Graph implements Serializable {
                 }
             }
         }
+        this.shortest_distance=shortest_distances;
         var parent=parents.get(end);
         while(parents.get(parent) !=null){
             path.add(parent.getName());
@@ -126,10 +124,14 @@ public class Graph implements Serializable {
         Collections.reverse(path);
         return path;
     }
-    public void InputGraph(int vertex,int edges){
-        System.out.println("Введите количество вершин и количество ребер:");
+    public double Count_time(ArrayList<String> path){
+        double d=0.0;
+        for(String s:path){
+            Vertex v=Points.get(s);
+            d+=shortest_distance.get(v);
+        }
+        return d;
     }
-
     public void DrawPath( ArrayList<String> path){
 
         SequentialTransition sequentialTransition = new SequentialTransition();
@@ -170,6 +172,7 @@ public class Graph implements Serializable {
  //   public Map<Vertex,HashSet<HashMap<Vertex,Double>>> quality_road=new HashMap<>();
   //  public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic=new HashMap<>();
     public void FillGraph(String v1,String v2,Quality_Road qr, HashMap<Integer,Double> traffic){
+
         Vertex ver1=Points.get(v1);
         Vertex ver2=Points.get(v2);
         if(graph.get(ver1)==null){

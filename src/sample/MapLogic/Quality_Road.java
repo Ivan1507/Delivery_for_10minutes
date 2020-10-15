@@ -16,6 +16,9 @@ public enum Quality_Road {
         quality=q;
         color=c;
     }
+    Quality_Road(){
+
+    }
 
     public double getStatus() {
         return quality;

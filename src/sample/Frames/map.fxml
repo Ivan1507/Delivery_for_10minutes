@@ -27,7 +27,7 @@
                   </TableView>
                </bottom>
                <center>
-                  <BorderPane fx:id="Map" prefHeight="600.0" prefWidth="918.0">
+                  <BorderPane fx:id="Map1" prefHeight="600.0" prefWidth="918.0">
                      <bottom>
                         <ScrollBar value="50.0" BorderPane.alignment="CENTER" />
                      </bottom>

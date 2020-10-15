@@ -25,7 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Frames/MainScene.fxml"));
         Parent root = loader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Delivery for 10 minutes");
        //BorderPane root = new BorderPane();
        // Vertex v=new Vertex(1,2);
        // v.setName("MIET");

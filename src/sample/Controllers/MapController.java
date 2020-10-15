@@ -1,6 +1,5 @@
 package sample.Controllers;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,24 +12,22 @@ import javafx.scene.layout.Pane;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
 import sample.MapLogic.Delivery.DeliverySerializer;
-import sample.MapLogic.Graphic.PointType;
+import sample.MapLogic.Vertex;
 import sample.Transport.BaseTransport;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 public class MapController implements Initializable {
 
     @FXML
     private TableView table;
     @FXML
-    private BorderPane Map;
+    private BorderPane Map1;
 
     @FXML
     private TableColumn id;
@@ -54,22 +51,19 @@ public class MapController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Pane root = new Pane();
-        Map.setCenter(root);
+        Map1.setCenter(root);
         Main.map.setRoot( root );
         Main.map.DrawGraph();
         Main.map.draw();
 
-        ArrayList<String> path= Main.map.find_min_path("1","10", new BaseTransport());
+        ArrayList<String> path= Main.map.find_min_path("1","12", new BaseTransport());
         for(String s:path){
             System.out.println(s);
         }
-
+        double ans=Main.map.Count_time(path);
+        System.out.println("Доставка заняла "+ans+" min");
 
             Main.map.DrawPath( path );
-
-
-
-
         System.out.println("Добавилось");
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
