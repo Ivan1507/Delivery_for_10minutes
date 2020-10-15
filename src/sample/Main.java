@@ -9,9 +9,11 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
+import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -52,24 +54,30 @@ public class Main extends Application {
         map.addPoint("10",545,140, PointType.TwoCricle);
         map.addPoint("11",625,210, PointType.TwoCricle);
         map.addPoint("12",760,150, PointType.TwoCricle);
-        map.FillGraph("1","3");
-        map.FillGraph("1","2");
-        map.FillGraph("2","3");
-        map.FillGraph("6","13");
-        map.FillGraph("5","13");
-        map.FillGraph("3","4");
-        map.FillGraph("4","5");
-        map.FillGraph("5","6");
-        map.FillGraph("6","7");
-        map.FillGraph("1","7");
-        map.FillGraph("1","8");
-        map.FillGraph("8","9");
-        map.FillGraph("9","10");
-        map.FillGraph("2","11");
-        map.FillGraph("11","12");
-        map.FillGraph("9","12");
-        map.FillGraph("10","11");
-        map.FillGraph("1","4");
+        Quality_Road q = Quality_Road.good;
+        HashMap<Integer,Double> traffic = new HashMap<>();
+        for( int i =1; i<=24;i++ ){
+            traffic.put(i,0.0);
+        }
+        traffic.put(15,0.1);
+        map.FillGraph("1","3",q,traffic);
+        map.FillGraph("1","2",q,traffic);
+        map.FillGraph("2","3",q,traffic);
+        map.FillGraph("6","13",q,traffic);
+        map.FillGraph("5","13",q,traffic);
+        map.FillGraph("3","4",q,traffic);
+        map.FillGraph("4","5",q,traffic);
+        map.FillGraph("5","6",q,traffic);
+        map.FillGraph("6","7",q,traffic);
+        map.FillGraph("1","7",q,traffic);
+        map.FillGraph("1","8",q,traffic);
+        map.FillGraph("8","9",q,traffic);
+        map.FillGraph("9","10",q,traffic);
+        map.FillGraph("2","11",q,traffic);
+        map.FillGraph("11","12",q,traffic);
+        map.FillGraph("9","12",q,traffic);
+        map.FillGraph("10","11",q,traffic);
+        map.FillGraph("1","4",q,traffic);
         for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
             //System.out.print(x);
             //System.out.println();

@@ -10,4 +10,8 @@ public enum Quality_Road {
     Quality_Road( double a){
         status=a;
     }
+
+    public double getStatus() {
+        return status;
+    }
 }

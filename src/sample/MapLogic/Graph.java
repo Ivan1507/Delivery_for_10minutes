@@ -16,7 +16,28 @@ public class Graph implements Serializable {
     public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
-    public Map<Vertex,HashSet<Vertex>> graph=new HashMap<>();
+    public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
+    public HashMap<Vertex,HashMap<Vertex,Double>> quality_road=new HashMap<>();
+    public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic=new HashMap<>();
+
+    // {
+     //   V: {
+         //  k: U, v: 0.1;
+
+   // }
+    //
+
+
+    // {
+    // V:
+    // {
+    // U: {15: 0.3, 16:0.2}
+    // I:
+    // }
+    // HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic
+    //{ V: {U{15:0.3, 16:0.2},I{15:0.3, 16:0.2}}
+    // I: {U{15:0.3, 16:0.2},V{15:0.3, 16:0.2}}
+    //}
     public void setRoot(Pane root) {
         this.root = root;
     }
@@ -55,6 +76,8 @@ public class Graph implements Serializable {
             Vertex cur_v= (Vertex) d.pop();
             for(Vertex u:graph.get(cur_v)){
                 Double cost=Math.sqrt(Math.pow((u.getX()-cur_v.getX()),2)+Math.pow((u.getY()-cur_v.getY()),2));
+
+
                 if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+cost < shortest_distances.get(u)){
                     shortest_distances.put(u,shortest_distances.get(cur_v)+cost);
                     d.add(u);
@@ -74,7 +97,10 @@ public class Graph implements Serializable {
     public void InputGraph(int vertex,int edges){
         System.out.println("Введите количество вершин и количество ребер:");
     }
-    public void FillGraph(String v1,String v2){
+
+ //   public Map<Vertex,HashSet<HashMap<Vertex,Double>>> quality_road=new HashMap<>();
+  //  public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic=new HashMap<>();
+    public void FillGraph(String v1,String v2,Quality_Road qr, HashMap<Integer,Double> traffic){
         Vertex ver1=Points.get(v1);
         Vertex ver2=Points.get(v2);
         if(graph.get(ver1)==null){
@@ -86,6 +112,33 @@ public class Graph implements Serializable {
         }
         graph.get(ver1).add(ver2);
         graph.get(ver2).add(ver1);
+
+
+
+        // Качество покрытия
+        if(quality_road.get(ver1)==null){
+            quality_road.put(ver1, new HashMap<>());
+        }
+        if(quality_road.get(ver2)==null){
+            quality_road.put(ver2, new HashMap<>());
+        }
+
+        quality_road.get(ver1).put(ver2,qr.getStatus());
+        quality_road.get(ver2).put(ver1,qr.getStatus());
+
+
+        // Пробки
+        //HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>
+        if(Traffic.get(ver1)==null){
+            Traffic.put(ver1, new HashMap<Vertex, HashMap<Integer, Double>>());
+        }
+        if(traffic.get(ver2)==null){
+            Traffic.put(ver2, new HashMap<Vertex, HashMap<Integer, Double>>());
+        }
+        Traffic.get(ver1).put(ver2,traffic);
+        Traffic.get(ver2).put(ver1,traffic);
+
+
     }
     @Override
     public boolean equals(Object o) {
