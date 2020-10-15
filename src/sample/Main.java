@@ -11,6 +11,7 @@ import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.Vertex;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -68,14 +69,15 @@ public class Main extends Application {
         map.FillGraph("11","12");
         map.FillGraph("9","12");
         map.FillGraph("10","11");
+        map.FillGraph("1","4");
         for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
-                 System.out.print(x);
-
-            System.out.println();
+            //System.out.print(x);
+            //System.out.println();
         }
-        //map.FillGraph("1","5");
-        //map.FillGraph("1","6");
-
+      ArrayList<String> path=map.find_min_path("1","6");
+        for(String s:path){
+            System.out.println(s);
+        }
 
 
 

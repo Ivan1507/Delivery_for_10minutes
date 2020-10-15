@@ -7,18 +7,16 @@ import sample.MapLogic.Graphic.PointType;
 import sample.Transport.BaseTransport;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.Deque;
 
 public class Graph implements Serializable {
     private transient Pane root;
 
-    private HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
+    public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
-    public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
+    public Map<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public void setRoot(Pane root) {
         this.root = root;
     }
@@ -37,6 +35,41 @@ public class Graph implements Serializable {
                 root.getChildren().addAll(l);
             }
         }
+    }
+    public void Show_path(String s){
+        Vertex v=Points.get(s);
+
+    }
+    public ArrayList<String> find_min_path(String star, String en){
+        Vertex start=Points.get(star);
+        Vertex end=Points.get(en);
+        Map<Vertex,Double> shortest_distances=new HashMap<Vertex,Double>();
+        Map<Vertex,Vertex> parents=new HashMap<Vertex,Vertex>();
+        parents.put(start,null);
+        ArrayList<String> path=new ArrayList<>();
+        path.add(end.getName());
+        shortest_distances.put(start,0.0);
+        ArrayDeque<Vertex> d=new ArrayDeque<>();
+        d.add(start);
+        while(d.size()!=0){
+            Vertex cur_v= (Vertex) d.pop();
+            for(Vertex u:graph.get(cur_v)){
+                Double cost=Math.sqrt(Math.pow((u.getX()-cur_v.getX()),2)+Math.pow((u.getY()-cur_v.getY()),2));
+                if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+cost < shortest_distances.get(u)){
+                    shortest_distances.put(u,shortest_distances.get(cur_v)+cost);
+                    d.add(u);
+                    parents.put(u,cur_v);
+                }
+            }
+        }
+        var parent=parents.get(end);
+        while(parents.get(parent) !=null){
+            path.add(parent.getName());
+            parent =parents.get(parent);
+        }
+        path.add(star);
+        Collections.reverse(path);
+        return path;
     }
     public void InputGraph(int vertex,int edges){
         System.out.println("Введите количество вершин и количество ребер:");
