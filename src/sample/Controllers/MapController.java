@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
 import sample.MapLogic.Delivery.DeliverySerializer;
+import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Transport.BaseTransport;
 
@@ -55,15 +56,15 @@ public class MapController implements Initializable {
         Main.map.setRoot( root );
         Main.map.DrawGraph();
         Main.map.draw();
-
-        ArrayList<String> path= Main.map.find_min_path("1","12", new BaseTransport());
-        for(String s:path){
+//ArrayList<String> path
+       PathWrapper pathWrapper= Main.map.find_min_path("1","12", new BaseTransport());
+        for(String s:pathWrapper.getPath()){
             System.out.println(s);
         }
-        double ans=Main.map.Count_time(path);
+        double ans=Main.map.Count_time(pathWrapper);
         System.out.println("Доставка заняла "+ans+" min");
 
-        Main.map.DrawPath( path );
+        Main.map.DrawPath( pathWrapper.getPath() );
         System.out.println("Добавилось");
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));

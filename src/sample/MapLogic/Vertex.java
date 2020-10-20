@@ -77,7 +77,6 @@ public class Vertex implements Serializable {
     public void placeTo(Pane rt){
         wrapper.setPane(rt);
         wrapper.Init(this);
-
     }
     public void setPos( double x, double y){
        X=x;
@@ -95,6 +94,9 @@ public class Vertex implements Serializable {
         return "Vertex{" +
                 "Name='" + Name + '\'' +
                 '}';
+    }
+    public static double dot(Vertex v1, Vertex v2){
+        return v1.getX() * v2.getX() + v2.getY()*v1.getY();
     }
 //    public void SaveToFile(String path) throws IOException {
 //        try(FileWriter fw=new FileWriter(path,true)){

@@ -21,7 +21,6 @@ public class Graph implements Serializable {
     private transient Pane root;
     public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
-    //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
     public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public HashMap<Vertex,HashMap<Vertex,Quality_Road>> quality_road=new HashMap<>();
     public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>> Traffic=new HashMap<>();
@@ -35,9 +34,7 @@ public class Graph implements Serializable {
     public Graph(Pane root) {
         this.root = root;
     }
-    public Graph() {
-
-    }
+    public Graph() { }
     // Рисует соединения между точками
     public void DrawGraph(){
         for(Map.Entry<Vertex,HashSet<Vertex>> x:graph.entrySet()){
@@ -56,7 +53,7 @@ public class Graph implements Serializable {
     }
 
         // Метод нахождения минимального пути между двумя точками на базовом транспорте по алгоритму Дейкстры
-     public ArrayList<String>  find_min_path(String star, String en,BaseTransport transport){
+     public PathWrapper  find_min_path(String star, String en,BaseTransport transport){
         Vertex start=Points.get(star);
         Vertex end=Points.get(en);
         Map<Vertex,Double> shortest_distances=new HashMap<>();
@@ -87,7 +84,7 @@ public class Graph implements Serializable {
                 }
             }
         }
-        this.shortest_distance=shortest_distances;
+        //this.shortest_distance=shortest_distances;
         var parent=parents.get(end);
         while(parents.get(parent) !=null){
             path.add(parent.getName());
@@ -95,14 +92,14 @@ public class Graph implements Serializable {
         }
         path.add(star);
         Collections.reverse(path);
-        return path;
+        return new PathWrapper( shortest_distances,path);
     }
     // Подсчет время-затрат на путь path
-    public double Count_time(ArrayList<String> path){
+    public double Count_time(PathWrapper pathWrapper){
         double d=0.0;
-        for(String s:path){
+        for(String s:pathWrapper.getPath()){
             Vertex v=Points.get(s);
-            d+=shortest_distance.get(v);
+            d+=pathWrapper.getShortest_distance().get(v);
         }
         return d;
     }

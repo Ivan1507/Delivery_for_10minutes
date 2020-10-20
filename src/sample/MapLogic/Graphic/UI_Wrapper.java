@@ -77,11 +77,9 @@ public class UI_Wrapper {
                 circle2.setStroke(Color.BLUE);
                 circle2.setFill(Color.WHITE);
 
-
                 getPane().getChildren().addAll( circle2 );
                 break;
         }
-
 
         Text Text1 = new Text(self.getX(),self.getY()-15,self.getName());
         Text1.setText(self.getName());
