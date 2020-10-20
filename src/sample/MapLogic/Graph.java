@@ -16,10 +16,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.Deque;
-
+// Основной класс хранения данных ребер и вершин
 public class Graph implements Serializable {
     private transient Pane root;
-
     public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     //private transient HashMap<String,Vertex> ConnectedPoints = new HashMap<>(200,0.75f);
@@ -29,24 +28,6 @@ public class Graph implements Serializable {
     private ArrayList<Line> lines = new ArrayList<>();
     public Map<Vertex,Double> shortest_distance=new HashMap<Vertex,Double>();
 
-    // {
-     //   V: {
-         //  k: U, v: 0.1;
-
-   // }
-    //
-
-
-    // {
-    // V:
-    // {
-    // U: {15: 0.3, 16:0.2}
-    // I:
-    // }
-    // HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic
-    //{ V: {U{15:0.3, 16:0.2},I{15:0.3, 16:0.2}}
-    // I: {U{15:0.3, 16:0.2},V{15:0.3, 16:0.2}}
-    //}
     public void setRoot(Pane root) {
         this.root = root;
     }
@@ -57,36 +38,29 @@ public class Graph implements Serializable {
     public Graph() {
 
     }
+    // Рисует соединения между точками
     public void DrawGraph(){
         for(Map.Entry<Vertex,HashSet<Vertex>> x:graph.entrySet()){
             for(Vertex y:x.getValue()){
                 Line l=new Line(x.getKey().getX(),x.getKey().getY(),y.getX(),y.getY());
                 try {
-                   // Quality_Road quality = quality_road.get(y).get(x);
                     Color c = quality_road.get(x.getKey()).get(y).getColor();
-                   // System.out.println( quality_road.get(x));
-                   // System.out.println(quality.toString());
                     l.setStroke(c);
                 }catch (NullPointerException e){
-                    System.out.println("Err");
-                    //System.out.println(y);
+                    System.out.println("Не выходит получить цвет дороги!");
                 }
                 l.setStrokeWidth(1.7);
-                //System.out.println(quality.getColor());
-                //l.setStroke(Quality_Road.average.getColor());
                 root.getChildren().addAll(l);
             }
         }
     }
-    public void Show_path(String s){
-        Vertex v=Points.get(s);
 
-    }
-    public ArrayList<String>  find_min_path(String star, String en,BaseTransport transport){
+        // Метод нахождения минимального пути между двумя точками на базовом транспорте по алгоритму Дейкстры
+     public ArrayList<String>  find_min_path(String star, String en,BaseTransport transport){
         Vertex start=Points.get(star);
         Vertex end=Points.get(en);
-        Map<Vertex,Double> shortest_distances=new HashMap<Vertex,Double>();
-        Map<Vertex,Vertex> parents=new HashMap<Vertex,Vertex>();
+        Map<Vertex,Double> shortest_distances=new HashMap<>();
+        Map<Vertex,Vertex> parents=new HashMap<>();
         parents.put(start,null);
         ArrayList<String> path=new ArrayList<>();
         path.add(end.getName());
@@ -94,9 +68,8 @@ public class Graph implements Serializable {
         ArrayDeque<Vertex> d=new ArrayDeque<>();
         d.add(start);
         while(d.size()!=0){
-            Vertex cur_v= (Vertex) d.pop();
+            Vertex cur_v= d.pop();
             Integer Curtime = LocalTime.now().getHour();
-
             for(Vertex u:graph.get(cur_v)){
                 Double length=Math.sqrt(Math.pow((u.getX()-cur_v.getX()),2)+Math.pow((u.getY()-cur_v.getY()),2));
                 Double quality = quality_road.get(u).get(cur_v).getStatus();
@@ -124,6 +97,7 @@ public class Graph implements Serializable {
         Collections.reverse(path);
         return path;
     }
+    // Подсчет время-затрат на путь path
     public double Count_time(ArrayList<String> path){
         double d=0.0;
         for(String s:path){
@@ -132,14 +106,13 @@ public class Graph implements Serializable {
         }
         return d;
     }
+    // Прорисовка минимального пути на графе
     public void DrawPath( ArrayList<String> path){
 
         SequentialTransition sequentialTransition = new SequentialTransition();
 
         sequentialTransition.setCycleCount(1);
         sequentialTransition.setAutoReverse(false);
-
-
 
         int size = path.size();
         for (int i = 0; i < size-1; i++) {
@@ -163,14 +136,12 @@ public class Graph implements Serializable {
 
 
         sequentialTransition.play();
+
         }
 
 
 
-
-
- //   public Map<Vertex,HashSet<HashMap<Vertex,Double>>> quality_road=new HashMap<>();
-  //  public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>  Traffic=new HashMap<>();
+        // Заполняет данные об качестве дороги и трафике
     public void FillGraph(String v1,String v2,Quality_Road qr, HashMap<Integer,Double> traffic){
 
         Vertex ver1=Points.get(v1);
@@ -201,8 +172,7 @@ public class Graph implements Serializable {
         quality_road.get(ver1).put(ver1,qr);
         quality_road.get(ver2).put(ver2,qr);
 
-        // Пробки
-        //HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>>
+
         if(Traffic.get(ver1)==null){
             Traffic.put(ver1, new HashMap<Vertex, HashMap<Integer, Double>>());
         }
@@ -228,7 +198,7 @@ public class Graph implements Serializable {
     public int hashCode() {
         return Objects.hash(Points);
     }
-
+    // Добавить точку на граф (без рисования)
     public void addPoint(String name, double X, double Y, PointType type){
         Vertex A1 = new Vertex(X,Y);
         A1.setName(name);
@@ -236,23 +206,21 @@ public class Graph implements Serializable {
         Points.put(name,A1);
     }
 
+    // Отобразить все точки на графе
     public void draw(){
     for(Map.Entry<String,Vertex> point : Points.entrySet())
         point.getValue().placeTo(root);
     }
 
-    public void connectPoint(String From, String To, Quality_Road quality_road){
-        //Points.get(From).connectTo(Points.get(To),quality_road);
-    }
-
-    public  void SaveObject(String name) throws IOException {
+    // Сериализовать граф в файл
+     public  void SaveObject(String name) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(new File("Graph.dat"));
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
     }
 
-
+    // Десериализовать граф из файла
     public void LoadObject(String name) throws IOException, ClassNotFoundException {
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(new File("Graph.dat")));
         Graph readed = (Graph) objectInputStream.readObject();

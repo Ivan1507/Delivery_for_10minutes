@@ -12,13 +12,12 @@ public class Vertex implements Serializable {
    private double X;
    private double Y;
    private String Name;
-   private PointType pointType;
-   private UI_Wrapper wrapper = new UI_Wrapper();
-   //private ArrayList<Edge> Edges = new ArrayList<>();
+   private PointType pointType; // Какая будет иконка на карте
+   private UI_Wrapper wrapper = new UI_Wrapper(); // Объект для вырисовки точек
    public Vertex(double x, double y){
-        X=x;
-        Y=y;
-}
+       X=x;
+       Y=y;
+    }
    private transient Pane root;
 
     public Vertex() {
@@ -97,8 +96,7 @@ public class Vertex implements Serializable {
                 "Name='" + Name + '\'' +
                 '}';
     }
-
-    //    public void SaveToFile(String path) throws IOException {
+//    public void SaveToFile(String path) throws IOException {
 //        try(FileWriter fw=new FileWriter(path,true)){
 //            fw.append(this.toString());
 //        }catch(IOException e){

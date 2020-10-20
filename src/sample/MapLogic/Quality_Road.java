@@ -1,6 +1,11 @@
 package sample.MapLogic;
 
 import javafx.scene.paint.Color;
+// Качество дороги
+// Первый параметр - число от 0 до 1
+// 0 - ужасная дорога
+// 1 - наилучшая дорога
+// Второй параметр - цвет дороги в формате HEX
 
 public enum Quality_Road {
     very_bad(0.65,Color.web("#e32c22")),
@@ -11,23 +16,17 @@ public enum Quality_Road {
     private double quality;
     private Color color;
 
-    Quality_Road( double q, Color c){
-
+    Quality_Road(double q, Color c){
         quality=q;
         color=c;
-    }
-    Quality_Road(){
-
     }
 
     public double getStatus() {
         return quality;
     }
-
     public Color getColor() {
         return color;
     }
-
     @Override
     public String toString() {
         return "Quality_Road{" +
@@ -36,8 +35,3 @@ public enum Quality_Road {
                 '}';
     }
 }
-
-
-// q = 0.65
-
-//

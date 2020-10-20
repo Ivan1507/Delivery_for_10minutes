@@ -1,23 +1,27 @@
 package sample.MapLogic.Delivery;
 
-import java.io.Serializable;
+import sample.MapLogic.Vertex;
 
+import java.io.Serializable;
+// Класс для заполнения записей в таблице "Заказы"
 public class Delivery implements Serializable {
 
     private int id;
-    private String executor;
-    private String status;
-    private String time_start;
-    private String time_end;
-    private String goods;
+    private String executor; // Исполнитель
+    private String status; // Статус заказа
+    private String time_start; // Начало
+    private String time_end; // Конец
+    private String goods; // Список товаров
+    private Vertex address; // Адрес, куда нужно доставлять заказ
 
-    public Delivery(int id, String executor, String status, String time_start, String time_end, String goods) {
+    public Delivery(int id, String executor, String status, String time_start, String time_end, String goods, Vertex address) {
         this.id = id;
         this.executor = executor;
         this.status = status;
         this.time_start = time_start;
         this.time_end = time_end;
         this.goods = goods;
+        this.address = address;
     }
 
     public int getId() {
@@ -68,19 +72,11 @@ public class Delivery implements Serializable {
         this.goods = goods;
     }
 
-    public Delivery() {
-
+    public Vertex getAddress() {
+        return address;
     }
 
-    @Override
-    public String toString() {
-        return "Delivery{" +
-                "id=" + id +
-                ", executor='" + executor + '\'' +
-                ", status='" + status + '\'' +
-                ", time_start='" + time_start + '\'' +
-                ", time_end='" + time_end + '\'' +
-                ", goods='" + goods + '\'' +
-                '}';
+    public void setAddress(Vertex address) {
+        this.address = address;
     }
 }

@@ -22,8 +22,6 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     @FXML
     private BorderPane borderPane;
-    @FXML
-    private Pane pane12;
     // @FXML
     @FXML
     private ComboBox pizzas;
@@ -33,8 +31,7 @@ public class MainController implements Initializable {
     private ComboBox drinks;
     @FXML
     private AnchorPane anch;
-    @FXML
-    private Button bt;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> list= FXCollections.observableArrayList("Маргарита","Мясная","Мексиканская");
@@ -51,21 +48,13 @@ public class MainController implements Initializable {
     public void bt_click(){
         anch.setVisible(true);
     }
-    private Graph mapGraph;
-    {
 
-    }
-    //{
-    //Graph bMapgraph = new Graph(borderPaneMap);
 
     @FXML
     public void OnClicked(Event E) throws IOException {
-        // Инициализация фрейма
-        //System.out.println("123");
+
         Parent root = FXMLLoader.load(getClass().getResource("/sample/Frames/map.fxml"));
         borderPane.setCenter(root);
-        //mapGraph.setRoot( pane12 );
-        //System.out.println(pane12);
 
     }
     @FXML
@@ -78,10 +67,7 @@ public class MainController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/sample/Frames/delivery.fxml"));
         borderPane.setCenter(root);
     }
-    @FXML
-    public void button_Point_Clicked(ActionEvent E) {
 
-    }
 
     @FXML
     public void clearData(MouseEvent E) {
@@ -91,10 +77,6 @@ public class MainController implements Initializable {
     public void insertObject(MouseEvent E) {
     }
 
-    @FXML
-    public void clearStylesheet(){
-
-    }
 }
 
 

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.ResourceBundle;
-
+// FXML контроллер для сцены map.fxml
 public class MapController implements Initializable {
 
     @FXML
@@ -63,7 +63,7 @@ public class MapController implements Initializable {
         double ans=Main.map.Count_time(path);
         System.out.println("Доставка заняла "+ans+" min");
 
-            Main.map.DrawPath( path );
+        Main.map.DrawPath( path );
         System.out.println("Добавилось");
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
@@ -73,46 +73,8 @@ public class MapController implements Initializable {
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_end"));
         goods.setCellValueFactory(new PropertyValueFactory<Delivery, String>("goods"));
         // заполняем таблицу данными
-        ObservableList<Delivery> DeliveryData = FXCollections.observableArrayList();
-        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка\n123"));
 
-
-        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
-        try {
-            serializer2.SaveObject("Active");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ObservableList<Delivery> DeliveryData1;
-        DeliverySerializer serializer = new DeliverySerializer();
-        try {
-        DeliveryData =  serializer.LoadObject("Active");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        ;
-
-        DeliveryData.sort(new Comparator<Delivery>() {
-            @Override
-            public int compare(Delivery o1, Delivery o2) {
-                return o1.getId()-o2.getId();
-            }
-        });
-
-//        HashMap<Integer,Integer> Id_to_Delivery = new HashMap<>();
-//
-//        ObservableList<Delivery> finalDeliveryData = DeliveryData;
-//        Function<HashMap,HashMap> d = (map)->{
-//               map.clear();
-//               int index = 0;
-//               for( var a: finalDeliveryData){
-//                   map.put(a.getId(),index++);
-//               }
-//               return map;
-//        };
-//        Id_to_Delivery = d.apply( Id_to_Delivery );
-//        System.out.println( DeliveryData.get(Id_to_Delivery.get(426)) );
-        table.setItems(DeliveryData);
+        table.setItems(Main.DeliveryData);
 
 
       //  ObservableList<String> list2= FXCollections.observableArrayList("Тортик","Пироженое");

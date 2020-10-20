@@ -1,45 +1,35 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import sample.MapLogic.Delivery.Delivery;
+import sample.MapLogic.Delivery.DeliverySerializer;
 import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
 import sample.Transport.BaseTransport;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 public class Main extends Application {
 
     public static Graph map = new Graph();
+    public static ObservableList<Delivery> DeliveryData;
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Frames/MainScene.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Delivery for 10 minutes");
-       //BorderPane root = new BorderPane();
-       // Vertex v=new Vertex(1,2);
-       // v.setName("MIET");
-        //v.SaveToFile("src\\save.txt");
-        //Vertex v1=new Vertex();
-       // v1.getFromFile("src\\save.txt");
-        //System.out.println(v1);
-      // Graph Map = new Graph(root);
 
-        //Map.addPoint("A",45,40);
-       // Map.addPoint("B",80,40);
-       // Map.connectPoint("A","B",Quality_Road.Very_bad);
-
-        //Map.LoadObject("");
 
         map.addPoint("1",400,200, PointType.Triangle);
         map.addPoint("13",200,200, PointType.TwoCricle);
@@ -100,8 +90,36 @@ public class Main extends Application {
         for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
             //System.out.print(x);
             //System.out.println();
+        };
+
+
+        DeliveryData = FXCollections.observableArrayList();
+        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка\n123", new Vertex(25,25)));
+
+        DeliveryData.remove(0);
+        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
+        try {
+            serializer2.SaveObject("Active");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-;
+        ObservableList<Delivery> DeliveryData1;
+        DeliverySerializer serializer = new DeliverySerializer();
+        try {
+            DeliveryData =  serializer.LoadObject("Active");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        ;
+
+        DeliveryData.sort(new Comparator<Delivery>() {
+            @Override
+            public int compare(Delivery o1, Delivery o2) {
+                return o1.getId()-o2.getId();
+            }
+        });
+
+
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
