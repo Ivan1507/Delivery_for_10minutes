@@ -118,12 +118,15 @@ public class Graph implements Serializable {
                                         Double length=Math.sqrt(Math.pow((to_vertex_adj.getX()-k.getX()),2)+Math.pow((to_vertex_adj.getY()-k.getY()),2));
                                         System.out.println(to_info.getAnotherVertex(to_vertex_adj));
                                         double trafficInt=0;
-                                        //if(Traffic.get(k).get(to_vertex_adj) != null){
-                                       var traffic = Traffic.get(to_vertex_adj).get(to_vertex_adj);
-                                      //  if (traffic.get(Curtime) != null) {
-                                       //    // trafficInt =traffic.get(Curtime);
-                                        //}
-                                        System.out.println("traffic = " + traffic);
+
+                                       //var traffic = Traffic.get(to_vertex_adj).get(to_vertex_adj);
+                                        if (Traffic.get(to_vertex_adj).get(to_vertex_adj).get(Curtime) != null) {
+                                            trafficInt =Traffic.get(to_vertex_adj).get(to_vertex_adj).get(Curtime);
+                                        }
+                                       // System.out.println("traffic = " + traffic);
+
+                                        System.out.println("to_vertex_adj = " + to_vertex_adj);
+                                        System.out.println("to_info.getAnotherVertex(to_vertex_adj) = " + to_info.getAnotherVertex(to_vertex_adj));
                                         Double quality = quality_road.get(to_vertex_adj).get(to_info.getAnotherVertex(to_vertex_adj)).getStatus();
                                         Double time = length/(transport.getAvgSpeed()*(1-trafficInt)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
 
