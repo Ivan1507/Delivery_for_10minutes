@@ -55,113 +55,52 @@ public class Graph implements Serializable {
     }
 
 
-    // from- машина
-    // to - заказ
-    public void find_min_path( Vertex from , Vertex to, BaseTransport transport){
 
-        DeliveryEdgeInfo from_info = parseAllEdges( from,true );
-        DeliveryEdgeInfo to_info = parseAllEdges( to,false );
-        Integer Curtime = LocalTime.now().getHour();
-    to_info.getAdjacentVertexes().forEach(
-            (to_k,to_v)-> {
-                to_v.forEach(
-                        to_vertex_adj->{ // to_vertex_adj - смежная вершина точки на ребре для заказа
-                            from_info.getAdjacentVertexes().forEach((k, v) -> {// k - точка на ребре для заказа
-                                v.forEach(vertex -> { // verex - смежная вершина стартовой точки
-                                    // Для каждой точки для данного заказа находим дистанцию от точки на ребре(машина)
-                                    // до каждой смежной вершины
-                                    Vector2D Distance = new Vector2D(vertex);
-                                    Distance.sub(new Vector2D(from));
-                                    double dist = Distance.length();
 
-                                    PathWrapper pathWrapper = find_min_path_with_vert(vertex,to_vertex_adj,transport );
-                                    double time_to_target = Count_time( pathWrapper );
-                                    Double length=Math.sqrt(Math.pow((to_vertex_adj.getX()-k.getX()),2)+Math.pow((to_vertex_adj.getY()-k.getY()),2));
-                                   // Double quality = quality_road.get(u).get(cur_v).getStatus();
-                                    /// cur_v
 
-                                    double traffic=0;
-                                    if(Traffic.get(k).get(to_vertex_adj) != null){
-                                        traffic = Traffic.get(k).get(to_vertex_adj).get(Curtime);
-                                    }
 
-                                    Double time2 = length/(transport.getAvgSpeed()*(1-traffic)); // от смежн вершины до точки на ребре для заказа
-                                    System.out.println(time2);
-                                });
-                            });
-                        }
-                );
-            });
-    }
+    public PathWrapper findPath( BaseTransport vehicle, Vertex to){
 
-    public ArrayList find_min_path_test(Vertex from , Vertex to, BaseTransport transport){
+        DeliveryEdgeInfo veh = parseAllEdges(vehicle,true);
+        DeliveryEdgeInfo end = parseAllEdges(to,false);
+        var quality=Quality_Road.good;
+        HashMap<Integer, Double> traffic = new HashMap<>();
+        var f = veh.getAdjacentVertexes();
+            for( Map.Entry<Vertex,HashSet<Vertex>> e : f.entrySet()){
+                for( Vertex vert : e.getValue()) {
 
-        ArrayList<Double> imin=new ArrayList<>();
-        ArrayList<ArrayList<String>> minpath=new ArrayList<>();
-        DeliveryEdgeInfo from_info = parseAllEdges( from,true );
-        DeliveryEdgeInfo to_info = parseAllEdges( to,false );
-        ArrayList<Vertex> points=to_info.getPointOnEdge();
-        for(int i=0;i<points.size();i++){
-            Points.put(points.get(i).getName(),points.get(i));
-        }
-        System.out.println("Точка на графе"+to_info.getPointOnEdge());
-        Integer Curtime = LocalTime.now().getHour();
-        to_info.getAdjacentVertexes().forEach(
-                (to_k,to_v)-> {
+                    if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null)
+                        quality = quality_road.get(vert).get(veh.getAnotherVertex(vert));
 
-                    to_v.forEach(
-                            to_vertex_adj->{
-                                // to_vertex_adj - смежная вершина точки на ребре для заказа
-                                from_info.getAdjacentVertexes().forEach((k, v) -> { // k - точка на ребре для заказа
-                                    v.forEach(vertex -> { // vertex - смежная вершина стартовой точки
-                                        Vector2D Distance = new Vector2D(vertex);
-                                        Distance.sub(new Vector2D(from));
-                                        double dist = Distance.length();
+                    if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
+                        traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
+                    }
 
-                                        PathWrapper pathWrapper= find_min_path_with_vert(vertex,to_vertex_adj,transport );
-                                        double time_to_target = Count_time( pathWrapper );
-                                        Double length=Math.sqrt(Math.pow((to_vertex_adj.getX()-k.getX()),2)+Math.pow((to_vertex_adj.getY()-k.getY()),2));
-                                        System.out.println(to_info.getAnotherVertex(to_vertex_adj));
-                                        double trafficInt=0;
+                    FillGraph2(vert, vehicle, quality,traffic);
 
-                                       //var traffic = Traffic.get(to_vertex_adj).get(to_vertex_adj);
-                                        if (Traffic.get(to_vertex_adj).get(to_vertex_adj).get(Curtime) != null) {
-                                            trafficInt =Traffic.get(to_vertex_adj).get(to_vertex_adj).get(Curtime);
-                                        }
-                                       // System.out.println("traffic = " + traffic);
+                }
+            }
 
-                                        System.out.println("to_vertex_adj = " + to_vertex_adj);
-                                        System.out.println("to_info.getAnotherVertex(to_vertex_adj) = " + to_info.getAnotherVertex(to_vertex_adj));
-                                        Double quality=0d;
-                                        if(quality_road.get(to_vertex_adj).get(to_info.getAnotherVertex(to_vertex_adj))!=null)
-                                            quality = quality_road.get(to_vertex_adj).get(to_info.getAnotherVertex(to_vertex_adj)).getStatus();
-                                        Double time = length/(transport.getAvgSpeed()*(1-trafficInt)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
+        for( Map.Entry<Vertex,HashSet<Vertex>> e : end.getAdjacentVertexes().entrySet()){
+            for( Vertex vert : e.getValue()) {
+                if (quality_road.get(vert).get(end.getAnotherVertex(vert)) != null)
+                    quality = quality_road.get(vert).get(end.getAnotherVertex(vert));
 
-                                        System.out.println(time_to_target+time);
-                                        imin.add(time_to_target+time);
-                                        minpath.add(pathWrapper.getPath());
-                                        //System.out.println(pathWrapper.getPath());
-                                    });
+                if (Traffic.get(vert).get(end.getAnotherVertex(vert)) != null) {
+                    traffic =Traffic.get(vert).get(end.getAnotherVertex(vert)) ;
+                }
 
-                                });
-                            }
-                    );
+                FillGraph2(vert,e.getKey(),quality,traffic);
+                FillGraph2(to,e.getKey(),quality,traffic);
 
-                });
-        double min=100000;
-        int min_index=0;
-        for(int i=0;i<imin.size();i++){
-            if(imin.get(i) <min) {
-                min = imin.get(i);
-                min_index = i;
             }
         }
-        System.out.println(minpath.get(min_index));
+        return find_min_path_with_optimized(vehicle,to);
 
-        ArrayList<String> finalpath=addPointstoPath(from,minpath.get(min_index),to,points);
-        ArrayList<String> finalpath1=new ArrayList<>();
-        return finalpath;
+
+
     }
+
     //Добавление к пути точек машины и заказа
     public ArrayList addPointstoPath(Vertex from, ArrayList<String> arr, Vertex to, ArrayList<Vertex> points){
         ArrayList<String> final_path=new ArrayList<>();
@@ -175,15 +114,16 @@ public class Graph implements Serializable {
         }
         final_path.add(to.getName());
         Points.put(to.getName(),to);
-        System.out.println(final_path);
+        //System.out.println(final_path);
         return final_path;
     }
-    public PathWrapper find_min_path_with_vert(Vertex start, Vertex end, BaseTransport transport){
+
+    public PathWrapper find_min_path_with_optimized(BaseTransport start, Vertex end){
         Map<Vertex,Double> shortest_distances=new HashMap<>();
         Map<Vertex,Vertex> parents=new HashMap<>();
         parents.put(start,null);
-        ArrayList<String> path=new ArrayList<>();
-        path.add(end.getName());
+        ArrayList<Vertex> path=new ArrayList<>();
+        path.add(end);
         shortest_distances.put(start,0.0);
         ArrayDeque<Vertex> d=new ArrayDeque<>();
         d.add(start);
@@ -198,8 +138,16 @@ public class Graph implements Serializable {
                 if(Traffic.get(u).get(cur_v) != null){
                     traffic = Traffic.get(u).get(cur_v).get(Curtime);
                 }
+                double speed = start.getAvgSpeed();
+                if( cur_v.isSpecial() || u.isSpecial()){
 
-                Double time = length/(transport.getAvgSpeed()*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
+                    speed = 50;
+                    traffic=0d;
+                    quality = Quality_Road.Perfect.getStatus();
+                }
+
+                ;
+                Double time = 0.38*length/(speed*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
                 if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+time < shortest_distances.get(u)){
                     shortest_distances.put(u,shortest_distances.get(cur_v)+time);
                     d.add(u);
@@ -210,61 +158,20 @@ public class Graph implements Serializable {
         //this.shortest_distance=shortest_distances;
         var parent=parents.get(end);
         while(parents.get(parent) !=null){
-            path.add(parent.getName());
+            path.add(parent);
             parent =parents.get(parent);
         }
-        path.add(start.getName());
+        path.add(start);
         Collections.reverse(path);
         return new PathWrapper( shortest_distances,path);
     }
-        // Метод нахождения минимального пути между двумя точками на базовом транспорте по алгоритму Дейкстры
-     public PathWrapper find_min_path_with_vert(String star, String en, BaseTransport transport){
-        Vertex start=Points.get(star);
-        Vertex end=Points.get(en);
-        Map<Vertex,Double> shortest_distances=new HashMap<>();
-        Map<Vertex,Vertex> parents=new HashMap<>();
-        parents.put(start,null);
-        ArrayList<String> path=new ArrayList<>();
-        path.add(end.getName());
-        shortest_distances.put(start,0.0);
-        ArrayDeque<Vertex> d=new ArrayDeque<>();
-        d.add(start);
-        while(d.size()!=0){
-            Vertex cur_v= d.pop();
-            Integer Curtime = LocalTime.now().getHour();
-            for(Vertex u:graph.get(cur_v)){
-                Double length=Math.sqrt(Math.pow((u.getX()-cur_v.getX()),2)+Math.pow((u.getY()-cur_v.getY()),2));
-                Double quality = quality_road.get(u).get(cur_v).getStatus();
-                Double traffic = 0.0;//
 
-                if(Traffic.get(u).get(cur_v) != null){
-                    traffic = Traffic.get(u).get(cur_v).get(Curtime);
-                }
-
-                Double time = length/(transport.getAvgSpeed()*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
-                if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+time < shortest_distances.get(u)){
-                    shortest_distances.put(u,shortest_distances.get(cur_v)+time);
-                    d.add(u);
-                    parents.put(u,cur_v);
-                }
-            }
-        }
-        //this.shortest_distance=shortest_distances;
-        var parent=parents.get(end);
-        while(parents.get(parent) !=null){
-            path.add(parent.getName());
-            parent =parents.get(parent);
-        }
-        path.add(star);
-        Collections.reverse(path);
-        return new PathWrapper( shortest_distances,path);
-    }
     // Подсчет время-затрат на путь path
     public double Count_time(PathWrapper pathWrapper){
         double d=0.0;
-        for(String s:pathWrapper.getPath()){
-            Vertex v=Points.get(s);
-            d+=pathWrapper.getShortest_distance().get(v);
+        for(Vertex s:pathWrapper.getPath()){
+           // Vertex v=Points.get(s);
+            d+=pathWrapper.getShortest_distance().get(s);
         }
         return d;
     }
@@ -304,13 +211,14 @@ public class Graph implements Serializable {
                         Out.add(new Vector2D(MapEntry.getKey()));
                         Out.add(start);
 
-                       // System.out.println(Out);
+
 
                         Line l = new Line(Delivery.getX(), Delivery.getY(), Out.getX(), Out.getY());
                         l.setStroke(Color.FUCHSIA);
                         l.setStrokeWidth(1.7);
                         root.getChildren().addAll(l);
                         Vertex PointOnEdge = Out.convertToVertex();
+                        PointOnEdge.setName("Точка"+ i);
                         roads.add(PointOnEdge);
 
                         HashSet<Vertex> hashSet = new HashSet();
@@ -333,7 +241,7 @@ public class Graph implements Serializable {
     }
 
     // Прорисовка минимального пути на графе
-    public void DrawPath( ArrayList<String> path){
+    public void DrawPath( ArrayList<Vertex> path){
 
         SequentialTransition sequentialTransition = new SequentialTransition();
 
@@ -343,8 +251,8 @@ public class Graph implements Serializable {
         int size = path.size();
         for (int i = 0; i < size-1; i++) {
 
-            Vertex x = Points.get(path.get(i));
-            Vertex y = Points.get(path.get(i+1));
+            Vertex x = path.get(i);
+            Vertex y = path.get(i+1);
             Line l = new Line(x.getX(), x.getY(), y.getX(), y.getY());
             l.setStroke(Color.GOLD);
             l.setStrokeWidth(3);
@@ -366,7 +274,50 @@ public class Graph implements Serializable {
         }
 
 
+    // Заполняет данные об качестве дороги и трафике
+    public void FillGraph2(Vertex ver1,Vertex ver2,Quality_Road qr, HashMap<Integer,Double> traffic){
 
+
+        if(graph.get(ver1)==null){
+            graph.put(ver1,new HashSet<Vertex>());
+        }
+        if(graph.get(ver2)==null){
+            graph.put(ver2,new HashSet<Vertex>());
+        }
+
+        graph.get(ver1).add(ver2);
+        graph.get(ver2).add(ver1);
+        //edges.get(ver1).add(ver2); // Добавили несимметричное соеднинение
+
+
+        // Качество покрытия
+        if(quality_road.get(ver1)==null){
+            quality_road.put(ver1, new HashMap<>());
+        }
+        if(quality_road.get(ver2)==null){
+            quality_road.put(ver2, new HashMap<>());
+        }
+
+        quality_road.get(ver1).put(ver2,qr);
+        quality_road.get(ver2).put(ver1,qr);
+
+        quality_road.get(ver1).put(ver1,qr);
+        quality_road.get(ver2).put(ver2,qr);
+
+
+        if(Traffic.get(ver1)==null){
+            Traffic.put(ver1, new HashMap<Vertex, HashMap<Integer, Double>>());
+        }
+        if(traffic.get(ver2)==null){
+            Traffic.put(ver2, new HashMap<Vertex, HashMap<Integer, Double>>());
+        }
+        Traffic.get(ver1).put(ver2,traffic);
+        Traffic.get(ver2).put(ver1,traffic);
+
+        Traffic.get(ver1).put(ver1,traffic);
+        Traffic.get(ver2).put(ver2,traffic);
+
+    }
         // Заполняет данные об качестве дороги и трафике
     public void FillGraph(String v1,String v2,Quality_Road qr, HashMap<Integer,Double> traffic){
 

@@ -6,9 +6,9 @@ import java.util.Map;
 
 public class PathWrapper {
     private Map<Vertex,Double> shortest_distance = new HashMap<>();
-    private ArrayList<String> path=new ArrayList<>();
+    private ArrayList<Vertex> path=new ArrayList<>();
 
-    public PathWrapper(Map<Vertex, Double> shortest_distance, ArrayList<String> path) {
+    public PathWrapper(Map<Vertex, Double> shortest_distance, ArrayList<Vertex> path) {
         this.shortest_distance = shortest_distance;
         this.path = path;
     }
@@ -17,7 +17,7 @@ public class PathWrapper {
         return shortest_distance;
     }
 
-    public ArrayList<String> getPath() {
+    public ArrayList<Vertex> getPath() {
         return path;
     }
 

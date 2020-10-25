@@ -53,15 +53,15 @@ public class MapController implements Initializable {
         Main.map.DrawGraph();
         Main.map.draw();
 //ArrayList<String> path
-       PathWrapper pathWrapper= Main.map.find_min_path_with_vert("1","12", new BaseTransport());
-        for(String s:pathWrapper.getPath()){
-            System.out.println(s);
-        }
-        double ans=Main.map.Count_time(pathWrapper);
-        System.out.println("Доставка заняла "+ans+" min");
-
-        Main.map.DrawPath( pathWrapper.getPath() );
-        System.out.println("Добавилось");
+//       PathWrapper pathWrapper= Main.map.find_min_path_with_vert("1","12", new BaseTransport());
+//        for(String s:pathWrapper.getPath()){
+//            System.out.println(s);
+//        }
+//        double ans=Main.map.Count_time(pathWrapper);
+//        System.out.println("Доставка заняла "+ans+" min");
+//
+//        Main.map.DrawPath( pathWrapper.getPath() );
+//        System.out.println("Добавилось");
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
         executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
@@ -85,12 +85,13 @@ public class MapController implements Initializable {
 
 
 
-        Vertex A3 = new Vertex(325,156);
+        Vertex A3 = new Vertex(325,86);
         A3.setName("Заказ 3");
         A3.setPointType(PointType.Triangle);
         A3.placeTo(root);
+        A3.setSpecial(true);
 
-        Vertex Car = new Vertex(470+40,80+3);
+        BaseTransport Car = new BaseTransport(470+40,80+3);
         Car.setName("Машина");
         Car.setPointType(PointType.Circle);
         Car.placeTo(root);
@@ -101,8 +102,12 @@ public class MapController implements Initializable {
         DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
         //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
         DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
-        ArrayList<String> minpath=Main.map.find_min_path_test(Car,A3,new BaseTransport());
-        Main.map.DrawPath(minpath);
+       PathWrapper path=Main.map.findPath(Car,A3);
+
+       path.getPath().forEach(System.out::println);
+        double time= Main.map.Count_time( path );
+        System.out.println("Доставка займет " + time + " мин ");
+        Main.map.DrawPath(path.getPath());
        // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
        // deliveryEdgeInfo.print();
 

@@ -13,6 +13,8 @@ public class Vertex implements Serializable {
    private double Y;
    private String Name;
    private PointType pointType; // Какая будет иконка на карте
+   private boolean isSpecial = false;
+
    private UI_Wrapper wrapper = new UI_Wrapper(); // Объект для вырисовки точек
    public Vertex(double x, double y){
        X=x;
@@ -57,7 +59,13 @@ public class Vertex implements Serializable {
         return pointType;
     }
 
+    public boolean isSpecial() {
+        return isSpecial;
+    }
 
+    public void setSpecial(boolean special) {
+        isSpecial = special;
+    }
 
     @Override
     public boolean equals(Object o) {

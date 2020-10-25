@@ -13,4 +13,11 @@ public class BaseTransport extends Vertex {
         return getMaxSpeed()/Math.sqrt(2);
     }
 
+    public BaseTransport(double x, double y) {
+        super(x, y);
+    }
+    public BaseTransport() {
+        super(0, 0);
+    }
+
 }
