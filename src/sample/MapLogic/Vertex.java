@@ -92,9 +92,12 @@ public class Vertex implements Serializable {
     @Override
     public String toString() {
         return "Vertex{" +
-                "Name='" + Name + '\'' +
+                "X=" + X +
+                ", Y=" + Y +
+                ", Name='" + Name + '\'' +
                 '}';
     }
+
     public static double dot(Vertex v1, Vertex v2){
         return v1.getX() * v2.getX() + v2.getY()*v1.getY();
     }

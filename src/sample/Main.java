@@ -68,7 +68,7 @@ public class Main extends Application {
         map.FillGraph("1","3",Quality_Road.average,traffic);
         map.FillGraph("1","2",Quality_Road.average,traffic);
         map.FillGraph("2","3",Quality_Road.average,traffic);
-        map.FillGraph("6","13",Quality_Road.average,traffic);
+        map.FillGraph("13","6",Quality_Road.average,traffic);
         map.FillGraph("5","13",Quality_Road.good,traffic);
         map.FillGraph("3","4",Quality_Road.average,traffic);
         map.FillGraph("4","5",Quality_Road.good,traffic);
@@ -96,21 +96,21 @@ public class Main extends Application {
         DeliveryData = FXCollections.observableArrayList();
         DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка\n123", new Vertex(25,25)));
 
-        DeliveryData.remove(0);
-        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
-        try {
-            serializer2.SaveObject("Active");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ObservableList<Delivery> DeliveryData1;
-        DeliverySerializer serializer = new DeliverySerializer();
-        try {
-            DeliveryData =  serializer.LoadObject("Active");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        ;
+        //DeliveryData.remove(0);
+//        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
+//        try {
+//            serializer2.SaveObject("Active");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        ObservableList<Delivery> DeliveryData1;
+//        DeliverySerializer serializer = new DeliverySerializer();
+//        try {
+//            DeliveryData =  serializer.LoadObject("Active");
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        ;
 
         DeliveryData.sort(new Comparator<Delivery>() {
             @Override

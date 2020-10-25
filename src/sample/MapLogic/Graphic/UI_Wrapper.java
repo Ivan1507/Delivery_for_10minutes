@@ -66,7 +66,6 @@ public class UI_Wrapper {
                 mark.setCenterX(self.getX());
                 mark.setCenterY(self.getY());
                 mark.setFill(Color.BLACK);
-
                 getPane().getChildren().addAll( circle, mark );
                 break;
             case Circle:

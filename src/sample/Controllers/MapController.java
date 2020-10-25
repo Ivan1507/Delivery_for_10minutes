@@ -1,7 +1,5 @@
 package sample.Controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -9,19 +7,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import sample.DeliveryEdgeInfo;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
-import sample.MapLogic.Delivery.DeliverySerializer;
+import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Transport.BaseTransport;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+
 // FXML контроллер для сцены map.fxml
 public class MapController implements Initializable {
 
@@ -57,7 +53,7 @@ public class MapController implements Initializable {
         Main.map.DrawGraph();
         Main.map.draw();
 //ArrayList<String> path
-       PathWrapper pathWrapper= Main.map.find_min_path("1","12", new BaseTransport());
+       PathWrapper pathWrapper= Main.map.find_min_path_with_vert("1","12", new BaseTransport());
         for(String s:pathWrapper.getPath()){
             System.out.println(s);
         }
@@ -77,7 +73,41 @@ public class MapController implements Initializable {
 
         table.setItems(Main.DeliveryData);
 
+        Vertex A1 = new Vertex(125,66);
+        A1.setName("Заказ");
+        A1.setPointType(PointType.Triangle);
+        A1.placeTo(root);
 
+        Vertex A2 = new Vertex(225,96);
+        A2.setName("Заказ 2");
+        A2.setPointType(PointType.Triangle);
+        A2.placeTo(root);
+
+
+
+        Vertex A3 = new Vertex(325,156);
+        A3.setName("Заказ 3");
+        A3.setPointType(PointType.Triangle);
+        A3.placeTo(root);
+
+        Vertex Car = new Vertex(470+40,80+3);
+        Car.setName("Машина");
+        Car.setPointType(PointType.Circle);
+        Car.placeTo(root);
+
+
+
+        DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.parseAllEdges(A1,false);
+        DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
+        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
+        Main.map.find_min_path_test(Car,A2,new BaseTransport());
+       // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
+       // deliveryEdgeInfo.print();
+
+      //  deliveryEdgeInfo2.print();
+      //  deliveryEdgeInfo3.print();
+
+       // Points.put(name,A1);
       //  ObservableList<String> list2= FXCollections.observableArrayList("Тортик","Пироженое");
 
     }
