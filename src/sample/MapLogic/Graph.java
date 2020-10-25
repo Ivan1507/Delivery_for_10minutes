@@ -2,7 +2,6 @@ package sample.MapLogic;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -14,11 +13,10 @@ import sample.Transport.BaseTransport;
 import sample.Vector2D;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.Deque;
+import java.util.concurrent.atomic.AtomicReference;
+
 // Основной класс хранения данных ребер и вершин
 public class Graph implements Serializable {
     private transient Pane root;
@@ -61,7 +59,6 @@ public class Graph implements Serializable {
     // to - заказ
     public void find_min_path( Vertex from , Vertex to, BaseTransport transport){
 
-
         DeliveryEdgeInfo from_info = parseAllEdges( from,true );
         DeliveryEdgeInfo to_info = parseAllEdges( to,false );
         Integer Curtime = LocalTime.now().getHour();
@@ -69,7 +66,7 @@ public class Graph implements Serializable {
             (to_k,to_v)-> {
                 to_v.forEach(
                         to_vertex_adj->{ // to_vertex_adj - смежная вершина точки на ребре для заказа
-                            from_info.getAdjacentVertexes().forEach((k, v) -> { // k - точка на ребре для заказа
+                            from_info.getAdjacentVertexes().forEach((k, v) -> {// k - точка на ребре для заказа
                                 v.forEach(vertex -> { // verex - смежная вершина стартовой точки
                                     // Для каждой точки для данного заказа находим дистанцию от точки на ребре(машина)
                                     // до каждой смежной вершины
@@ -97,23 +94,31 @@ public class Graph implements Serializable {
             });
     }
 
-    public void find_min_path_test( Vertex from , Vertex to, BaseTransport transport){
+    public ArrayList find_min_path_test(Vertex from , Vertex to, BaseTransport transport){
 
-
+        ArrayList<Double> imin=new ArrayList<>();
+        ArrayList<ArrayList<String>> minpath=new ArrayList<>();
         DeliveryEdgeInfo from_info = parseAllEdges( from,true );
         DeliveryEdgeInfo to_info = parseAllEdges( to,false );
+        ArrayList<Vertex> points=to_info.getPointOnEdge();
+        for(int i=0;i<points.size();i++){
+            Points.put(points.get(i).getName(),points.get(i));
+        }
+        System.out.println("Точка на графе"+to_info.getPointOnEdge());
         Integer Curtime = LocalTime.now().getHour();
         to_info.getAdjacentVertexes().forEach(
                 (to_k,to_v)-> {
+
                     to_v.forEach(
-                            to_vertex_adj->{ // to_vertex_adj - смежная вершина точки на ребре для заказа
+                            to_vertex_adj->{
+                                // to_vertex_adj - смежная вершина точки на ребре для заказа
                                 from_info.getAdjacentVertexes().forEach((k, v) -> { // k - точка на ребре для заказа
-                                    v.forEach(vertex -> { // verex - смежная вершина стартовой точки
+                                    v.forEach(vertex -> { // vertex - смежная вершина стартовой точки
                                         Vector2D Distance = new Vector2D(vertex);
                                         Distance.sub(new Vector2D(from));
                                         double dist = Distance.length();
 
-                                        PathWrapper pathWrapper = find_min_path_with_vert(vertex,to_vertex_adj,transport );
+                                        PathWrapper pathWrapper= find_min_path_with_vert(vertex,to_vertex_adj,transport );
                                         double time_to_target = Count_time( pathWrapper );
                                         Double length=Math.sqrt(Math.pow((to_vertex_adj.getX()-k.getX()),2)+Math.pow((to_vertex_adj.getY()-k.getY()),2));
                                         System.out.println(to_info.getAnotherVertex(to_vertex_adj));
@@ -127,17 +132,52 @@ public class Graph implements Serializable {
 
                                         System.out.println("to_vertex_adj = " + to_vertex_adj);
                                         System.out.println("to_info.getAnotherVertex(to_vertex_adj) = " + to_info.getAnotherVertex(to_vertex_adj));
-                                        Double quality = quality_road.get(to_vertex_adj).get(to_info.getAnotherVertex(to_vertex_adj)).getStatus();
+                                        Double quality=0d;
+                                        if(quality_road.get(to_vertex_adj).get(to_info.getAnotherVertex(to_vertex_adj))!=null)
+                                            quality = quality_road.get(to_vertex_adj).get(to_info.getAnotherVertex(to_vertex_adj)).getStatus();
                                         Double time = length/(transport.getAvgSpeed()*(1-trafficInt)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
 
                                         System.out.println(time_to_target+time);
+                                        imin.add(time_to_target+time);
+                                        minpath.add(pathWrapper.getPath());
+                                        //System.out.println(pathWrapper.getPath());
                                     });
+
                                 });
                             }
                     );
-                });
-    }
 
+                });
+        double min=100000;
+        int min_index=0;
+        for(int i=0;i<imin.size();i++){
+            if(imin.get(i) <min) {
+                min = imin.get(i);
+                min_index = i;
+            }
+        }
+        System.out.println(minpath.get(min_index));
+
+        ArrayList<String> finalpath=addPointstoPath(from,minpath.get(min_index),to,points);
+        ArrayList<String> finalpath1=new ArrayList<>();
+        return finalpath;
+    }
+    //Добавление к пути точек машины и заказа
+    public ArrayList addPointstoPath(Vertex from, ArrayList<String> arr, Vertex to, ArrayList<Vertex> points){
+        ArrayList<String> final_path=new ArrayList<>();
+        Points.put(from.getName(),from);
+        final_path.add(from.getName());
+        for(int i=1;i<=arr.size();i++){
+           final_path.add(i,arr.get(i-1));
+        }
+        for(int i=0;i<points.size();i++){
+            final_path.add(arr.size()+i+1,points.get(i).getName());
+        }
+        final_path.add(to.getName());
+        Points.put(to.getName(),to);
+        System.out.println(final_path);
+        return final_path;
+    }
     public PathWrapper find_min_path_with_vert(Vertex start, Vertex end, BaseTransport transport){
         Map<Vertex,Double> shortest_distances=new HashMap<>();
         Map<Vertex,Vertex> parents=new HashMap<>();

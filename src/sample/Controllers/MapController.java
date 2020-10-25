@@ -99,8 +99,10 @@ public class MapController implements Initializable {
 
         DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.parseAllEdges(A1,false);
         DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
+        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
         DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
-        Main.map.find_min_path_test(Car,A2,new BaseTransport());
+        ArrayList<String> minpath=Main.map.find_min_path_test(Car,A3,new BaseTransport());
+        Main.map.DrawPath(minpath);
        // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
        // deliveryEdgeInfo.print();
 

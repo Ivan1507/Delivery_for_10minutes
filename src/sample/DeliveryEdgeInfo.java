@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class DeliveryEdgeInfo {
 private Vertex pointDelivery;
-private ArrayList<Vertex> pointOnEdge; // Точки на ребрах
+public ArrayList<Vertex> pointOnEdge; // Точки на ребрах
 private HashMap<Vertex,HashSet<Vertex>> adjacentVertexes = new HashMap<>(); // Смежные вершины
 
 public void setPointOnEdge(ArrayList<Vertex> pointOnEdge) {
