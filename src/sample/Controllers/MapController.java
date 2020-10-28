@@ -90,7 +90,7 @@ public class MapController implements Initializable {
         A3.placeTo(root);
         A3.setSpecial(true);
 
-        BaseTransport Car = new BaseTransport(470+40,100);
+        BaseTransport Car = new BaseTransport(470+100,156);
         Car.setName("Машина");
         Car.setPointType(PointType.Circle);
         Car.placeTo(root);
@@ -103,7 +103,7 @@ public class MapController implements Initializable {
         //DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
         PathWrapper path= null;
         try {
-            path = Main.map.findPath(Car,A3);
+            path = Main.map.findPath(Car,A2);
 
 
 

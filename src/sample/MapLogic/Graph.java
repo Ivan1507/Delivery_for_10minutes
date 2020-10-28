@@ -58,9 +58,9 @@ public class Graph implements Serializable {
 
 
     public PathWrapper findPath( BaseTransport vehicleOriginal, Vertex to) throws CloneNotSupportedException {
-       // try{
+        try{
         BaseTransport vehicle = vehicleOriginal.clone();
-        DeliveryEdgeInfo veh = getOrtogonalEdges(vehicle,true);
+        DeliveryEdgeInfo veh = getOrtogonalEdges(vehicle,false);
         DeliveryEdgeInfo end = getOrtogonalEdges(to,false);
         var quality=Quality_Road.good;
         HashMap<Integer, Double> traffic = new HashMap<>();
@@ -69,9 +69,16 @@ public class Graph implements Serializable {
                 for( Vertex vert : e.getValue()) {
                     //if (quality_road.get(vert).get(e.getKey()) == null && quality_road.get(e.getKey()).get(vert) == null){continue;}
 
-
-                    if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null)
+                    quality = Quality_Road.average;
+                    if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null) {
                         quality = quality_road.get(vert).get(veh.getAnotherVertex(vert));
+                    }
+
+//                    else{
+//                        System.out.println("vert = " + vert);
+//                        System.out.println("veh.getAnotherVertex(vert) = " + veh.getAnotherVertex(vert));
+//                        System.out.println("Проблема!");
+//                    }
 
                     if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
                         traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
@@ -101,11 +108,11 @@ public class Graph implements Serializable {
             }
         }
         return find_min_path_with_optimized(vehicle,to);
-//        }catch(Exception e){
-//            System.out.println("Маршрут нельзя построить!");
-//            System.out.println(e.getMessage());
-//            return null;
-//        }
+        }catch(Exception e){
+            System.out.println("Маршрут нельзя построить!");
+            System.out.println(e.getMessage());
+            return null;
+        }
 
 
     }
@@ -173,8 +180,8 @@ public class Graph implements Serializable {
         long start = System.nanoTime();
         for( Map.Entry<Vertex,HashSet<Vertex>> MapEntry:edges.entrySet()) {
             for (Vertex vertex : MapEntry.getValue()) {
-            if (quality_road.get(vertex).get(MapEntry.getKey()) == null){continue;}
-            if (quality_road.get(MapEntry.getKey()).get(vertex) == null){continue;}
+            //if (quality_road.get(vertex).get(MapEntry.getKey()) == null && quality_road.get(MapEntry.getKey()).get(vertex) == null){continue;}
+            //if (quality_road.get(MapEntry.getKey()).get(vertex) == null){continue;}
                 Vector2D directionToB = new Vector2D(vertex);
                 directionToB.sub( new Vector2D(MapEntry.getKey()));
 
@@ -221,7 +228,7 @@ public class Graph implements Serializable {
                 break;
             }
         }
-
+        System.out.println(Смежные_вершины);
         long end = System.nanoTime();
 
         info.setPointOnEdge(roads);
@@ -363,8 +370,8 @@ public class Graph implements Serializable {
         quality_road.get(ver1).put(ver2,qr);
         quality_road.get(ver2).put(ver1,qr);
 
-        quality_road.get(ver1).put(ver1,qr);
-        quality_road.get(ver2).put(ver2,qr);
+        //quality_road.get(ver1).put(ver1,qr);
+        //quality_road.get(ver2).put(ver2,qr);
 
 
         if(Traffic.get(ver1)==null){
@@ -388,6 +395,11 @@ public class Graph implements Serializable {
         if (edges.get(ver1) == null){
             edges.put(ver1,new HashSet<>());
         }
+        if (edges.get(ver2) == null){
+            edges.put(ver2,new HashSet<>());
+        }
+
+
 
         if(graph.get(ver1)==null){
             graph.put(ver1,new HashSet<Vertex>());
@@ -398,7 +410,7 @@ public class Graph implements Serializable {
         graph.get(ver1).add(ver2);
         graph.get(ver2).add(ver1);
         edges.get(ver1).add(ver2); // Добавили несимметричное соеднинение
-
+        edges.get(ver2).add(ver1);
 
         // Качество покрытия
         if(quality_road.get(ver1)==null){
@@ -411,8 +423,8 @@ public class Graph implements Serializable {
         quality_road.get(ver1).put(ver2,qr);
         quality_road.get(ver2).put(ver1,qr);
 
-        quality_road.get(ver1).put(ver1,qr);
-        quality_road.get(ver2).put(ver2,qr);
+        //quality_road.get(ver1).put(ver1,qr);
+        //quality_road.get(ver2).put(ver2,qr);
 
 
         if(Traffic.get(ver1)==null){

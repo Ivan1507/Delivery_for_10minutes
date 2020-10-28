@@ -8,11 +8,13 @@ import javafx.scene.paint.Color;
 // Второй параметр - цвет дороги в формате HEX
 
 public enum Quality_Road {
-    Perfect( 1,Color.web("#9df257")),
+    Abstract_bad(0.2,Color.web("#e32c22")),
     very_bad(0.65,Color.web("#e32c22")),
     bad(0.7,Color.web("#e37f22")),
     average(0.78,Color.web("#44751b")),
-    good(0.94,Color.web("#9df257"));
+    good(0.94,Color.web("#9df257")),
+    Perfect( 1,Color.web("#9df257"));
+
 
     private double quality;
     private Color color;
