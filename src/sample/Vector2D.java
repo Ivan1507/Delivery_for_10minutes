@@ -16,6 +16,10 @@ public class Vector2D {
         X = start.getX();
         Y = start.getY();
     }
+    public Vector2D(Vector2D start) {
+        X = start.getX();
+        Y = start.getY();
+    }
 
 
     public double getX() {
@@ -40,10 +44,21 @@ public class Vector2D {
         setX( getX() - another.getX());
         setY( getY() - another.getY());
     }
+
     public void add(Vector2D another){
         setX( getX() + another.getX());
         setY( getY() + another.getY());
     }
+
+    public void div(double k){
+        setX( getX() / k);
+        setY( getY() / k);
+    }
+    public void inc(double val, Vector2D normalize){
+        setX( getX() + val*normalize.getX());
+        setY( getY() + val*normalize.getY());
+    }
+
     public int normalize(){
          setX( getX()/step);
          setY( getY()/step);
@@ -55,11 +70,25 @@ public class Vector2D {
     public Vertex convertToVertex(){
         return new Vertex(getX(),getY());
     }
+
+    public double getCosBetweenVectors(Vector2D vector2D){
+        return(vector2D.dot(this) / ((vector2D.length()) * this.length()));
+    }
+    public  double getAngles(Vector2D vector2D){
+        return 180*Math.acos( getCosBetweenVectors(vector2D))/Math.PI;
+    }
     @Override
     public String toString() {
         return "Vector2D{" +
                 "X=" + X +
                 ", Y=" + Y +
                 '}';
+    }
+
+
+    public Vector2D getDirection() {
+        Vector2D normalized = new Vector2D(this);
+        normalized.div( normalized.length() );
+        return normalized;
     }
 }

@@ -7,7 +7,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import sample.DeliveryEdgeInfo;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
 import sample.MapLogic.Graphic.PointType;
@@ -78,7 +77,7 @@ public class MapController implements Initializable {
         A1.setPointType(PointType.Triangle);
         A1.placeTo(root);
 
-        Vertex A2 = new Vertex(225,96);
+        Vertex A2 = new Vertex(255,186);
         A2.setName("Заказ 2");
         A2.setPointType(PointType.Triangle);
         A2.placeTo(root);
@@ -91,31 +90,38 @@ public class MapController implements Initializable {
         A3.placeTo(root);
         A3.setSpecial(true);
 
-        BaseTransport Car = new BaseTransport(470+40,80+3);
+        BaseTransport Car = new BaseTransport(470+40,100);
         Car.setName("Машина");
         Car.setPointType(PointType.Circle);
         Car.placeTo(root);
 
 
+        //Car.findPath( to );
+        //Car
+        //DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.testsmth(A1,false);
+        //DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
+        //DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
+        PathWrapper path= null;
+        try {
+            path = Main.map.findPath(Car,A3);
 
-        DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.parseAllEdges(A1,false);
-        DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
-        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
-        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
-       PathWrapper path=Main.map.findPath(Car,A3);
 
-       path.getPath().forEach(System.out::println);
-        double time= Main.map.Count_time( path );
-        System.out.println("Доставка займет " + time + " мин ");
-        Main.map.DrawPath(path.getPath());
-       // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
-       // deliveryEdgeInfo.print();
 
-      //  deliveryEdgeInfo2.print();
-      //  deliveryEdgeInfo3.print();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        //Main.map.testsmth(A2,false);
+        Main.map.getOrtogonalEdges(Car,false);
+        try {
+            path.getPath().forEach(System.out::println);
 
-       // Points.put(name,A1);
-      //  ObservableList<String> list2= FXCollections.observableArrayList("Тортик","Пироженое");
+            double time = Main.map.getPathDrivingTime(path);
+            System.out.println("Доставка займет " + time + " мин ");
+            Main.map.DrawPath(path.getPath());
+        }
+        catch (NullPointerException e){
+            System.out.println("Обращение к NULL");
+        }
 
     }
 }

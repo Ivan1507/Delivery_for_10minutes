@@ -75,7 +75,6 @@ public class Main extends Application {
         map.FillGraph("8.5","8",Quality_Road.very_bad,traffic);
         map.FillGraph("8.5","9",Quality_Road.bad,traffic);
         map.FillGraph("8.5","10",Quality_Road.very_bad,traffic);
-
         map.FillGraph("5","6",Quality_Road.average,traffic);
         map.FillGraph("6","7",Quality_Road.average,traffic);
         map.FillGraph("1","7",Quality_Road.average,traffic);
@@ -91,7 +90,6 @@ public class Main extends Application {
             //System.out.print(x);
             //System.out.println();
         };
-
 
         DeliveryData = FXCollections.observableArrayList();
         DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка\n123", new Vertex(25,25)));

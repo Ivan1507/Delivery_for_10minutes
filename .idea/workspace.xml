@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Исправлена ошибка с трафиком">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Улучшение алгоритма поиска маршрута (можно начнать путь не с вершины, и доезжать до заказа вне ребра и вершины)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Delivery_task/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Delivery_task/sample/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controllers/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controllers/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/PathWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/PathWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Quality_Road.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Quality_Road.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Vertex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Transport/BaseTransport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Transport/BaseTransport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Vector2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Vector2D.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +124,7 @@
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin.scripting" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -370,6 +370,11 @@
       <workItem from="1603285282544" duration="2355000" />
       <workItem from="1603363089504" duration="5000" />
       <workItem from="1603615805930" duration="12824000" />
+      <workItem from="1603693338373" duration="3003000" />
+      <workItem from="1603702153551" duration="14000" />
+      <workItem from="1603703592557" duration="554000" />
+      <workItem from="1603725081636" duration="4000" />
+      <workItem from="1603879559472" duration="8623000" />
     </task>
     <task id="LOCAL-00001" summary="0">
       <created>1601480157135</created>
@@ -525,7 +530,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603633152130</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Улучшение алгоритма поиска маршрута (можно начнать путь не с вершины, и доезжать до заказа вне ребра и вершины)">
+      <created>1603648472680</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1603648472680</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,7 +566,8 @@
     <MESSAGE value="Добавлены комментарии" />
     <MESSAGE value="Добавлен класс PathWrapper" />
     <MESSAGE value="Расчет всех путей на машине до точки, которая лежит вне вершины" />
-    <option name="LAST_COMMIT_MESSAGE" value="Расчет всех путей на машине до точки, которая лежит вне вершины" />
+    <MESSAGE value="Улучшение алгоритма поиска маршрута (можно начнать путь не с вершины, и доезжать до заказа вне ребра и вершины)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Улучшение алгоритма поиска маршрута (можно начнать путь не с вершины, и доезжать до заказа вне ребра и вершины)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="71" key="#Configure_Path_Variables" timestamp="1601733123671">
@@ -585,10 +598,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="536" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1602532816479" />
-    <state x="928" y="164" key="#com.intellij.ide.util.MemberChooser" timestamp="1603647792956">
+    <state x="928" y="164" key="#com.intellij.ide.util.MemberChooser" timestamp="1603887943874">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="928" y="164" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1603647792956" />
+    <state x="928" y="164" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1603887943874" />
     <state x="499" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1602596884559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -613,14 +626,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1602658560214" />
-    <state x="498" y="0" key="CommitChangelistDialog2" timestamp="1603633149619">
+    <state x="498" y="0" key="CommitChangelistDialog2" timestamp="1603648470378">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="498" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1603633149619" />
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1603643329399">
+    <state x="498" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1603648470378" />
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1603880538830">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1603643329399" />
+    <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1603880538830" />
     <state x="386" y="244" key="FileChooserDialogImpl" timestamp="1602759057200">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -629,38 +642,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="591" y="328" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1601479048030" />
-    <state width="1493" height="132" key="GridCell.Tab.0.bottom" timestamp="1603648239678">
+    <state width="1493" height="132" key="GridCell.Tab.0.bottom" timestamp="1603888099217">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="132" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1493" height="132" key="GridCell.Tab.0.center" timestamp="1603648239678">
+    <state width="1493" height="132" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603888099217" />
+    <state width="1493" height="132" key="GridCell.Tab.0.center" timestamp="1603888099216">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="132" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1493" height="132" key="GridCell.Tab.0.left" timestamp="1603648239678">
+    <state width="1493" height="132" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603888099216" />
+    <state width="1493" height="132" key="GridCell.Tab.0.left" timestamp="1603888099216">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="132" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1493" height="132" key="GridCell.Tab.0.right" timestamp="1603648239678">
+    <state width="1493" height="132" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603888099216" />
+    <state width="1493" height="132" key="GridCell.Tab.0.right" timestamp="1603888099217">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="132" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1601744102708">
+    <state width="1493" height="132" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603888099217" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1603883496530">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601744102708" />
-    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1601744102708">
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603883496530" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1603883496530">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601744102708" />
-    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1601744102707">
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603883496530" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1603883496530">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601744102707" />
-    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1601744102708">
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603883496530" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1603883496530">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601744102708" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603883496530" />
     <state x="349" y="155" key="IDE.errors.dialog" timestamp="1601915734170">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -673,18 +686,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="412" y="60" key="NewModule_or_Project.wizard/0.0.1536.824@0.0.1536.824" timestamp="1602759038505" />
-    <state x="250" y="2" width="981" height="707" key="SettingsEditor" timestamp="1602759059773">
+    <state x="250" y="2" width="981" height="707" key="SettingsEditor" timestamp="1603657010269">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="250" y="2" width="981" height="707" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1602759059773" />
-    <state x="103" y="78" width="1350" height="638" key="ShowDiffWithBranchDialog" timestamp="1603643329400">
+    <state x="250" y="2" width="981" height="707" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1603657010269" />
+    <state x="103" y="78" width="1350" height="638" key="ShowDiffWithBranchDialog" timestamp="1603880538830">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="103" y="78" width="1350" height="638" key="ShowDiffWithBranchDialog/0.0.1536.824@0.0.1536.824" timestamp="1603643329400" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1603633156017">
+    <state x="103" y="78" width="1350" height="638" key="ShowDiffWithBranchDialog/0.0.1536.824@0.0.1536.824" timestamp="1603880538830" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1603649044518">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603633156017" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603649044518" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1601812696095">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

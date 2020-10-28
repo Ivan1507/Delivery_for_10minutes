@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sample.DeliveryEdgeInfo;
-import sample.MapLogic.Delivery.Delivery;
 import sample.MapLogic.Graphic.PointType;
 import sample.Transport.BaseTransport;
 import sample.Vector2D;
@@ -15,7 +14,6 @@ import sample.Vector2D;
 import java.io.*;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 // Основной класс хранения данных ребер и вершин
 public class Graph implements Serializable {
@@ -59,15 +57,18 @@ public class Graph implements Serializable {
 
 
 
-    public PathWrapper findPath( BaseTransport vehicle, Vertex to){
-
-        DeliveryEdgeInfo veh = parseAllEdges(vehicle,true);
-        DeliveryEdgeInfo end = parseAllEdges(to,false);
+    public PathWrapper findPath( BaseTransport vehicleOriginal, Vertex to) throws CloneNotSupportedException {
+       // try{
+        BaseTransport vehicle = vehicleOriginal.clone();
+        DeliveryEdgeInfo veh = getOrtogonalEdges(vehicle,true);
+        DeliveryEdgeInfo end = getOrtogonalEdges(to,false);
         var quality=Quality_Road.good;
         HashMap<Integer, Double> traffic = new HashMap<>();
         var f = veh.getAdjacentVertexes();
             for( Map.Entry<Vertex,HashSet<Vertex>> e : f.entrySet()){
                 for( Vertex vert : e.getValue()) {
+                    //if (quality_road.get(vert).get(e.getKey()) == null && quality_road.get(e.getKey()).get(vert) == null){continue;}
+
 
                     if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null)
                         quality = quality_road.get(vert).get(veh.getAnotherVertex(vert));
@@ -76,13 +77,17 @@ public class Graph implements Serializable {
                         traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
                     }
 
-                    FillGraph2(vert, vehicle, quality,traffic);
-
+                    //FillGraph2(vert, vehicle, quality,traffic); // for vehicle
+                    FillGraph2(vert,e.getKey(),quality,traffic);
+                    FillGraph2(vehicle,e.getKey(),quality,traffic);
                 }
             }
 
         for( Map.Entry<Vertex,HashSet<Vertex>> e : end.getAdjacentVertexes().entrySet()){
             for( Vertex vert : e.getValue()) {
+                //if (quality_road.get(vert).get(e.getKey()) == null && quality_road.get(e.getKey()).get(vert) == null){continue;}
+
+
                 if (quality_road.get(vert).get(end.getAnotherVertex(vert)) != null)
                     quality = quality_road.get(vert).get(end.getAnotherVertex(vert));
 
@@ -96,26 +101,13 @@ public class Graph implements Serializable {
             }
         }
         return find_min_path_with_optimized(vehicle,to);
+//        }catch(Exception e){
+//            System.out.println("Маршрут нельзя построить!");
+//            System.out.println(e.getMessage());
+//            return null;
+//        }
 
 
-
-    }
-
-    //Добавление к пути точек машины и заказа
-    public ArrayList addPointstoPath(Vertex from, ArrayList<String> arr, Vertex to, ArrayList<Vertex> points){
-        ArrayList<String> final_path=new ArrayList<>();
-        Points.put(from.getName(),from);
-        final_path.add(from.getName());
-        for(int i=1;i<=arr.size();i++){
-           final_path.add(i,arr.get(i-1));
-        }
-        for(int i=0;i<points.size();i++){
-            final_path.add(arr.size()+i+1,points.get(i).getName());
-        }
-        final_path.add(to.getName());
-        Points.put(to.getName(),to);
-        //System.out.println(final_path);
-        return final_path;
     }
 
     public PathWrapper find_min_path_with_optimized(BaseTransport start, Vertex end){
@@ -145,8 +137,7 @@ public class Graph implements Serializable {
                     traffic=0d;
                     quality = Quality_Road.Perfect.getStatus();
                 }
-
-                ;
+                if(traffic == null) { traffic = 0d; };
                 Double time = 0.38*length/(speed*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
                 if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+time < shortest_distances.get(u)){
                     shortest_distances.put(u,shortest_distances.get(cur_v)+time);
@@ -167,7 +158,7 @@ public class Graph implements Serializable {
     }
 
     // Подсчет время-затрат на путь path
-    public double Count_time(PathWrapper pathWrapper){
+    public double getPathDrivingTime(PathWrapper pathWrapper){
         double d=0.0;
         for(Vertex s:pathWrapper.getPath()){
            // Vertex v=Points.get(s);
@@ -175,9 +166,75 @@ public class Graph implements Serializable {
         }
         return d;
     }
+    public DeliveryEdgeInfo getOrtogonalEdges(Vertex Delivery, boolean isCar){
+        DeliveryEdgeInfo info = new DeliveryEdgeInfo();
+        ArrayList<Vertex> roads = new ArrayList<>();
+        HashMap<Vertex,HashSet<Vertex>> Смежные_вершины = new HashMap<>();
+        long start = System.nanoTime();
+        for( Map.Entry<Vertex,HashSet<Vertex>> MapEntry:edges.entrySet()) {
+            for (Vertex vertex : MapEntry.getValue()) {
+            if (quality_road.get(vertex).get(MapEntry.getKey()) == null){continue;}
+            if (quality_road.get(MapEntry.getKey()).get(vertex) == null){continue;}
+                Vector2D directionToB = new Vector2D(vertex);
+                directionToB.sub( new Vector2D(MapEntry.getKey()));
 
+                Vector2D directionToDelivery = new Vector2D(Delivery);
+                directionToDelivery.sub( new Vector2D(vertex));
+
+                double angle = directionToB.getAngles(directionToDelivery);
+               // System.out.println("Angle between two vectors is " + angle);
+                double projection = directionToB.getCosBetweenVectors(directionToDelivery)*directionToDelivery.length();
+                //System.out.println("projection = " + projection);
+                Vector2D ProjectionVector = new Vector2D(vertex);
+                //ProjectionVector.sub( new Vector2D(MapEntry.getKey()));
+                int length_par = isCar ? 45 : 45;
+                if (Math.abs(projection) > 200)continue;
+
+                ProjectionVector.inc( -Math.abs(projection),directionToB.getDirection() );
+                Vector2D test = new Vector2D(Delivery);
+                test.sub(ProjectionVector);
+
+                Vector2D test2 = new Vector2D(MapEntry.getKey());
+                test2.sub(new Vector2D(vertex));
+
+
+                Vector2D test3 = new Vector2D(MapEntry.getKey());
+                test3.sub(new Vector2D(Delivery));
+
+                Vector2D test4 = new Vector2D(vertex);
+                test4.sub(new Vector2D(Delivery));
+
+                if (test4.length() > test2.length() || test3.length() > test2.length()){ continue; }
+                if (test.length() > length_par) { continue;}
+                Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());
+                Vertex PointOnEdge = ProjectionVector.convertToVertex();
+                PointOnEdge.setName("Точка"+ Math.abs(projection)+24);
+                roads.add(PointOnEdge);
+
+                l.setStroke(Color.FUCHSIA);
+                l.setStrokeWidth(1.7);
+                root.getChildren().addAll(l);
+                HashSet<Vertex> hashSet = new HashSet();
+                hashSet.add(MapEntry.getKey());
+                hashSet.add(vertex);
+                Смежные_вершины.put(PointOnEdge,hashSet);
+                break;
+            }
+        }
+
+        long end = System.nanoTime();
+
+        info.setPointOnEdge(roads);
+        info.setPointDelivery(Delivery);
+        info.setAdjacentVertexes(Смежные_вершины);
+        System.out.println( (end-start)/Math.pow(10,6) + " ms");
+        return info;
+
+
+    }
 
     public DeliveryEdgeInfo parseAllEdges(Vertex Delivery, boolean isCar){
+        long startTime = System.nanoTime();
         DeliveryEdgeInfo info = new DeliveryEdgeInfo();
         ArrayList<Vertex> roads = new ArrayList<>();
         HashMap<Vertex,HashSet<Vertex>> hashSetHashMap;
@@ -203,7 +260,7 @@ public class Graph implements Serializable {
                     result.sub(new Vector2D(Delivery));
 
 
-                    int length_par = isCar ? 2 : 100;
+                    int length_par = isCar ? 20 : 100;
                     if (dot_product < 0.005 && result.length()<length_par) {
 
 
@@ -233,6 +290,9 @@ public class Graph implements Serializable {
 
             }
         }
+        long endTime = System.nanoTime();
+
+        System.out.println( (endTime-startTime)/Math.pow(10,6) + " ms - итерационный");
 
         info.setPointOnEdge(roads);
         info.setPointDelivery(Delivery);
@@ -276,7 +336,10 @@ public class Graph implements Serializable {
 
     // Заполняет данные об качестве дороги и трафике
     public void FillGraph2(Vertex ver1,Vertex ver2,Quality_Road qr, HashMap<Integer,Double> traffic){
-
+        if (edges.get(ver1) == null){
+         //   edges.put(ver1,new HashSet<>());
+        }
+        //edges.get(ver1).add(ver2); // Добавили несимметричное соеднинение
 
         if(graph.get(ver1)==null){
             graph.put(ver1,new HashSet<Vertex>());
@@ -284,7 +347,6 @@ public class Graph implements Serializable {
         if(graph.get(ver2)==null){
             graph.put(ver2,new HashSet<Vertex>());
         }
-
         graph.get(ver1).add(ver2);
         graph.get(ver2).add(ver1);
         //edges.get(ver1).add(ver2); // Добавили несимметричное соеднинение

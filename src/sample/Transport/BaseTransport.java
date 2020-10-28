@@ -2,7 +2,7 @@ package sample.Transport;
 
 import sample.MapLogic.Vertex;
 // Базовый класс для описания всех видов транспортых средств
-public class BaseTransport extends Vertex {
+public class BaseTransport extends Vertex implements Cloneable {
 
     private double maxSpeed=120;
     public double getMaxSpeed(){
@@ -20,4 +20,8 @@ public class BaseTransport extends Vertex {
         super(0, 0);
     }
 
+    @Override
+    public BaseTransport clone() throws CloneNotSupportedException {
+        return (BaseTransport) super.clone();
+    }
 }
