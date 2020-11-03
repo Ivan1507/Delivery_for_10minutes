@@ -1,20 +1,24 @@
 package sample.MapLogic.Delivery;
 
 import sample.MapLogic.Vertex;
+import sample.Product;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 // Класс для заполнения записей в таблице "Заказы"
 public class Delivery implements Serializable {
 
     private int id;
     private String executor; // Исполнитель
-    private String status; // Статус заказа
-    private String time_start; // Начало
-    private String time_end; // Конец
-    private String goods; // Список товаров
+    private DeliveryStatus status; // Статус заказа
+    private LocalDateTime time_start; // Начало
+    private LocalDateTime time_end; // Конец
+    private ArrayList<Product> goods; // Список товаров
     private Vertex address; // Адрес, куда нужно доставлять заказ
 
-    public Delivery(int id, String executor, String status, String time_start, String time_end, String goods, Vertex address) {
+    public Delivery(int id , String executor, DeliveryStatus status, LocalDateTime time_start, LocalDateTime time_end, ArrayList<Product> goods, Vertex address) {
         this.id = id;
         this.executor = executor;
         this.status = status;
@@ -40,35 +44,35 @@ public class Delivery implements Serializable {
         this.executor = executor;
     }
 
-    public String getStatus() {
+    public DeliveryStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(DeliveryStatus status) {
         this.status = status;
     }
 
-    public String getTime_start() {
+    public LocalDateTime getTime_start() {
         return time_start;
     }
 
-    public void setTime_start(String time_start) {
+    public void setTime_start(LocalDateTime time_start) {
         this.time_start = time_start;
     }
 
-    public String getTime_end() {
+    public LocalDateTime getTime_end() {
         return time_end;
     }
 
-    public void setTime_end(String time_end) {
+    public void setTime_end(LocalDateTime time_end) {
         this.time_end = time_end;
     }
 
-    public String getGoods() {
+    public ArrayList<Product> getGoods() {
         return goods;
     }
 
-    public void setGoods(String goods) {
+    public void setGoods(ArrayList<Product> goods) {
         this.goods = goods;
     }
 

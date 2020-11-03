@@ -10,9 +10,11 @@ import javafx.scene.layout.Pane;
 import sample.DeliveryEdgeInfo;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
+import sample.MapLogic.Delivery.DeliveryStatus;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
+import sample.Product;
 import sample.Transport.BaseTransport;
 
 import java.net.URL;
@@ -65,10 +67,10 @@ public class MapController implements Initializable {
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
         executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
-        status.setCellValueFactory(new PropertyValueFactory<Delivery, String>("status"));
+        status.setCellValueFactory(new PropertyValueFactory<Delivery, DeliveryStatus>("status"));
         time_start.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_start"));
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_end"));
-        goods.setCellValueFactory(new PropertyValueFactory<Delivery, String>("goods"));
+        goods.setCellValueFactory(new PropertyValueFactory<Delivery, ArrayList<Product>>("goods"));
         // заполняем таблицу данными
 
         table.setItems(Main.DeliveryData);

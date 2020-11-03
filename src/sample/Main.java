@@ -94,7 +94,7 @@ public class Main extends Application {
 
 
         DeliveryData = FXCollections.observableArrayList();
-        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10","Картошка\n123", new Vertex(25,25)));
+        DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10",new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
 
         //DeliveryData.remove(0);
 //        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
