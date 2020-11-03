@@ -8,14 +8,19 @@ import java.io.*;
 import java.util.Objects;
 
 // Вершина
-public class Vertex implements Serializable {
+public class Vertex implements Serializable,Cloneable {
    private double X;
    private double Y;
    private String Name;
    private PointType pointType; // Какая будет иконка на карте
    private boolean isSpecial = false;
 
-   private UI_Wrapper wrapper = new UI_Wrapper(); // Объект для вырисовки точек
+    @Override
+    public Vertex clone() throws CloneNotSupportedException {
+        return (Vertex)super.clone();
+    }
+
+    private UI_Wrapper wrapper = new UI_Wrapper(); // Объект для вырисовки точек
    public Vertex(double x, double y){
        X=x;
        Y=y;

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 // Класс для заполнения записей в таблице "Заказы"
-public class Delivery implements Serializable {
+public class Delivery implements Serializable,Cloneable {
 
     private int id;
     private String executor; // Исполнитель
@@ -27,6 +27,8 @@ public class Delivery implements Serializable {
         this.goods = goods;
         this.address = address;
     }
+
+
 
     public int getId() {
         return id;

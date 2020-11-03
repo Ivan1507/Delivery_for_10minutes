@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import sample.MapLogic.Delivery.Delivery;
+import sample.MapLogic.Delivery.DeliveryGenerator;
 import sample.MapLogic.Delivery.DeliverySerializer;
+import sample.MapLogic.Delivery.DeliveryStatus;
 import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.Quality_Road;
@@ -18,6 +20,8 @@ import sample.MapLogic.Vertex;
 import sample.Transport.BaseTransport;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Main extends Application {
@@ -94,7 +98,10 @@ public class Main extends Application {
 
 
         DeliveryData = FXCollections.observableArrayList();
-       // DeliveryData.add(new Delivery(5,"Иванов","В процессе", "22","22:10",new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
+        DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
+        DeliveryData.add(DeliveryGenerator.generate());
+        DeliveryData.add(DeliveryGenerator.generate());
+
 
         //DeliveryData.remove(0);
 //        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);

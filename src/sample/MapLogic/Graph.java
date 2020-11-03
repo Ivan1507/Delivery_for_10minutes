@@ -66,20 +66,20 @@ public class Graph implements Serializable {
         var quality=Quality_Road.good;
         HashMap<Integer, Double> traffic = new HashMap<>();
         var f = veh.getAdjacentVertexes();
-            for( Map.Entry<Vertex,HashSet<Vertex>> e : f.entrySet()){
-                for( Vertex vert : e.getValue()) {
+        for( Map.Entry<Vertex,HashSet<Vertex>> e : f.entrySet()){
+            for( Vertex vert : e.getValue()) {
 
-                    if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null)
-                        quality = quality_road.get(vert).get(veh.getAnotherVertex(vert));
+                if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null)
+                    quality = quality_road.get(vert).get(veh.getAnotherVertex(vert));
 
-                    if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
-                        traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
-                    }
-
-                    FillGraph2(vert, vehicle, quality,traffic);
-
+                if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
+                    traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
                 }
+
+                FillGraph2(vert, vehicle, quality,traffic);
+
             }
+        }
 
         for( Map.Entry<Vertex,HashSet<Vertex>> e : end.getAdjacentVertexes().entrySet()){
             for( Vertex vert : e.getValue()) {
@@ -107,7 +107,7 @@ public class Graph implements Serializable {
         Points.put(from.getName(),from);
         final_path.add(from.getName());
         for(int i=1;i<=arr.size();i++){
-           final_path.add(i,arr.get(i-1));
+            final_path.add(i,arr.get(i-1));
         }
         for(int i=0;i<points.size();i++){
             final_path.add(arr.size()+i+1,points.get(i).getName());
@@ -170,7 +170,7 @@ public class Graph implements Serializable {
     public double Count_time(PathWrapper pathWrapper){
         double d=0.0;
         for(Vertex s:pathWrapper.getPath()){
-           // Vertex v=Points.get(s);
+            // Vertex v=Points.get(s);
             d+=pathWrapper.getShortest_distance().get(s);
         }
         return d;
@@ -190,8 +190,8 @@ public class Graph implements Serializable {
 
                 Vector2D direction = new Vector2D(vertex);
                 direction.sub( new Vector2D(MapEntry.getKey()));
-               int step = direction.normalize();
-               Vector2D start = new Vector2D(0,0);
+                int step = direction.normalize();
+                Vector2D start = new Vector2D(0,0);
                 for(int i = 0; i < step; i++){
                     Vector2D dot_param = new Vector2D(Delivery);
                     dot_param.sub(start);
@@ -271,7 +271,7 @@ public class Graph implements Serializable {
 
         sequentialTransition.play();
 
-        }
+    }
 
 
     // Заполняет данные об качестве дороги и трафике
@@ -318,7 +318,7 @@ public class Graph implements Serializable {
         Traffic.get(ver2).put(ver2,traffic);
 
     }
-        // Заполняет данные об качестве дороги и трафике
+    // Заполняет данные об качестве дороги и трафике
     public void FillGraph(String v1,String v2,Quality_Road qr, HashMap<Integer,Double> traffic){
 
         Vertex ver1=Points.get(v1);
@@ -388,12 +388,12 @@ public class Graph implements Serializable {
 
     // Отобразить все точки на графе
     public void draw(){
-    for(Map.Entry<String,Vertex> point : Points.entrySet())
-        point.getValue().placeTo(root);
+        for(Map.Entry<String,Vertex> point : Points.entrySet())
+            point.getValue().placeTo(root);
     }
 
     // Сериализовать граф в файл
-     public  void SaveObject(String name) throws IOException {
+    public  void SaveObject(String name) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(new File("Graph.dat"));
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this);

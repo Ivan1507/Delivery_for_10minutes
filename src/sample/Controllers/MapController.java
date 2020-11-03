@@ -76,7 +76,7 @@ public class MapController implements Initializable {
         table.setItems(Main.DeliveryData);
 
         Vertex A1 = new Vertex(125,66);
-        A1.setName("Заказ");
+        A1.setName("Заказ1");
         A1.setPointType(PointType.Triangle);
         A1.placeTo(root);
 
@@ -92,6 +92,18 @@ public class MapController implements Initializable {
         A3.setPointType(PointType.Triangle);
         A3.placeTo(root);
         A3.setSpecial(true);
+
+        for(Delivery delivery:Main.DeliveryData){
+
+            Vertex ver= null;
+            try {
+                ver = delivery.getAddress().clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            ver.placeTo(root);
+        }
+
 
         BaseTransport Car = new BaseTransport(470+40,80+3);
         Car.setName("Машина");
