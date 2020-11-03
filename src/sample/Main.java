@@ -98,9 +98,9 @@ public class Main extends Application {
         };
 
         DeliveryData = FXCollections.observableArrayList();
-        DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
+        //DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
         DeliveryData.add(DeliveryGenerator.generate());
-        DeliveryData.add(DeliveryGenerator.generate());
+      for (int i = 0; i<5; i++) DeliveryData.add(DeliveryGenerator.generate());
 
 
         //DeliveryData.remove(0);
