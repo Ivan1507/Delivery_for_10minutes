@@ -70,7 +70,7 @@ public class Main extends Application {
 
 
         map.FillGraph("1","3",Quality_Road.average,traffic);
-        map.FillGraph("1","2",Quality_Road.average,traffic);
+        map.FillGraph("1","2",Quality_Road.Abstract_bad,traffic);
         map.FillGraph("2","3",Quality_Road.average,traffic);
         map.FillGraph("13","6",Quality_Road.average,traffic);
         map.FillGraph("5","13",Quality_Road.good,traffic);
@@ -79,23 +79,23 @@ public class Main extends Application {
         map.FillGraph("8.5","8",Quality_Road.very_bad,traffic);
         map.FillGraph("8.5","9",Quality_Road.bad,traffic);
         map.FillGraph("8.5","10",Quality_Road.very_bad,traffic);
-
         map.FillGraph("5","6",Quality_Road.average,traffic);
         map.FillGraph("6","7",Quality_Road.average,traffic);
         map.FillGraph("1","7",Quality_Road.average,traffic);
         map.FillGraph("1","8",Quality_Road.average,traffic);
-        map.FillGraph("8","9",Quality_Road.average,traffic);
+        map.FillGraph("8","9",Quality_Road.Perfect,traffic);
         map.FillGraph("9","10",Quality_Road.average,traffic);
         map.FillGraph("2","11",Quality_Road.average,traffic);
         map.FillGraph("11","12",Quality_Road.average,traffic);
         map.FillGraph("9","12",Quality_Road.average,traffic);
         map.FillGraph("10","11",Quality_Road.average,traffic);
         map.FillGraph("1","4",Quality_Road.average,traffic);
+
+        System.out.println(map.quality_road);
         for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
             //System.out.print(x);
             //System.out.println();
         };
-
 
         DeliveryData = FXCollections.observableArrayList();
         DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
