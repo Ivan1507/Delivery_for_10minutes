@@ -99,9 +99,14 @@ public class Main extends Application {
 
         DeliveryData = FXCollections.observableArrayList();
         //DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
-        DeliveryData.add(DeliveryGenerator.generate());
-      for (int i = 0; i<5; i++) DeliveryData.add(DeliveryGenerator.generate());
-
+      HashSet<Vertex> current_ver=new HashSet<>();
+        for (int i = 0; i<5; i++){
+          if(!current_ver.contains(DeliveryGenerator.generate().getAddress())) {
+              current_ver.add(DeliveryGenerator.generate().getAddress());
+              DeliveryData.add(DeliveryGenerator.generate());
+          }
+      }
+        System.out.println("DeliveryData = " + current_ver);
 
         //DeliveryData.remove(0);
 //        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
