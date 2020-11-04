@@ -5,4 +5,7 @@ public enum DeliveryStatus {
     NOT_OK,
     WAITING,
     DELAYED;
+
+
+
 }

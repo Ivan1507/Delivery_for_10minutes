@@ -3,7 +3,6 @@ package sample;
 public class Product {
     private String Name;
     private double Weight;
-
     private double Volume;
 
     public Product( String n, double w, double v) {

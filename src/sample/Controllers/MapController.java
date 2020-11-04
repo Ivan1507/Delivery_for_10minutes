@@ -80,11 +80,11 @@ public class MapController implements Initializable {
         A1.setPointType(PointType.Triangle);
         A1.placeTo(root);
 
-        Vertex A2 = new Vertex(225,96);
+        Vertex A2 = new Vertex(255,136);
         A2.setName("Заказ 2");
         A2.setPointType(PointType.Triangle);
         A2.placeTo(root);
-
+        A2.setSpecial(true);
 
 
         Vertex A3 = new Vertex(325,86);
@@ -105,23 +105,29 @@ public class MapController implements Initializable {
         }
 
 
-        BaseTransport Car = new BaseTransport(470+40,80+3);
+        BaseTransport Car = new BaseTransport(470+90,25+7);
         Car.setName("Машина");
         Car.setPointType(PointType.Circle);
         Car.placeTo(root);
 
 
 
-        DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.parseAllEdges(A1,false);
-        DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
-        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
-        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
-       PathWrapper path=Main.map.findPath(Car,A3);
-
-       path.getPath().forEach(System.out::println);
-        double time= Main.map.Count_time( path );
+//        DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.parseAllEdges(A1,false);
+//        DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
+//        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
+//        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
+        PathWrapper path= null;
+        try {
+            path = Main.map.findPath(Car,A2);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    try {
+        path.getPath().forEach(System.out::println);
+        double time = Main.map.Count_time(path);
         System.out.println("Доставка займет " + time + " мин ");
         Main.map.DrawPath(path.getPath());
+    }catch (Exception r){}
        // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
        // deliveryEdgeInfo.print();
 
