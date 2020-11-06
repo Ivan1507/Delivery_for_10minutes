@@ -101,9 +101,10 @@ public class Main extends Application {
         //DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
       HashSet<Vertex> current_ver=new HashSet<>();
         for (int i = 0; i<5; i++){
-          if(!current_ver.contains(DeliveryGenerator.generate().getAddress())) {
-              current_ver.add(DeliveryGenerator.generate().getAddress());
-              DeliveryData.add(DeliveryGenerator.generate());
+            Delivery dev=DeliveryGenerator.generate();
+          if(!current_ver.contains(dev.getAddress())) {
+              current_ver.add(dev.getAddress());
+              DeliveryData.add(dev);
           }
       }
         System.out.println("DeliveryData = " + current_ver);

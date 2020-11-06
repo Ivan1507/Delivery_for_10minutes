@@ -95,12 +95,8 @@ public class MapController implements Initializable {
 
         for(Delivery delivery:Main.DeliveryData){
 
-            Vertex ver= null;
-            try {
-                ver = delivery.getAddress().clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+            Vertex ver=delivery.getAddress();
+            System.out.println("ver = " + ver);
             ver.placeTo(root);
         }
 
