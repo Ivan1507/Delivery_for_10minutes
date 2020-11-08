@@ -1,6 +1,7 @@
 package sample.MapLogic.Delivery;
 
 import javafx.collections.ObservableList;
+import sample.LocalDateFormatted2;
 
 import java.time.LocalDateTime;
 
@@ -37,12 +38,16 @@ public class DeliveryLogic {
             }
         }
     }
-    public void change_time_end(Integer id,LocalDateTime ld){
+    public void change_time_end(Integer id, LocalDateFormatted2 ld){
         for(Delivery del:DeliveryData){
             if(del.getId()==id) {
                 del.setTime_end(ld);
                 break;
             }
         }
+    }
+
+    public ObservableList<Delivery> getDeliveryData() {
+        return DeliveryData;
     }
 }

@@ -1,5 +1,6 @@
 package sample.MapLogic.Delivery;
 
+import sample.LocalDateFormatted2;
 import sample.MapLogic.Vertex;
 import sample.Product;
 
@@ -13,12 +14,12 @@ public class Delivery implements Serializable,Cloneable {
     private int id;
     private String executor; // Исполнитель
     private DeliveryStatus status; // Статус заказа
-    private LocalDateTime time_start; // Начало
-    private LocalDateTime time_end; // Конец
+    private LocalDateFormatted2 time_start; // Начало
+    private LocalDateFormatted2 time_end; // Конец
     private ArrayList<Product> goods; // Список товаров
     private Vertex address; // Адрес, куда нужно доставлять заказ
 
-    public Delivery(int id , String executor, DeliveryStatus status, LocalDateTime time_start, LocalDateTime time_end, ArrayList<Product> goods, Vertex address) {
+    public Delivery(int id , String executor, DeliveryStatus status, LocalDateFormatted2 time_start, LocalDateFormatted2 time_end, ArrayList<Product> goods, Vertex address) {
         this.id = id;
         this.executor = executor;
         this.status = status;
@@ -54,19 +55,19 @@ public class Delivery implements Serializable,Cloneable {
         this.status = status;
     }
 
-    public LocalDateTime getTime_start() {
+    public LocalDateFormatted2 getTime_start() {
         return time_start;
     }
 
-    public void setTime_start(LocalDateTime time_start) {
+    public void setTime_start(LocalDateFormatted2 time_start) {
         this.time_start = time_start;
     }
 
-    public LocalDateTime getTime_end() {
+    public LocalDateFormatted2 getTime_end() {
         return time_end;
     }
 
-    public void setTime_end(LocalDateTime time_end) {
+    public void setTime_end(LocalDateFormatted2 time_end) {
         this.time_end = time_end;
     }
 

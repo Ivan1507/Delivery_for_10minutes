@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import sample.DeliveryEdgeInfo;
+import sample.LocalDateFormatted2;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
 import sample.MapLogic.Delivery.DeliveryLogic;
@@ -69,12 +70,12 @@ public class MapController implements Initializable {
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
         executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
         status.setCellValueFactory(new PropertyValueFactory<Delivery, DeliveryStatus>("status"));
-        time_start.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_start"));
-        time_end.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_end"));
+        time_start.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_start"));
+        time_end.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_end"));
         goods.setCellValueFactory(new PropertyValueFactory<Delivery, ArrayList<Product>>("goods"));
         // заполняем таблицу данными
 
-        table.setItems(Main.DeliveryData);
+        table.setItems(Main.deliveryLogic.getDeliveryData());
 
         Vertex A1 = new Vertex(125,66);
         A1.setName("Заказ1");
@@ -94,13 +95,6 @@ public class MapController implements Initializable {
         A3.placeTo(root);
         A3.setSpecial(true);
 
-        for(Delivery delivery:Main.DeliveryData){
-
-            Vertex ver=delivery.getAddress();
-            System.out.println("ver = " + ver);
-            ver.placeTo(root);
-        }
-
 
         BaseTransport Car = new BaseTransport(470+90,25+7);
         Car.setName("Машина");
@@ -114,8 +108,8 @@ public class MapController implements Initializable {
 //        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
 //        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
         PathWrapper path= null;
-        DeliveryLogic lg=new DeliveryLogic();
-        lg.DeliveryData=Main.DeliveryData;
+        //DeliveryLogic lg=new DeliveryLogic();
+        //lg.DeliveryData=Main.DeliveryData;
         try {
             path = Main.map.findPath(Car,A2);
         } catch (CloneNotSupportedException e) {
@@ -128,7 +122,7 @@ public class MapController implements Initializable {
         Main.map.DrawPath(path.getPath());
         TimerTask task = new TimerTask() {
             public void run() {
-                lg.remove_by_key(0);
+                Main.deliveryLogic.remove_by_key(0);
             }
         };
         Timer timer = new Timer("Timer");

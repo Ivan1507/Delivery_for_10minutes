@@ -38,7 +38,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "" +
-                "Name='" + Name + '\n';
+        return Name + "\n";
     }
 }

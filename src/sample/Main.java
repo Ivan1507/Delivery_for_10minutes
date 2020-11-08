@@ -6,27 +6,19 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import sample.MapLogic.Delivery.Delivery;
-import sample.MapLogic.Delivery.DeliveryGenerator;
-import sample.MapLogic.Delivery.DeliverySerializer;
-import sample.MapLogic.Delivery.DeliveryStatus;
+import sample.MapLogic.Delivery.*;
 import sample.MapLogic.Graph;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
-import sample.Transport.BaseTransport;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class Main extends Application {
 
     public static Graph map = new Graph();
+   public static DeliveryLogic deliveryLogic=new DeliveryLogic();
     public static ObservableList<Delivery> DeliveryData;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -93,46 +85,21 @@ public class Main extends Application {
 
         System.out.println(map.quality_road);
         for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
-            //System.out.print(x);
-            //System.out.println();
+
         };
 
-        DeliveryData = FXCollections.observableArrayList();
-        //DeliveryData.add(new Delivery(5,"Иванов", DeliveryStatus.DELAYED, LocalDateTime.now(),LocalDateTime.now().plusMinutes(10),new ArrayList<>() {{ add(new Product("Картошка",3,2)); }}, new Vertex(25,25)));
-      HashSet<Vertex> current_ver=new HashSet<>();
+
+
+        deliveryLogic.DeliveryData=FXCollections.observableArrayList();
+
+        HashSet<Vertex> current_ver=new HashSet<>();
         for (int i = 0; i<5; i++){
             Delivery dev=DeliveryGenerator.generate();
           if(!current_ver.contains(dev.getAddress())) {
               current_ver.add(dev.getAddress());
-              DeliveryData.add(dev);
+              deliveryLogic.add_delivery(dev);
           }
       }
-        System.out.println("DeliveryData = " + current_ver);
-
-
-        //DeliveryData.remove(0);
-//        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
-//        try {
-//            serializer2.SaveObject("Active");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ObservableList<Delivery> DeliveryData1;
-//        DeliverySerializer serializer = new DeliverySerializer();
-//        try {
-//            DeliveryData =  serializer.LoadObject("Active");
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        ;
-
-        DeliveryData.sort(new Comparator<Delivery>() {
-            @Override
-            public int compare(Delivery o1, Delivery o2) {
-                return o1.getId()-o2.getId();
-            }
-        });
-
 
 
         primaryStage.setScene(new Scene(root));

@@ -45,6 +45,7 @@ public class BaseTransport extends Vertex {
             cur_weight+=a.getWeight();
         }
         if (cur_volume>max_volume_baggage || cur_weight>max_weight_baggage) return false;
+
         return true;
     }
 
