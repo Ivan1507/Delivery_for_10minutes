@@ -1,7 +1,7 @@
-package sample.MapLogic.Delivery;
+package sample.Delivery;
 
 import sample.LocalDateFormatted2;
-import sample.MapLogic.Graphic.PointType;
+import sample.Graphic.PointType;
 import sample.MapLogic.Vertex;
 import sample.Product;
 

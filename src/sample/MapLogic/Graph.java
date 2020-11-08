@@ -6,28 +6,24 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import sample.DeliveryEdgeInfo;
-import sample.MapLogic.Delivery.Delivery;
-import sample.MapLogic.Graphic.PointType;
+import sample.Delivery.DeliveryEdgeInfo;
+import sample.Graphic.PointType;
 import sample.Transport.BaseTransport;
 import sample.Vector2D;
 
 import java.io.*;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 // Основной класс хранения данных ребер и вершин
 public class Graph implements Serializable {
     private transient Pane root;
     public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
-    private HashMap<String, BaseTransport> Transport = new HashMap<>(200,0.75f);
     public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public HashMap<Vertex,HashSet<Vertex>> edges=new HashMap<>();
     public HashMap<Vertex,HashMap<Vertex,Quality_Road>> quality_road=new HashMap<>();
     public HashMap< Vertex, HashMap<Vertex, HashMap<Integer, Double>>> Traffic=new HashMap<>();
     private ArrayList<Line> lines = new ArrayList<>();
-    //public Map<Vertex,Double> shortest_distance=new HashMap<Vertex,Double>();
 
     public void setRoot(Pane root) {
         this.root = root;
@@ -37,6 +33,7 @@ public class Graph implements Serializable {
         this.root = root;
     }
     public Graph() { }
+
     // Рисует соединения между точками
     public void DrawGraph(){
         for(Map.Entry<Vertex,HashSet<Vertex>> x:graph.entrySet()){
@@ -59,7 +56,6 @@ public class Graph implements Serializable {
         DeliveryEdgeInfo info = new DeliveryEdgeInfo();
         ArrayList<Vertex> roads = new ArrayList<>();
         HashMap<Vertex,HashSet<Vertex>> Смежные_вершины = new HashMap<>();
-        long start = System.nanoTime();
         for( Map.Entry<Vertex,HashSet<Vertex>> MapEntry:edges.entrySet()) {
             for (Vertex vertex : MapEntry.getValue()) {
                 //if (quality_road.get(vertex).get(MapEntry.getKey()) == null && quality_road.get(MapEntry.getKey()).get(vertex) == null){continue;}
@@ -107,19 +103,16 @@ public class Graph implements Serializable {
                 break;
             }
         }
-        //System.out.println(Смежные_вершины);
-        long end = System.nanoTime();
 
         info.setPointOnEdge(roads);
         info.setPointDelivery(Delivery);
         info.setAdjacentVertexes(Смежные_вершины);
-        //System.out.println( (end-start)/Math.pow(10,6) + " ms");
         return info;
 
 
     }
 
-    public PathWrapper findPath( BaseTransport vehicleOriginal, Vertex to) throws CloneNotSupportedException {
+    public PathWrapper FindPath(BaseTransport vehicleOriginal, Vertex to) throws CloneNotSupportedException {
         try{
             BaseTransport vehicle = vehicleOriginal.clone();
             DeliveryEdgeInfo veh = getOrtogonalEdges(vehicle,false);
@@ -130,33 +123,20 @@ public class Graph implements Serializable {
             for( Map.Entry<Vertex,HashSet<Vertex>> e : f.entrySet()){
                 for( Vertex vert : e.getValue()) {
                     //if (quality_road.get(vert).get(e.getKey()) == null && quality_road.get(e.getKey()).get(vert) == null){continue;}
-
                     quality = Quality_Road.average;
                     if (quality_road.get(vert).get(veh.getAnotherVertex(vert)) != null) {
                         quality = quality_road.get(vert).get(veh.getAnotherVertex(vert));
                     }
-
-//                    else{
-//                        System.out.println("vert = " + vert);
-//                        System.out.println("veh.getAnotherVertex(vert) = " + veh.getAnotherVertex(vert));
-//                        System.out.println("Проблема!");
-//                    }
-                    //System.out.println("quality = " + quality);
                     if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
                         traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
                     }
-
-                    //FillGraph2(vert, vehicle, quality,traffic); // for vehicle
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(vehicle,e.getKey(),quality,traffic);
                 }
             }
-
             for( Map.Entry<Vertex,HashSet<Vertex>> e : end.getAdjacentVertexes().entrySet()){
                 for( Vertex vert : e.getValue()) {
                     //if (quality_road.get(vert).get(e.getKey()) == null && quality_road.get(e.getKey()).get(vert) == null){continue;}
-
-
                     if (quality_road.get(vert).get(end.getAnotherVertex(vert)) != null)
                         quality = quality_road.get(vert).get(end.getAnotherVertex(vert));
 
@@ -166,10 +146,9 @@ public class Graph implements Serializable {
 
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(to,e.getKey(),quality,traffic);
-
                 }
             }
-            return find_min_path_with_optimized(vehicle,to);
+            return Find_min_path_with_optimized(vehicle,to);
         }catch(Exception e){
             System.out.println("Маршрут нельзя построить!");
             System.out.println(e.getMessage());
@@ -222,24 +201,8 @@ public class Graph implements Serializable {
 //
 //    }
 
-    //Добавление к пути точек машины и заказа
-    public ArrayList addPointstoPath(Vertex from, ArrayList<String> arr, Vertex to, ArrayList<Vertex> points){
-        ArrayList<String> final_path=new ArrayList<>();
-        Points.put(from.getName(),from);
-        final_path.add(from.getName());
-        for(int i=1;i<=arr.size();i++){
-            final_path.add(i,arr.get(i-1));
-        }
-        for(int i=0;i<points.size();i++){
-            final_path.add(arr.size()+i+1,points.get(i).getName());
-        }
-        final_path.add(to.getName());
-        Points.put(to.getName(),to);
-        //System.out.println(final_path);
-        return final_path;
-    }
-
-    public PathWrapper find_min_path_with_optimized(BaseTransport start, Vertex end){
+    // Нахождением мин. пути по алгоритму Дейстктры
+    public PathWrapper Find_min_path_with_optimized(BaseTransport start, Vertex end){
         Map<Vertex,Double> shortest_distances=new HashMap<>();
         Map<Vertex,Vertex> parents=new HashMap<>();
         parents.put(start,null);
@@ -285,14 +248,14 @@ public class Graph implements Serializable {
         Collections.reverse(path);
         return new PathWrapper( shortest_distances,path);
     }
+
     // Подсчет время-затрат на путь path
     public double Count_time(PathWrapper pathWrapper){
-        double d=0.0;
+        double time=0.0;
         for(Vertex s:pathWrapper.getPath()){
-            // Vertex v=Points.get(s);
-            d+=pathWrapper.getShortest_distance().get(s);
+            time+=pathWrapper.getShortest_distance().get(s);
         }
-        return d;
+        return time;
     }
 
 
@@ -395,10 +358,6 @@ public class Graph implements Serializable {
 
     // Заполняет данные об качестве дороги и трафике
     public void FillGraph2(Vertex ver1,Vertex ver2,Quality_Road qr, HashMap<Integer,Double> traffic){
-        if (edges.get(ver1) == null){
-            //   edges.put(ver1,new HashSet<>());
-        }
-        //edges.get(ver1).add(ver2); // Добавили несимметричное соеднинение
 
         if(graph.get(ver1)==null){
             graph.put(ver1,new HashSet<Vertex>());
@@ -422,10 +381,6 @@ public class Graph implements Serializable {
         quality_road.get(ver1).put(ver2,qr);
         quality_road.get(ver2).put(ver1,qr);
 
-        //quality_road.get(ver1).put(ver1,qr);
-        //quality_road.get(ver2).put(ver2,qr);
-
-
         if(Traffic.get(ver1)==null){
             Traffic.put(ver1, new HashMap<Vertex, HashMap<Integer, Double>>());
         }
@@ -440,7 +395,7 @@ public class Graph implements Serializable {
 
     }
     // Заполняет данные об качестве дороги и трафике
-    public void FillGraph(String v1,String v2,Quality_Road qr, HashMap<Integer,Double> traffic){
+    public void Connect(String v1, String v2, Quality_Road qr, HashMap<Integer,Double> traffic){
 
         Vertex ver1=Points.get(v1);
         Vertex ver2=Points.get(v2);
@@ -500,7 +455,7 @@ public class Graph implements Serializable {
         return Objects.hash(Points);
     }
     // Добавить точку на граф (без рисования)
-    public void addPoint(String name, double X, double Y, PointType type){
+    public void AddPoint(String name, double X, double Y, PointType type){
         Vertex A1 = new Vertex(X,Y);
         A1.setName(name);
         A1.setPointType(type);
@@ -508,7 +463,7 @@ public class Graph implements Serializable {
     }
 
     // Отобразить все точки на графе
-    public void draw(){
+    public void Draw(){
         for(Map.Entry<String,Vertex> point : Points.entrySet())
             point.getValue().placeTo(root);
     }

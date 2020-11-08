@@ -1,4 +1,4 @@
-package sample.MapLogic.Delivery;
+package sample.Delivery;
 
 public enum DeliveryStatus {
     OK,

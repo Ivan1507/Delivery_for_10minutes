@@ -1,4 +1,4 @@
-package sample.MapLogic.Graphic;
+package sample.Graphic;
 
 public enum PointType {
     TwoCricle("1"), Triangle("2"), Square("3"), Circle("4");

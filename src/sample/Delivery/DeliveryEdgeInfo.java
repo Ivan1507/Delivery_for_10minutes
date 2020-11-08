@@ -1,4 +1,4 @@
-package sample;
+package sample.Delivery;
 
 import sample.MapLogic.Vertex;
 

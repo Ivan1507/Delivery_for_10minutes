@@ -7,13 +7,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import sample.DeliveryEdgeInfo;
 import sample.LocalDateFormatted2;
-import sample.MapLogic.Delivery.Delivery;
+import sample.Delivery.Delivery;
 import sample.Main;
-import sample.MapLogic.Delivery.DeliveryLogic;
-import sample.MapLogic.Delivery.DeliveryStatus;
-import sample.MapLogic.Graphic.PointType;
+import sample.Delivery.DeliveryStatus;
+import sample.Graphic.PointType;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Product;
@@ -55,7 +53,7 @@ public class MapController implements Initializable {
         Map1.setCenter(root);
         Main.map.setRoot( root );
         Main.map.DrawGraph();
-        Main.map.draw();
+        Main.map.Draw();
 //ArrayList<String> path
 //       PathWrapper pathWrapper= Main.map.find_min_path_with_vert("1","12", new BaseTransport());
 //        for(String s:pathWrapper.getPath()){
@@ -76,6 +74,10 @@ public class MapController implements Initializable {
         // заполняем таблицу данными
 
         table.setItems(Main.deliveryLogic.getDeliveryData());
+        for (BaseTransport vehicle : Main.deliveryLogic.getDepartment().getVehicles()) {
+            vehicle.placeTo(root);
+        }
+        
 
         Vertex A1 = new Vertex(125,66);
         A1.setName("Заказ1");
@@ -103,20 +105,15 @@ public class MapController implements Initializable {
 
 
 
-//        DeliveryEdgeInfo deliveryEdgeInfo   =  Main.map.parseAllEdges(A1,false);
-//        DeliveryEdgeInfo deliveryEdgeInfo2 = Main.map.parseAllEdges(A2,false);
-//        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
-//        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
         PathWrapper path= null;
-        //DeliveryLogic lg=new DeliveryLogic();
-        //lg.DeliveryData=Main.DeliveryData;
+
         try {
-            path = Main.map.findPath(Car,A2);
+            path = Main.map.FindPath(Car,A2);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
     try {
-        path.getPath().forEach(System.out::println);
+        //path.getPath().forEach(System.out::println);
         double time = Main.map.Count_time(path);
         System.out.println("Доставка займет " + time + " мин ");
         Main.map.DrawPath(path.getPath());
@@ -131,14 +128,6 @@ public class MapController implements Initializable {
         timer.schedule(task, delay);
 
     }catch (Exception r){}
-       // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
-       // deliveryEdgeInfo.print();
-
-      //  deliveryEdgeInfo2.print();
-      //  deliveryEdgeInfo3.print();
-
-       // Points.put(name,A1);
-      //  ObservableList<String> list2= FXCollections.observableArrayList("Тортик","Пироженое");
 
     }
 }

@@ -1,11 +1,10 @@
-package sample.MapLogic.Delivery;
+package sample.Delivery;
 
 import sample.LocalDateFormatted2;
 import sample.MapLogic.Vertex;
 import sample.Product;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 // Класс для заполнения записей в таблице "Заказы"

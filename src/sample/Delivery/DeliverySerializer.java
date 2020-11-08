@@ -1,7 +1,6 @@
-package sample.MapLogic.Delivery;
+package sample.Delivery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import jdk.jfr.Name;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,26 +1,26 @@
 package sample.MapLogic;
 
 import javafx.scene.layout.Pane;
-import sample.MapLogic.Graphic.PointType;
-import sample.MapLogic.Graphic.UI_Wrapper;
+import sample.Graphic.PointType;
+import sample.Graphic.UI_Wrapper;
 
 import java.io.*;
 import java.util.Objects;
 
 // Вершина
 public class Vertex implements Serializable,Cloneable {
-   private double X;
-   private double Y;
-   private String Name;
+   private double X; // Координата X
+   private double Y; // Координата Y
+   private String Name; // Название вершины
    private PointType pointType; // Какая будет иконка на карте
-   private boolean isSpecial = false;
+   private boolean isSpecial = false; // Тип вершины: true - заказ, false - все остальное
 
     @Override
     public Vertex clone() throws CloneNotSupportedException {
         return (Vertex)super.clone();
     }
 
-    private UI_Wrapper wrapper = new UI_Wrapper(); // Объект для вырисовки точек
+   private UI_Wrapper wrapper = new UI_Wrapper(); // Объект для вырисовки точек
    public Vertex(double x, double y){
        X=x;
        Y=y;
@@ -91,10 +91,7 @@ public class Vertex implements Serializable,Cloneable {
         wrapper.setPane(rt);
         wrapper.Init(this);
     }
-    public void setPos( double x, double y){
-       X=x;
-       Y=y;
-    }
+
     public void setName( String name){
        Name = name;
     }
@@ -111,47 +108,4 @@ public class Vertex implements Serializable,Cloneable {
                 '}';
     }
 
-    public static double dot(Vertex v1, Vertex v2){
-        return v1.getX() * v2.getX() + v2.getY()*v1.getY();
-    }
-//    public void SaveToFile(String path) throws IOException {
-//        try(FileWriter fw=new FileWriter(path,true)){
-//            fw.append(this.toString());
-//        }catch(IOException e){
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//    public void getFromFile(String path){
-//        try(FileReader fd=new FileReader(path)){
-//            BufferedReader br=new BufferedReader(new FileReader(path));
-//            String temp="";
-//            String key="";
-//            String value="";
-//            boolean s=true;
-//            int i;
-//            while ((temp = br.readLine()) != "" & temp != null) {
-//                if (temp.contains("Vertex{")) {
-//                    temp=br.readLine();
-//                    s= true;
-//                } else if (temp.length() == 0) {
-//                    s= false;
-//                }
-//
-//                if (s) {
-//                    key = temp.substring(0, temp.indexOf('='));
-//                    value = temp.substring(temp.indexOf('=') +1);
-//
-//                    if (!key.isEmpty() && !value.isEmpty()) {
-//                        switch (key) {
-//                            case "X"->this.setX(Double.parseDouble(value));
-//                            case "Y"->this.setY(Double.parseDouble(value));
-//                            case "Name"->this.setName(value);
-//                        }
-//                    }
-//                }
-//            }
-//        }catch(Exception ex){
-//            System.out.println(ex.getMessage());
-//        }
-//    }
 }

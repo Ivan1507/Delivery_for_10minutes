@@ -7,8 +7,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import sample.Main;
-import sample.MapLogic.Delivery.Delivery;
-import sample.MapLogic.Delivery.DeliveryStatus;
+import sample.Delivery.Delivery;
+import sample.Delivery.DeliveryStatus;
 
 import java.net.URL;
 import java.util.ResourceBundle;

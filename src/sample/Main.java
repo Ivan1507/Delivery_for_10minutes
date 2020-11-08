@@ -7,18 +7,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.MapLogic.Delivery.*;
+import sample.Delivery.*;
 import sample.MapLogic.Graph;
-import sample.MapLogic.Graphic.PointType;
+import sample.Graphic.PointType;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
+import sample.Transport.BaseTransport;
 
 import java.util.*;
 
 public class Main extends Application {
 
     public static Graph map = new Graph();
-   public static DeliveryLogic deliveryLogic=new DeliveryLogic();
+    public static DeliveryLogic deliveryLogic=new DeliveryLogic();
+    static {
+        deliveryLogic.DeliveryData=FXCollections.observableArrayList();
+
+
+        BaseTransport Car = new BaseTransport(470+150,25+7);
+        Car.setName("Машина 2");
+        Car.setPointType(PointType.Circle);
+
+        deliveryLogic.getDepartment().getVehicles().add( Car );
+    }
+
+
     public static ObservableList<Delivery> DeliveryData;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -27,22 +40,24 @@ public class Main extends Application {
         primaryStage.setTitle("Delivery for 10 minutes");
 
 
-        map.addPoint("1",400,200, PointType.Triangle);
-        map.addPoint("13",200,200, PointType.TwoCricle);
-        map.addPoint("2",500,240, PointType.TwoCricle);
-        map.addPoint("3",460,300, PointType.TwoCricle);
-        map.addPoint("4",350,230, PointType.TwoCricle);
-        map.addPoint("5",320,300, PointType.TwoCricle);
-        map.addPoint("6",280,125, PointType.TwoCricle);
-        //map.addPoint("2",45,55, PointType.Square);
-        map.addPoint("7",350,100, PointType.TwoCricle);
-        map.addPoint("8",470,80, PointType.TwoCricle);
-        map.addPoint("8.5",(470+720) / 2,45, PointType.TwoCricle);
-        map.addPoint("9",720,90, PointType.TwoCricle);
-        map.addPoint("10",545,140, PointType.TwoCricle);
-        map.addPoint("11",625,210, PointType.TwoCricle);
-        map.addPoint("12",760,150, PointType.TwoCricle);
-        Quality_Road q = Quality_Road.good;
+        // Создаем точки на карте
+        map.AddPoint("1",400,200, PointType.Triangle);
+        map.AddPoint("13",200,200, PointType.TwoCricle);
+        map.AddPoint("2",500,240, PointType.TwoCricle);
+        map.AddPoint("3",460,300, PointType.TwoCricle);
+        map.AddPoint("4",350,230, PointType.TwoCricle);
+        map.AddPoint("5",320,300, PointType.TwoCricle);
+        map.AddPoint("6",280,125, PointType.TwoCricle);
+
+        map.AddPoint("7",350,100, PointType.TwoCricle);
+        map.AddPoint("8",470,80, PointType.TwoCricle);
+        map.AddPoint("8.5", (470+720) / 2,45, PointType.TwoCricle);
+        map.AddPoint("9",720,90, PointType.TwoCricle);
+        map.AddPoint("10",545,140, PointType.TwoCricle);
+        map.AddPoint("11",625,210, PointType.TwoCricle);
+        map.AddPoint("12",760,150, PointType.TwoCricle);
+
+
         HashMap<Integer,Double> traffic = new HashMap<>();
         for( int i =1; i<=24;i++ ){
             double traffic_value = switch(i) {
@@ -61,36 +76,30 @@ public class Main extends Application {
         }
 
 
-        map.FillGraph("1","3",Quality_Road.average,traffic);
-        map.FillGraph("1","2",Quality_Road.Abstract_bad,traffic);
-        map.FillGraph("2","3",Quality_Road.average,traffic);
-        map.FillGraph("13","6",Quality_Road.average,traffic);
-        map.FillGraph("5","13",Quality_Road.good,traffic);
-        map.FillGraph("3","4",Quality_Road.average,traffic);
-        map.FillGraph("4","5",Quality_Road.good,traffic);
-        map.FillGraph("8.5","8",Quality_Road.very_bad,traffic);
-        map.FillGraph("8.5","9",Quality_Road.bad,traffic);
-        map.FillGraph("8.5","10",Quality_Road.very_bad,traffic);
-        map.FillGraph("5","6",Quality_Road.average,traffic);
-        map.FillGraph("6","7",Quality_Road.average,traffic);
-        map.FillGraph("1","7",Quality_Road.average,traffic);
-        map.FillGraph("1","8",Quality_Road.average,traffic);
-        map.FillGraph("8","9",Quality_Road.good,traffic);
-        map.FillGraph("9","10",Quality_Road.average,traffic);
-        map.FillGraph("2","11",Quality_Road.average,traffic);
-        map.FillGraph("11","12",Quality_Road.average,traffic);
-        map.FillGraph("9","12",Quality_Road.average,traffic);
-        map.FillGraph("10","11",Quality_Road.average,traffic);
-        map.FillGraph("1","4",Quality_Road.average,traffic);
-
-        System.out.println(map.quality_road);
-        for(Map.Entry<Vertex, HashSet<Vertex>> x:map.graph.entrySet()){
-
-        };
+        map.Connect("1","3",Quality_Road.average,traffic);
+        map.Connect("1","2",Quality_Road.Abstract_bad,traffic);
+        map.Connect("2","3",Quality_Road.average,traffic);
+        map.Connect("13","6",Quality_Road.average,traffic);
+        map.Connect("5","13",Quality_Road.good,traffic);
+        map.Connect("3","4",Quality_Road.average,traffic);
+        map.Connect("4","5",Quality_Road.good,traffic);
+        map.Connect("8.5","8",Quality_Road.very_bad,traffic);
+        map.Connect("8.5","9",Quality_Road.bad,traffic);
+        map.Connect("8.5","10",Quality_Road.very_bad,traffic);
+        map.Connect("5","6",Quality_Road.average,traffic);
+        map.Connect("6","7",Quality_Road.average,traffic);
+        map.Connect("1","7",Quality_Road.average,traffic);
+        map.Connect("1","8",Quality_Road.average,traffic);
+        map.Connect("8","9",Quality_Road.good,traffic);
+        map.Connect("9","10",Quality_Road.average,traffic);
+        map.Connect("2","11",Quality_Road.average,traffic);
+        map.Connect("11","12",Quality_Road.average,traffic);
+        map.Connect("9","12",Quality_Road.average,traffic);
+        map.Connect("10","11",Quality_Road.average,traffic);
+        map.Connect("1","4",Quality_Road.average,traffic);
 
 
 
-        deliveryLogic.DeliveryData=FXCollections.observableArrayList();
 
         HashSet<Vertex> current_ver=new HashSet<>();
         for (int i = 0; i<5; i++){

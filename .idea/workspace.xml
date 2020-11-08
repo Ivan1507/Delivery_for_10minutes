@@ -19,18 +19,35 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Генератор заказов (alpha) fix">
-      <change afterPath="$PROJECT_DIR$/src/sample/LocalDateFormatted2.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Фрейм заказы">
+      <change afterPath="$PROJECT_DIR$/src/sample/Transport/TransportDepartment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Delivery_task/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Delivery_task/sample/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bicycle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Car.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Demonstrate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pedestrian.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Point.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Quadcopter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Road.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controllers/DeliveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controllers/DeliveryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controllers/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controllers/MapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/DeliveryEdgeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryEdgeInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/Delivery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/Delivery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliverySerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliverySerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graphic/PointType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Graphic/PointType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graphic/UI_Wrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Graphic/UI_Wrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Vertex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Transport/BaseTransport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Transport/BaseTransport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Transport/Strategy/AirStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Transport/Strategy/GroundStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Transport/Strategy/TransportStrategy.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -547,13 +564,29 @@
       <option name="project" value="LOCAL" />
       <updated>1603633152130</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Фрейм заказы">
+      <created>1604833785501</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1604833785501</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
@@ -579,7 +612,8 @@
     <MESSAGE value="Добавлены комментарии" />
     <MESSAGE value="Добавлен класс PathWrapper" />
     <MESSAGE value="Расчет всех путей на машине до точки, которая лежит вне вершины" />
-    <option name="LAST_COMMIT_MESSAGE" value="Расчет всех путей на машине до точки, которая лежит вне вершины" />
+    <MESSAGE value="Фрейм заказы" />
+    <option name="LAST_COMMIT_MESSAGE" value="Фрейм заказы" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="71" key="#Configure_Path_Variables" timestamp="1601733123671">
@@ -610,11 +644,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="536" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1602532816479" />
-    <state x="1160" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1604833540701">
+    <state x="1160" y="207" key="#com.intellij.ide.util.MemberChooser" timestamp="1604841289198">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="928" y="164" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1603647792956" />
-    <state x="1160" y="207" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604833540701" />
+    <state x="1160" y="207" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604841289198" />
     <state x="499" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1602596884559">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -636,10 +670,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1602494648726" />
-    <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1602658560214">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="645" y="337" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1604841018845">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1602658560214" />
+    <state x="645" y="337" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1604841018845" />
     <state x="498" y="0" key="CommitChangelistDialog2" timestamp="1603633149619">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -658,30 +693,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="591" y="328" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1601479048030" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604833239136">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604841645139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.bottom/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604833239136" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604833239136">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604841645139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.center/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604833239136" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604833239136">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604841645139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.left/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604833239136" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604833239136">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604841645139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.right/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604833239136" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
     <state width="1397" height="276" key="GridCell.Tab.1.bottom" timestamp="1604431201065">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
@@ -724,10 +759,11 @@
     </state>
     <state x="103" y="78" width="1350" height="638" key="ShowDiffWithBranchDialog/0.0.1536.824@0.0.1536.824" timestamp="1603643329400" />
     <state x="129" y="98" width="1688" height="806" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604832797316" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1603633156017">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1604833790401">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603633156017" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604833790401" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1601812696095">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

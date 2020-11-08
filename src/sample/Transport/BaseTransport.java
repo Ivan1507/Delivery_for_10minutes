@@ -12,12 +12,23 @@ public class BaseTransport extends Vertex {
     private ArrayList<Product> products;
     private double max_volume_baggage = 100;
     private double max_weight_baggage = 100;
+    private String Name;
+
+
+
     public double getMaxSpeed(){
         return maxSpeed;
     }
     public BaseTransport(double x, double y) {
         super(x, y);
     }
+
+    public BaseTransport(double x, double y, double maxSpeed, String name) {
+        super(x, y);
+        this.maxSpeed = maxSpeed;
+        Name = name;
+    }
+
     public BaseTransport() {
         super(0, 0);
     }
@@ -37,14 +48,25 @@ public class BaseTransport extends Vertex {
         this.products = products;
     }
 
+
+    // Может ли транспорт взять заказ?
     public boolean hasSpace(ArrayList<Product> A){
+        // вес в машине
         double cur_volume = 0d;
         double cur_weight = 0d;
         for( Product a : products){
             cur_volume+=a.getVolume();
             cur_weight+=a.getWeight();
         }
-        if (cur_volume>max_volume_baggage || cur_weight>max_weight_baggage) return false;
+
+        // взимаемый вес
+        double i_volume = 0d;
+        double i_weight = 0d;
+        for( Product a : A){
+            i_volume+=a.getVolume();
+            i_weight+=a.getWeight();
+        }
+        if ((cur_volume+i_volume)>max_volume_baggage || (cur_weight+i_weight)>max_weight_baggage) return false;
 
         return true;
     }

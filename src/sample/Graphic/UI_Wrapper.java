@@ -1,4 +1,4 @@
-package sample.MapLogic.Graphic;
+package sample.Graphic;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

@@ -1,13 +1,12 @@
-package sample.MapLogic.Delivery;
+package sample.Delivery;
 
 import javafx.collections.ObservableList;
 import sample.LocalDateFormatted2;
-
-import java.time.LocalDateTime;
+import sample.Transport.TransportDepartment;
 
 public class DeliveryLogic {
     public ObservableList<Delivery> DeliveryData;
-
+    private TransportDepartment department = new TransportDepartment();
     public void add_delivery(Delivery e){
         DeliveryData.add(e);
         System.out.println("Заказ успешно добавлен из таблицы!");
@@ -49,5 +48,9 @@ public class DeliveryLogic {
 
     public ObservableList<Delivery> getDeliveryData() {
         return DeliveryData;
+    }
+
+    public TransportDepartment getDepartment() {
+        return department;
     }
 }
