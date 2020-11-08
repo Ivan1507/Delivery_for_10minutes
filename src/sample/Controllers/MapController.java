@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import sample.DeliveryEdgeInfo;
 import sample.MapLogic.Delivery.Delivery;
 import sample.Main;
+import sample.MapLogic.Delivery.DeliveryLogic;
 import sample.MapLogic.Delivery.DeliveryStatus;
 import sample.MapLogic.Graphic.PointType;
 import sample.MapLogic.PathWrapper;
@@ -113,6 +114,8 @@ public class MapController implements Initializable {
 //        //DeliveryEdgeInfo deliveryEdgeInfo4 = Main.map.parseAllEdges(A3,false);
 //        DeliveryEdgeInfo deliveryEdgeInfo3 = Main.map.parseAllEdges(Car,true);
         PathWrapper path= null;
+        DeliveryLogic lg=new DeliveryLogic();
+        lg.DeliveryData=Main.DeliveryData;
         try {
             path = Main.map.findPath(Car,A2);
         } catch (CloneNotSupportedException e) {
@@ -123,6 +126,16 @@ public class MapController implements Initializable {
         double time = Main.map.Count_time(path);
         System.out.println("Доставка займет " + time + " мин ");
         Main.map.DrawPath(path.getPath());
+        TimerTask task = new TimerTask() {
+            public void run() {
+                lg.remove_by_key(0);
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 3000L;
+        timer.schedule(task, delay);
+
     }catch (Exception r){}
        // System.out.println(deliveryEdgeInfo2.getAdjacentVertexes());
        // deliveryEdgeInfo.print();

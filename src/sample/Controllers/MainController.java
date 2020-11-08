@@ -23,26 +23,11 @@ public class MainController implements Initializable {
     @FXML
     private BorderPane borderPane;
     // @FXML
-    @FXML
-    private ComboBox pizzas;
-    @FXML
-    private ComboBox sugar;
-    @FXML
-    private ComboBox drinks;
-    @FXML
     private AnchorPane anch;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> list= FXCollections.observableArrayList("Маргарита","Мясная","Мексиканская");
-        if (pizzas!=null)
-        pizzas.setItems(list);
-        ObservableList<String> list1= FXCollections.observableArrayList("Pepsi","Cola");
-        if (drinks!=null)
-        drinks.setItems(list1);
-        ObservableList<String> list2= FXCollections.observableArrayList("Тортик","Пироженое");
-        if(sugar!=null)
-        sugar.setItems(list2);
+
     }
     @FXML
     public void bt_click(){

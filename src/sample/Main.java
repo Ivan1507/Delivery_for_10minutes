@@ -109,6 +109,7 @@ public class Main extends Application {
       }
         System.out.println("DeliveryData = " + current_ver);
 
+
         //DeliveryData.remove(0);
 //        DeliverySerializer serializer2 = new DeliverySerializer(DeliveryData);
 //        try {

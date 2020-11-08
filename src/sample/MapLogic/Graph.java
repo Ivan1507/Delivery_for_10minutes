@@ -107,13 +107,13 @@ public class Graph implements Serializable {
                 break;
             }
         }
-        System.out.println(Смежные_вершины);
+        //System.out.println(Смежные_вершины);
         long end = System.nanoTime();
 
         info.setPointOnEdge(roads);
         info.setPointDelivery(Delivery);
         info.setAdjacentVertexes(Смежные_вершины);
-        System.out.println( (end-start)/Math.pow(10,6) + " ms");
+        //System.out.println( (end-start)/Math.pow(10,6) + " ms");
         return info;
 
 
@@ -141,7 +141,7 @@ public class Graph implements Serializable {
 //                        System.out.println("veh.getAnotherVertex(vert) = " + veh.getAnotherVertex(vert));
 //                        System.out.println("Проблема!");
 //                    }
-                    System.out.println("quality = " + quality);
+                    //System.out.println("quality = " + quality);
                     if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
                         traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
                     }
