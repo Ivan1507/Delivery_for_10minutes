@@ -19,40 +19,26 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Фрейм заказы">
-      <change afterPath="$PROJECT_DIR$/src/sample/Transport/TransportDepartment.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Добавлен класс хранения машин ( TransportDepartment.java )&#10;Инициализируется он в классе Main в статическом инициализаторе">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Delivery_task/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Delivery_task/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Bicycle.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Bus.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Car.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Demonstrate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pedestrian.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Point.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Quadcopter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Road.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Controllers/DeliveryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controllers/DeliveryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controllers/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controllers/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/DeliveryEdgeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryEdgeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Delivery/DeliveryGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Delivery/DeliveryLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Delivery/DeliveryStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/Delivery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliverySerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliverySerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Delivery/DeliveryStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Delivery/DeliveryStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graphic/PointType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Graphic/PointType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Graphic/UI_Wrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Graphic/UI_Wrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Quality_Road.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Quality_Road.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/MapLogic/Vertex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/MapLogic/Vertex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Transport/BaseTransport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Transport/BaseTransport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Transport/Strategy/AirStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Transport/Strategy/GroundStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Transport/Strategy/TransportStrategy.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -126,6 +112,9 @@
     <auto-save>true</auto-save>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="1iBwGKeS5TNerLxxlguTan7o2HU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
@@ -163,7 +152,7 @@
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin.scripting" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -226,13 +215,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -409,6 +400,7 @@
       <workItem from="1603285282544" duration="2355000" />
       <workItem from="1603363089504" duration="5000" />
       <workItem from="1603615805930" duration="12824000" />
+      <workItem from="1604901900836" duration="5922000" />
     </task>
     <task id="LOCAL-00001" summary="0">
       <created>1601480157135</created>
@@ -571,7 +563,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604833785501</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Добавлен класс хранения машин ( TransportDepartment.java )&#10;Инициализируется он в классе Main в статическом инициализаторе">
+      <created>1604841709032</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1604841709032</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,7 +612,8 @@
     <MESSAGE value="Добавлен класс PathWrapper" />
     <MESSAGE value="Расчет всех путей на машине до точки, которая лежит вне вершины" />
     <MESSAGE value="Фрейм заказы" />
-    <option name="LAST_COMMIT_MESSAGE" value="Фрейм заказы" />
+    <MESSAGE value="Добавлен класс хранения машин ( TransportDepartment.java )&#10;Инициализируется он в классе Main в статическом инициализаторе" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлен класс хранения машин ( TransportDepartment.java )&#10;Инициализируется он в классе Main в статическом инициализаторе" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="71" key="#Configure_Path_Variables" timestamp="1601733123671">
@@ -657,11 +657,12 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="301" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1601731508017" />
-    <state x="517" y="320" width="433" height="226" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604411703551">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state x="689" y="387" width="433" height="226" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604902003278">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="517" y="320" width="433" height="226" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1440.860@0.0.1440.860" timestamp="1604411703551" />
     <state x="551" y="307" width="433" height="216" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1603627614125" />
+    <state x="689" y="387" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1604902003278" />
     <state x="334" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1602531214558">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -679,11 +680,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1603633149619" />
-    <state x="116" y="117" width="1688" height="806" key="DiffContextDialog" timestamp="1604832797316">
+    <state x="123" y="85" width="1688" height="806" key="DiffContextDialog" timestamp="1604907506272">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1603643329399" />
-    <state x="116" y="117" width="1688" height="806" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604832797316" />
+    <state x="123" y="85" width="1688" height="806" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604907506272" />
     <state x="362" y="255" key="FileChooserDialogImpl" timestamp="1604411821763">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
@@ -693,30 +694,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="591" y="328" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1601479048030" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604841645139">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604906749422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.bottom/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604841645139">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604906749422" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604906749422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.center/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604841645139">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604906749422" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604906749422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.left/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604841645139">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604906749422" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604906749422">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="224" key="GridCell.Tab.0.right/0.0.1440.860@0.0.1440.860" timestamp="1604478041204" />
     <state width="1493" height="132" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603648239678" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604841645139" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604906749422" />
     <state width="1397" height="276" key="GridCell.Tab.1.bottom" timestamp="1604431201065">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
@@ -749,21 +750,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="412" y="60" key="NewModule_or_Project.wizard/0.0.1536.824@0.0.1536.824" timestamp="1602759038505" />
-    <state x="365" y="26" width="981" height="707" key="SettingsEditor" timestamp="1604411828254">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state x="487" y="31" width="981" height="707" key="SettingsEditor" timestamp="1604905059701">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="365" y="26" key="SettingsEditor/0.0.1440.860@0.0.1440.860" timestamp="1604411828254" />
     <state x="250" y="2" width="981" height="707" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1602759059773" />
-    <state x="129" y="98" width="1688" height="806" key="ShowDiffWithBranchDialog" timestamp="1604832797316">
+    <state x="487" y="31" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604905059701" />
+    <state x="129" y="98" width="1688" height="806" key="ShowDiffWithBranchDialog" timestamp="1604907506272">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="103" y="78" width="1350" height="638" key="ShowDiffWithBranchDialog/0.0.1536.824@0.0.1536.824" timestamp="1603643329400" />
-    <state x="129" y="98" width="1688" height="806" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604832797316" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1604833790401">
+    <state x="129" y="98" width="1688" height="806" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604907506272" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1604841712415">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1603633156017" />
-    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604833790401" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604841712415" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.dvcs.ui.CompareBranchesDialog" timestamp="1601812696095">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -16,8 +16,8 @@ public enum Quality_Road {
     Perfect( 1,Color.web("#9df257"));
 
 
-    private double quality;
-    private Color color;
+    private final double quality;
+    private final Color color;
 
     Quality_Road(double q, Color c){
         quality=q;

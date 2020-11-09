@@ -31,7 +31,6 @@ public class Main extends Application {
         deliveryLogic.getDepartment().getVehicles().add( Car );
     }
 
-
     public static ObservableList<Delivery> DeliveryData;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -113,6 +112,16 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                Main.deliveryLogic.remove_by_key(0);
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 4000L;
+        timer.schedule(task, delay);
 
     }
 

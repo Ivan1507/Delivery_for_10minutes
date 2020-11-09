@@ -13,7 +13,7 @@ import java.util.Random;
 public class DeliveryGenerator {
     private static int curInt = 0;
     private static HashSet<Vertex> nonRepeats = new HashSet<>();
-
+ // Сгенерировать случайный заказ из списка
     static public Delivery generate() {
         ArrayList<ArrayList<Product>> products = new ArrayList<>();
         ArrayList<Vertex> vertexes = new ArrayList<>();

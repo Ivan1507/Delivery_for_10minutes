@@ -9,8 +9,8 @@ import java.util.Objects;
 
 // Вершина
 public class Vertex implements Serializable,Cloneable {
-   private double X; // Координата X
-   private double Y; // Координата Y
+   private double X;
+   private double Y;
    private String Name; // Название вершины
    private PointType pointType; // Какая будет иконка на карте
    private boolean isSpecial = false; // Тип вершины: true - заказ, false - все остальное

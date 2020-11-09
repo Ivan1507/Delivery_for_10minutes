@@ -66,6 +66,9 @@ public class BaseTransport extends Vertex {
             i_volume+=a.getVolume();
             i_weight+=a.getWeight();
         }
+        // Проверка на максимальный объем в транспорте
+        // или
+        // максимальной допустимой массы в транспорте
         if ((cur_volume+i_volume)>max_volume_baggage || (cur_weight+i_weight)>max_weight_baggage) return false;
 
         return true;

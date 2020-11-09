@@ -110,6 +110,7 @@ public class MapController implements Initializable {
         try {
             path = Main.map.FindPath(Car,A2);
         } catch (CloneNotSupportedException e) {
+
             e.printStackTrace();
         }
     try {
@@ -117,17 +118,11 @@ public class MapController implements Initializable {
         double time = Main.map.Count_time(path);
         System.out.println("Доставка займет " + time + " мин ");
         Main.map.DrawPath(path.getPath());
-        TimerTask task = new TimerTask() {
-            public void run() {
-                Main.deliveryLogic.remove_by_key(0);
-            }
-        };
-        Timer timer = new Timer("Timer");
 
-        long delay = 3000L;
-        timer.schedule(task, delay);
 
-    }catch (Exception r){}
+    }catch (Exception r){
+
+    }
 
     }
 }

@@ -2,8 +2,8 @@ package sample;
 
 public class Product {
     private String Name;
-    private double Weight;
-    private double Volume;
+    private double Weight; // Вес
+    private double Volume; // Объем
 
     public Product( String n, double w, double v) {
         this.Name = n;

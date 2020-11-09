@@ -5,8 +5,8 @@ import sample.LocalDateFormatted2;
 import sample.Transport.TransportDepartment;
 
 public class DeliveryLogic {
-    public ObservableList<Delivery> DeliveryData;
-    private TransportDepartment department = new TransportDepartment();
+    public ObservableList<Delivery> DeliveryData; // Список заказов
+    private TransportDepartment department = new TransportDepartment(); // Список транспорта
     public void add_delivery(Delivery e){
         DeliveryData.add(e);
         System.out.println("Заказ успешно добавлен из таблицы!");
