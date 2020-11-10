@@ -1,15 +1,23 @@
 package sample.Transport;
 
+import javafx.scene.paint.Color;
+import sample.Delivery.Delivery;
+import sample.Main;
+import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Product;
+import sample.Vector2D;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 // Базовый класс для описания всех видов транспортых средств
 public class BaseTransport extends Vertex {
 
     private double maxSpeed=120;
-    private ArrayList<Product> products;
+    private ArrayList<Product> products=new ArrayList<>();
+    private Delivery activeDelivery;
     private double max_volume_baggage = 100;
     private double max_weight_baggage = 100;
     private String Name;
@@ -19,6 +27,11 @@ public class BaseTransport extends Vertex {
     public double getMaxSpeed(){
         return maxSpeed;
     }
+
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
     public BaseTransport(double x, double y) {
         super(x, y);
     }
@@ -44,13 +57,23 @@ public class BaseTransport extends Vertex {
         this.max_volume_baggage = volume_baggage;
     }
 
+    public double getMax_weight_baggage() {
+        return max_weight_baggage;
+    }
+
+    public void setMax_weight_baggage(double max_weight_baggage) {
+        this.max_weight_baggage = max_weight_baggage;
+    }
+
     public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 
 
     // Может ли транспорт взять заказ?
-    public boolean hasSpace(ArrayList<Product> A){
+    public boolean hasSpace(Delivery delivery){
+
+        ArrayList<Product> A  = delivery.getGoods();
         // вес в машине
         double cur_volume = 0d;
         double cur_weight = 0d;
@@ -72,6 +95,75 @@ public class BaseTransport extends Vertex {
         if ((cur_volume+i_volume)>max_volume_baggage || (cur_weight+i_weight)>max_weight_baggage) return false;
 
         return true;
+    }
+
+    public PathWrapper FindPath(Vertex to) throws CloneNotSupportedException {
+       return Main.map.FindPath(this, to);
+    }
+    public PathWrapper FindPath(BaseTransport from, Vertex to) throws CloneNotSupportedException {
+        return Main.map.FindPath(from, to);
+    }
+    public double Count_time(PathWrapper pathWrapper){
+        double time=0.0;
+        for(Vertex s:pathWrapper.getPath()){
+            time+=pathWrapper.getShortest_distance().get(s);
+        }
+        return time;
+    }
+
+    public boolean hasProducts(Delivery delivery){
+        ArrayList<Product> deliveryGoods = delivery.getGoods();
+        boolean hasProduct = true;
+        for(Product product: deliveryGoods){
+
+            if (!this.products.contains(product)){
+                hasProduct = false;
+            }
+
+        }
+        return hasProduct;
+    }
+    public void getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
+        try {
+            boolean hasProducts = hasProducts(delivery);
+            if (!hasProducts) {
+                System.out.println("Main.map.productPoint = " + Main.map.productPoint);
+                PathWrapper wrapper = FindPath(Main.map.productPoint);
+
+                System.out.println("wrapper = " + wrapper);
+                double x = getX();
+                double y = getY();
+
+                var clone = clone();
+                clone.setX(Main.map.productPoint.getX());
+                clone.setY(Main.map.productPoint.getY());
+                PathWrapper wrapper2 = FindPath(clone,delivery.getAddress());
+
+                wrapper.getPath().forEach((e) -> {
+                   // System.out.println(e.getName());
+                });
+
+
+               setX(x);
+               setY(y);
+
+                wrapper2.getPath().forEach((e) -> {
+                  //  System.out.println("Отсюда" + e.getName());
+                });
+                //Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
+                //Main.map.DrawPath(wrapper2.getPath());
+                System.out.println("Для машины " + Count_time(wrapper) + Count_time(wrapper2));
+
+            } else {
+
+
+            }
+
+        }
+        catch (Exception e){
+            //System.out.println("Не построить маршрут!");
+        }
+
     }
 
     @Override

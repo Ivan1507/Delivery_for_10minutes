@@ -4,7 +4,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import sample.MapLogic.Vertex;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 // Обертка над элементами управлени точки
 public class UI_Wrapper {
@@ -19,6 +23,7 @@ public class UI_Wrapper {
 
     public void setPane(Pane pane) {
         this.pane = pane;
+
     }
 
     public UI_Wrapper(Pane root){
@@ -29,9 +34,28 @@ public class UI_Wrapper {
     public UI_Wrapper(){
         super();
     }
+    public void changes(double x, double y, Pane pane){
 
+        for( Object o : pane.getChildren()) {
+            if (o instanceof Text) {
+                pane.getChildren().get(1).setTranslateX(x);
+                pane.getChildren().get(1).setTranslateY(y);
+            }
+
+            if (o instanceof Circle) {
+                ((Circle) o).setCenterX(x);
+                ((Circle) o).setCenterY(y);
+                System.out.println("Изменена");
+            }
+//            if (o instanceof Text && !(o instanceof Line)) {
+//                ((Text) pane.getChildren().get(10)).setX(x);
+//                ((Text) pane.getChildren().get(10)).setY(y);
+//            }
+        }
+    }
 
     public void Init(Vertex self){
+
         switch (self.getPointType()) {
             case Triangle:
                 Polygon polygon = new Polygon();
@@ -52,7 +76,7 @@ public class UI_Wrapper {
                 Rectangle rectangle = new Rectangle(25,25,Color.RED);
                 rectangle.setX(self.getX()-12.5);
                 rectangle.setY(self.getY()-12.5);
-                pane.getChildren().add( rectangle );
+                pane.getChildren().addAll(rectangle );
                 break;
             case TwoCricle:
                 Circle circle = new Circle();
@@ -66,8 +90,13 @@ public class UI_Wrapper {
                 mark.setCenterX(self.getX());
                 mark.setCenterY(self.getY());
                 mark.setFill(Color.BLACK);
-                getPane().getChildren().addAll( circle, mark );
+                mark.toFront();
+                circle.toFront();
+                getPane().getChildren().add(circle );
+                getPane().getChildren().addAll(mark );
+
                 break;
+
             case Circle:
                 Circle circle2 = new Circle();
                 circle2.setRadius(8);
@@ -76,12 +105,14 @@ public class UI_Wrapper {
                 circle2.setStroke(Color.BLUE);
                 circle2.setFill(Color.WHITE);
 
-                getPane().getChildren().addAll( circle2 );
+                getPane().getChildren().addAll(circle2 );
                 break;
         }
 
-        Text Text1 = new Text(self.getX(),self.getY()-15,self.getName());
+        Text Text1 = new Text(self.getX()-10,self.getY()-15,self.getName());
+        Text1.setTextAlignment(TextAlignment.CENTER);
         Text1.setText(self.getName());
+
         pane.getChildren().addAll(Text1);
     }
 
