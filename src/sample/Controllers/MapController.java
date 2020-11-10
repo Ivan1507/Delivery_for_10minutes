@@ -16,6 +16,7 @@ import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Product;
 import sample.Transport.BaseTransport;
+import sample.Transport.Quadrocopter;
 
 import java.net.URL;
 import java.util.*;
@@ -77,7 +78,9 @@ public class MapController implements Initializable {
         for (BaseTransport vehicle : Main.deliveryLogic.getDepartment().getVehicles()) {
             vehicle.placeTo(root);
         }
-        
+        for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
+            delivery.getAddress().placeTo(root);
+        }
 
         Vertex A1 = new Vertex(125,66);
         A1.setName("Заказ1");
@@ -98,31 +101,62 @@ public class MapController implements Initializable {
         A3.setSpecial(true);
 
 
-        BaseTransport Car = new BaseTransport(470+90,25+7);
-        Car.setName("Машина");
-        Car.setPointType(PointType.Circle);
-        Car.placeTo(root);
+        BaseTransport quadrocopter = new Quadrocopter(470+60,25+25);
+        quadrocopter.setName("Квадрокотер");
+        quadrocopter.setPointType(PointType.Circle);
+        quadrocopter.placeTo(root);
 
 
+        BaseTransport car = new Quadrocopter(470+60,45+25);
+        car.setName("car");
+        car.setPointType(PointType.Circle);
+        car.placeTo(root);
 
-        PathWrapper path= null;
+        for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
+            try {
+                //car.getExecuteTime(e);
+                //PathWrapper path = quadrocopter.FindPath(e.getAddress());
+               // System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+               // Main.map.DrawPath(path.getPath());
+
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
 
         try {
-            path = Main.map.FindPath(Car,A2);
-        } catch (CloneNotSupportedException e) {
+            //PathWrapper path = quadrocopter.FindPath(A2);
+            //System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+            //Main.map.DrawPath(path.getPath());
 
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    try {
-        //path.getPath().forEach(System.out::println);
-        double time = Main.map.Count_time(path);
-        System.out.println("Доставка займет " + time + " мин ");
-        Main.map.DrawPath(path.getPath());
 
+        try {
+            Main.deliveryLogic.testDeliveries();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    }catch (Exception r){
+        //     PathWrapper path= null;
 
-    }
+//        try {
+//            path = Main.map.FindPath(quadrocopter,A2);
+//        } catch (CloneNotSupportedException e) {
+//
+//            e.printStackTrace();
+//        }
+//    try {
+//        //path.getPath().forEach(System.out::println);
+//        double time = Main.map.Count_time(path);
+//        System.out.println("Доставка займет " + time + " мин ");
+//        Main.map.DrawPath(path.getPath());
+//
+//
+//    }catch (Exception r){
+//
+//    }
 
     }
 }

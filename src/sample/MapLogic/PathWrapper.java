@@ -13,6 +13,13 @@ public class PathWrapper {
         this.path = path;
     }
 
+    public PathWrapper() {
+    }
+
+    public void setPath(ArrayList<Vertex> path) {
+        this.path = path;
+    }
+
     public Map<Vertex, Double> getShortest_distance() {
         return shortest_distance;
     }

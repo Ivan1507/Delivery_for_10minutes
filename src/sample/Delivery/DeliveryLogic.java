@@ -2,14 +2,23 @@ package sample.Delivery;
 
 import javafx.collections.ObservableList;
 import sample.LocalDateFormatted2;
+import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
 public class DeliveryLogic {
     public ObservableList<Delivery> DeliveryData; // Список заказов
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
-    public void add_delivery(Delivery e){
+    public void add_delivery(Delivery e) throws CloneNotSupportedException {
         DeliveryData.add(e);
         System.out.println("Заказ успешно добавлен из таблицы!");
+
+    }
+    public void testDeliveries() throws CloneNotSupportedException {
+        for( Delivery e: getDeliveryData()) {
+            for (BaseTransport baseTransport : department.getVehicles()) {
+                baseTransport.getExecuteTime(e);
+            }
+        }
     }
     public void remove_by_key(Integer id){
 

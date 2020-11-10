@@ -19,6 +19,7 @@ import java.util.*;
 public class Graph implements Serializable {
     private transient Pane root;
     public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
+    public static Vertex productPoint;
     public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public HashMap<Vertex,HashSet<Vertex>> edges=new HashMap<>();
     public HashMap<Vertex,HashMap<Vertex,Quality_Road>> quality_road=new HashMap<>();
@@ -46,7 +47,9 @@ public class Graph implements Serializable {
                     System.out.println("Не выходит получить цвет дороги!");
                 }
                 l.setStrokeWidth(1.7);
+                l.toBack();
                 root.getChildren().addAll(l);
+
             }
         }
     }
@@ -88,14 +91,21 @@ public class Graph implements Serializable {
                 test4.sub(new Vector2D(Delivery));
                 if (test4.length() > test2.length() || test3.length() > test2.length()){ continue; }
                 if (test.length() > length_par) { continue;}
+                System.out.println("Length is " + test.length());
+
+
                 Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());
                 Vertex PointOnEdge = ProjectionVector.convertToVertex();
                 PointOnEdge.setName("Точка"+ Math.abs(projection)+24);
                 roads.add(PointOnEdge);
 
+
                 l.setStroke(Color.FUCHSIA);
                 l.setStrokeWidth(1.7);
+
                 root.getChildren().addAll(l);
+
+
                 HashSet<Vertex> hashSet = new HashSet();
                 hashSet.add(MapEntry.getKey());
                 hashSet.add(vertex);
@@ -117,6 +127,8 @@ public class Graph implements Serializable {
             BaseTransport vehicle = vehicleOriginal.clone();
             DeliveryEdgeInfo veh = getOrtogonalEdges(vehicle,false);
             DeliveryEdgeInfo end = getOrtogonalEdges(to,false);
+            if (end.getAdjacentVertexes().size() == 0) { return null; }
+            if (veh.getAdjacentVertexes().size() == 0) { return null; }
             var quality=Quality_Road.good;
             HashMap<Integer, Double> traffic = new HashMap<>();
             var f = veh.getAdjacentVertexes();
@@ -130,6 +142,10 @@ public class Graph implements Serializable {
                     if (Traffic.get(vert).get(veh.getAnotherVertex(vert)) != null) {
                         traffic =Traffic.get(vert).get(veh.getAnotherVertex(vert)) ;
                     }
+                    Vector2D v = new Vector2D(e.getKey());
+                    v.sub( new Vector2D(vehicle));
+                    System.out.println("v = " + v);
+
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(vehicle,e.getKey(),quality,traffic);
                 }
@@ -143,6 +159,9 @@ public class Graph implements Serializable {
                     if (Traffic.get(vert).get(end.getAnotherVertex(vert)) != null) {
                         traffic =Traffic.get(vert).get(end.getAnotherVertex(vert)) ;
                     }
+                    Vector2D v = new Vector2D(e.getKey());
+                    v.sub( new Vector2D(to));
+                    System.out.println("v = " + v);
 
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(to,e.getKey(),quality,traffic);
@@ -151,6 +170,7 @@ public class Graph implements Serializable {
             return Find_min_path_with_optimized(vehicle,to);
         }catch(Exception e){
             System.out.println("Маршрут нельзя построить!");
+            e.printStackTrace();
             System.out.println(e.getMessage());
             return null;
         }
@@ -250,6 +270,7 @@ public class Graph implements Serializable {
     }
 
     // Подсчет время-затрат на путь path
+    @Deprecated
     public double Count_time(PathWrapper pathWrapper){
         double time=0.0;
         for(Vertex s:pathWrapper.getPath()){
@@ -325,6 +346,12 @@ public class Graph implements Serializable {
     // Прорисовка минимального пути на графе
     public void DrawPath( ArrayList<Vertex> path){
 
+         DrawPath(path, Color.GOLD);
+
+    }
+
+    public void DrawPath( ArrayList<Vertex> path,Color color){
+
         SequentialTransition sequentialTransition = new SequentialTransition();
 
         sequentialTransition.setCycleCount(1);
@@ -336,7 +363,7 @@ public class Graph implements Serializable {
             Vertex x = path.get(i);
             Vertex y = path.get(i+1);
             Line l = new Line(x.getX(), x.getY(), y.getX(), y.getY());
-            l.setStroke(Color.GOLD);
+            l.setStroke(color);
             l.setStrokeWidth(3);
 
             root.getChildren().addAll(l);
@@ -354,8 +381,6 @@ public class Graph implements Serializable {
         sequentialTransition.play();
 
     }
-
-
     // Заполняет данные об качестве дороги и трафике
     public void FillGraph2(Vertex ver1,Vertex ver2,Quality_Road qr, HashMap<Integer,Double> traffic){
 
@@ -461,6 +486,14 @@ public class Graph implements Serializable {
         A1.setPointType(type);
         Points.put(name,A1);
     }
+
+    public void AddProduction(String name, double X, double Y, PointType type){
+        productPoint = new Vertex(X,Y);
+        productPoint.setName(name);
+        productPoint.setPointType(type);
+        Points.put(name,productPoint);
+    }
+
 
     // Отобразить все точки на графе
     public void Draw(){

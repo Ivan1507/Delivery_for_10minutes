@@ -33,10 +33,13 @@ public class Vertex implements Serializable,Cloneable {
 
     public void setX(double x) {
         X = x;
+        //wrapper.changes(x,this.getY(),root);
     }
 
     public void setY(double y) {
         Y = y;
+        System.out.println("root = " + root);
+        //wrapper.changes(this.getX(),y,root);
     }
 
     public void setRoot(Pane root) {
@@ -88,8 +91,11 @@ public class Vertex implements Serializable,Cloneable {
     }
 
     public void placeTo(Pane rt){
+        setRoot(rt);
         wrapper.setPane(rt);
+
         wrapper.Init(this);
+
     }
 
     public void setName( String name){

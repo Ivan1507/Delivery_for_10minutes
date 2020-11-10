@@ -13,6 +13,7 @@ import sample.Graphic.PointType;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
 import sample.Transport.BaseTransport;
+import sample.Transport.Quadrocopter;
 
 import java.util.*;
 
@@ -24,7 +25,7 @@ public class Main extends Application {
         deliveryLogic.DeliveryData=FXCollections.observableArrayList();
 
 
-        BaseTransport Car = new BaseTransport(470+150,25+7);
+        BaseTransport Car = new BaseTransport(166+80,157+7);
         Car.setName("Машина 2");
         Car.setPointType(PointType.Circle);
 
@@ -43,7 +44,7 @@ public class Main extends Application {
         map.AddPoint("1",400,200, PointType.Triangle);
         map.AddPoint("13",200,200, PointType.TwoCricle);
         map.AddPoint("2",500,240, PointType.TwoCricle);
-        map.AddPoint("3",460,300, PointType.TwoCricle);
+        map.AddPoint("3",460,300, PointType.Circle);
         map.AddPoint("4",350,230, PointType.TwoCricle);
         map.AddPoint("5",320,300, PointType.TwoCricle);
         map.AddPoint("6",280,125, PointType.TwoCricle);
@@ -55,6 +56,9 @@ public class Main extends Application {
         map.AddPoint("10",545,140, PointType.TwoCricle);
         map.AddPoint("11",625,210, PointType.TwoCricle);
         map.AddPoint("12",760,150, PointType.TwoCricle);
+
+        map.AddProduction("Production",760,250, PointType.TwoCricle);
+
 
 
         HashMap<Integer,Double> traffic = new HashMap<>();
@@ -97,7 +101,8 @@ public class Main extends Application {
         map.Connect("10","11",Quality_Road.average,traffic);
         map.Connect("1","4",Quality_Road.average,traffic);
 
-
+        map.Connect("Production","12",Quality_Road.average,traffic);
+        map.Connect("Production","11",Quality_Road.average,traffic);
 
 
         HashSet<Vertex> current_ver=new HashSet<>();
