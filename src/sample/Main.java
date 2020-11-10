@@ -20,6 +20,7 @@ import java.util.*;
 public class Main extends Application {
 
     public static Graph map = new Graph();
+    public static Kitchen kitchen=new Kitchen();
     public static DeliveryLogic deliveryLogic=new DeliveryLogic();
     static {
         deliveryLogic.DeliveryData=FXCollections.observableArrayList();

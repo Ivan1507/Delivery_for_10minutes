@@ -91,7 +91,6 @@ public class Graph implements Serializable {
                 test4.sub(new Vector2D(Delivery));
                 if (test4.length() > test2.length() || test3.length() > test2.length()){ continue; }
                 if (test.length() > length_par) { continue;}
-                System.out.println("Length is " + test.length());
 
 
                 Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());

@@ -1,0 +1,23 @@
+package sample;
+
+import java.util.ArrayList;
+
+//this class need to know what will prepare kitchen
+public class Kitchen {
+    private ArrayList<Product> products_of_kitchen=new ArrayList<>();
+    public void add_products(Product pr){
+        System.out.println("Кухня приступила к приготовлению пищи "+pr.getName());
+        products_of_kitchen.add(pr);
+    }
+    public void clear(){
+        products_of_kitchen.clear();
+    }
+
+    public ArrayList<Product> getProducts_of_kitchen() {
+        return products_of_kitchen;
+    }
+
+    public void setProducts_of_kitchen(ArrayList<Product> products_of_kitchen) {
+        this.products_of_kitchen = products_of_kitchen;
+    }
+}

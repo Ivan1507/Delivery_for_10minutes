@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import sample.Kitchen;
 import sample.LocalDateFormatted2;
 import sample.Delivery.Delivery;
 import sample.Main;
@@ -79,65 +80,38 @@ public class MapController implements Initializable {
             vehicle.placeTo(root);
         }
         for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
+
             delivery.getAddress().placeTo(root);
+            for(int i=0;i<delivery.getGoods().size();i++)
+               Main.kitchen.add_products(delivery.getGoods().get(i));
         }
 
-        Vertex A1 = new Vertex(125,66);
-        A1.setName("Заказ1");
-        A1.setPointType(PointType.Triangle);
-        A1.placeTo(root);
 
-        Vertex A2 = new Vertex(255,136);
-        A2.setName("Заказ 2");
-        A2.setPointType(PointType.Triangle);
-        A2.placeTo(root);
-        A2.setSpecial(true);
-
-
-        Vertex A3 = new Vertex(325,86);
-        A3.setName("Заказ 3");
-        A3.setPointType(PointType.Triangle);
-        A3.placeTo(root);
-        A3.setSpecial(true);
-
-
-        BaseTransport quadrocopter = new Quadrocopter(470+60,25+25);
+        BaseTransport quadrocopter = new BaseTransport(470+60,25+25);
         quadrocopter.setName("Квадрокотер");
         quadrocopter.setPointType(PointType.Circle);
         quadrocopter.placeTo(root);
 
 
-        BaseTransport car = new Quadrocopter(470+60,45+25);
-        car.setName("car");
-        car.setPointType(PointType.Circle);
-        car.placeTo(root);
+
 
         for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
             try {
-                //car.getExecuteTime(e);
-                //PathWrapper path = quadrocopter.FindPath(e.getAddress());
-               // System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
-               // Main.map.DrawPath(path.getPath());
-
+                PathWrapper path = quadrocopter.MakeDelivery(e);
+                System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+                Main.map.DrawPath(path.getPath());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
 
-        try {
-            //PathWrapper path = quadrocopter.FindPath(A2);
-            //System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
-            //Main.map.DrawPath(path.getPath());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        try {
-            Main.deliveryLogic.testDeliveries();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Main.deliveryLogic.testDeliveries();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         //     PathWrapper path= null;
 

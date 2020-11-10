@@ -1,7 +1,9 @@
 package sample.Transport;
 
 import javafx.scene.paint.Color;
+import sample.Controllers.MapController;
 import sample.Delivery.Delivery;
+import sample.Kitchen;
 import sample.Main;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
@@ -16,7 +18,7 @@ import java.util.TimerTask;
 public class BaseTransport extends Vertex {
 
     private double maxSpeed=120;
-    private ArrayList<Product> products=new ArrayList<>();
+    public ArrayList<Product> products=new ArrayList<>();
     private Delivery activeDelivery;
     private double max_volume_baggage = 100;
     private double max_weight_baggage = 100;
@@ -96,6 +98,32 @@ public class BaseTransport extends Vertex {
 
         return true;
     }
+    //Перегуженный метод hasSpace
+    public boolean hasSpace(ArrayList<Product> goods){
+
+
+        // вес в машине
+        double cur_volume = 0d;
+        double cur_weight = 0d;
+        for( Product a : products){
+            cur_volume+=a.getVolume();
+            cur_weight+=a.getWeight();
+        }
+
+        // взимаемый вес
+        double i_volume = 0d;
+        double i_weight = 0d;
+        for( Product a : goods){
+            i_volume+=a.getVolume();
+            i_weight+=a.getWeight();
+        }
+        // Проверка на максимальный объем в транспорте
+        // или
+        // максимальной допустимой массы в транспорте
+        if ((cur_volume+i_volume)>max_volume_baggage || (cur_weight+i_weight)>max_weight_baggage) return false;
+
+        return true;
+    }
 
     public PathWrapper FindPath(Vertex to) throws CloneNotSupportedException {
        return Main.map.FindPath(this, to);
@@ -115,19 +143,34 @@ public class BaseTransport extends Vertex {
         ArrayList<Product> deliveryGoods = delivery.getGoods();
         boolean hasProduct = true;
         for(Product product: deliveryGoods){
-
             if (!this.products.contains(product)){
                 hasProduct = false;
+                break;
             }
 
         }
         return hasProduct;
     }
+    public PathWrapper MakeDelivery(Delivery delivery) throws CloneNotSupportedException {
+        PathWrapper pt=new PathWrapper();
+        if(products.size()==0) {
+            pt = FindPath(Main.map.productPoint);
+            if(hasSpace(Main.kitchen.getProducts_of_kitchen())) {//Checking for space in Transport
+                products = Main.kitchen.getProducts_of_kitchen();
+                System.out.println("Товары успешно погружены в транспорт"+products);
+            }
+        }
+
+        PathWrapper pt2 = FindPath(delivery.getAddress());
+        pt.MergePathsWrappers(pt2);
+        System.out.println("pt= "+pt.getPath());
+        return pt;
+    }
     public void getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
-                System.out.println("Main.map.productPoint = " + Main.map.productPoint);
+               // System.out.println("Main.map.productPoint = " + Main.map.productPoint);
                 PathWrapper wrapper = FindPath(Main.map.productPoint);
 
                 System.out.println("wrapper = " + wrapper);
