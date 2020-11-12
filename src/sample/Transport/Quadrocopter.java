@@ -20,6 +20,7 @@ public class Quadrocopter extends BaseTransport {
     public void init(){
         init(false);
     }
+    public Delivery current_dev;
     public void init(boolean set_speed){
         setVolume_baggage(5);
         setMax_weight_baggage(4);
@@ -96,10 +97,9 @@ public class Quadrocopter extends BaseTransport {
                 System.out.println("wrapper = " + wrapper);
                 double x = getX();
                 double y = getY();
+                bas.products=Main.kitchen.getProducts_of_kitchen();
+                current_dev=delivery;
 
-                Quadrocopter clone = clone();
-                clone.setX(Graph.productPoint.getX());
-                clone.setY(Graph.productPoint.getY());
                 PathWrapper wrapper2 = FindPath(Graph.productPoint,delivery.getAddress());
 
 
