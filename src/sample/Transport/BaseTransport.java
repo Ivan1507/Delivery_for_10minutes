@@ -155,8 +155,8 @@ public class BaseTransport extends Vertex {
         PathWrapper pt=new PathWrapper();
         if(products.size()==0) {
             pt = FindPath(Main.map.productPoint);
-            if(hasSpace(Main.kitchen.getProducts_of_kitchen())) {//Checking for space in Transport
-                products = Main.kitchen.getProducts_of_kitchen();
+            if(hasSpace(delivery.getGoods())){//Checking for space in Transport
+                products =delivery.getGoods();// Main.kitchen.getProducts_of_kitchen();
                 System.out.println("Товары успешно погружены в транспорт"+products);
             }
         }
@@ -170,36 +170,35 @@ public class BaseTransport extends Vertex {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
-               // System.out.println("Main.map.productPoint = " + Main.map.productPoint);
-                PathWrapper wrapper = FindPath(Main.map.productPoint);
-
-                System.out.println("wrapper = " + wrapper);
-                double x = getX();
-                double y = getY();
-
-                var clone = clone();
-                clone.setX(Main.map.productPoint.getX());
-                clone.setY(Main.map.productPoint.getY());
-                PathWrapper wrapper2 = FindPath(clone,delivery.getAddress());
-
-                wrapper.getPath().forEach((e) -> {
-                   // System.out.println(e.getName());
-                });
+                try {
+                    // System.out.println("Main.map.productPoint = " + Main.map.productPoint);
+                    PathWrapper wrapper = FindPath(Main.map.productPoint);
 
 
-               setX(x);
-               setY(y);
+                    var clone = clone();
+                    clone.setX(Main.map.productPoint.getX());
+                    clone.setY(Main.map.productPoint.getY());
+                    PathWrapper wrapper2 = FindPath(clone, delivery.getAddress());
 
-                wrapper2.getPath().forEach((e) -> {
-                  //  System.out.println("Отсюда" + e.getName());
-                });
-                //Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
-                //Main.map.DrawPath(wrapper2.getPath());
-                System.out.println("Для машины " + Count_time(wrapper) + Count_time(wrapper2));
+                    wrapper.getPath().forEach((e) -> {
+                        // System.out.println(e.getName());
+                    });
+
+
+                    wrapper2.getPath().forEach((e) -> {
+                        //  System.out.println("Отсюда" + e.getName());
+                    });
+                    //Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
+                    Main.map.DrawPath(wrapper.MergePathsWrappers(wrapper2).getPath());
+                    System.out.println("Для машины " + Count_time(wrapper.MergePathsWrappers(wrapper2)));
+                }
+                catch (NullPointerException e) {
+                    throw new Exception("Машина " + this.toString() + " не может построить маршрут");
+                }
 
             } else {
 
-
+                throw new Exception("Машина " + this.toString() + " не может построить маршрут");
             }
 
         }

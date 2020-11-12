@@ -82,8 +82,8 @@ public class MapController implements Initializable {
         for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
 
             delivery.getAddress().placeTo(root);
-            for(int i=0;i<delivery.getGoods().size();i++)
-               Main.kitchen.add_products(delivery.getGoods().get(i));
+           // for(int i=0;i<delivery.getGoods().size();i++)
+               //Main.kitchen.add_products(delivery.getGoods().get(i));
         }
 
 
@@ -97,9 +97,9 @@ public class MapController implements Initializable {
 
         for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
             try {
-                PathWrapper path = quadrocopter.MakeDelivery(e);
-                System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
-                Main.map.DrawPath(path.getPath());
+//                PathWrapper path = quadrocopter.FindPath(e.getAddress());
+//                System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+//                Main.map.DrawPath(path.getPath());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -107,11 +107,11 @@ public class MapController implements Initializable {
 
 
 
-//        try {
-//            Main.deliveryLogic.testDeliveries();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Main.deliveryLogic.testDeliveries();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //     PathWrapper path= null;
 
