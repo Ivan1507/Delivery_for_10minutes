@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import sample.Delivery.Delivery;
 import sample.Delivery.DeliveryEdgeInfo;
 import sample.Main;
+import sample.MapLogic.Graph;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
@@ -83,40 +84,32 @@ public class Quadrocopter extends BaseTransport {
 
 
 
-    @Override
-    public Quadrocopter clone() throws CloneNotSupportedException {
-        return (Quadrocopter) super.clone();
-    }
 
-    public void getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
+
+    public void getExecuteTime(BaseTransport bas,Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
-                System.out.println("Main.map.productPoint = " + Main.map.productPoint);
-                PathWrapper wrapper = FindPath(Main.map.productPoint);
+                System.out.println("Main.map.productPoint = " + Graph.productPoint);
+                PathWrapper wrapper = FindPath(Graph.productPoint);
 
                 System.out.println("wrapper = " + wrapper);
                 double x = getX();
                 double y = getY();
 
                 Quadrocopter clone = clone();
-                clone.setX(Main.map.productPoint.getX());
-                clone.setY(Main.map.productPoint.getY());
-                PathWrapper wrapper2 = FindPath(Main.map.productPoint,delivery.getAddress());
-
-                wrapper.getPath().forEach((e) -> {
-                    // System.out.println(e.getName());
-                });
+                clone.setX(Graph.productPoint.getX());
+                clone.setY(Graph.productPoint.getY());
+                PathWrapper wrapper2 = FindPath(Graph.productPoint,delivery.getAddress());
 
 
                 //setX(x);
                 //setY(y);
 
-                wrapper2.getPath().forEach((e) -> {
-                    //  System.out.println("Отсюда" + e.getName());
-                });
-                Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
-                Main.map.DrawPath(wrapper2.getPath());
+
+                //Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
+                Main.map.DrawPath(wrapper.MergePathsWrappers(wrapper2).getPath());
+                System.out.println("Для квадро = " + Count_time(wrapper.MergePathsWrappers(wrapper2)));
             } else {
 
 
@@ -127,6 +120,10 @@ public class Quadrocopter extends BaseTransport {
             //System.out.println("Не построить маршрут!");
         }
 
+    }
+    @Override
+    public Quadrocopter clone() throws CloneNotSupportedException {
+        return (Quadrocopter) super.clone();
     }
 
 

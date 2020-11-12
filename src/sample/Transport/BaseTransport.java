@@ -1,10 +1,12 @@
 package sample.Transport;
 
+import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import sample.Controllers.MapController;
 import sample.Delivery.Delivery;
 import sample.Kitchen;
 import sample.Main;
+import sample.MapLogic.Graph;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Product;
@@ -20,11 +22,11 @@ public class BaseTransport extends Vertex {
     private double maxSpeed=120;
     public ArrayList<Product> products=new ArrayList<>();
     private Delivery activeDelivery;
+    private BaseTransport clone;
     private double max_volume_baggage = 100;
     private double max_weight_baggage = 100;
+
     private String Name;
-
-
 
     public double getMaxSpeed(){
         return maxSpeed;
@@ -151,54 +153,56 @@ public class BaseTransport extends Vertex {
         }
         return hasProduct;
     }
-    public PathWrapper MakeDelivery(Delivery delivery) throws CloneNotSupportedException {
-        PathWrapper pt=new PathWrapper();
-        if(products.size()==0) {
-            pt = FindPath(Main.map.productPoint);
-            if(hasSpace(delivery.getGoods())){//Checking for space in Transport
-                products =delivery.getGoods();// Main.kitchen.getProducts_of_kitchen();
-                System.out.println("Товары успешно погружены в транспорт"+products);
-            }
-        }
-
-        PathWrapper pt2 = FindPath(delivery.getAddress());
-        pt.MergePathsWrappers(pt2);
-        System.out.println("pt= "+pt.getPath());
-        return pt;
+    public PathWrapper MakeDelivery(BaseTransport bas,Delivery delivery) throws CloneNotSupportedException {
+//        PathWrapper pt=new PathWrapper();
+//        if(products.size()==0) {
+//            pt = FindPath(Graph.productPoint);
+//            if(hasSpace(delivery.getGoods())){//Checking for space in Transport
+//                bas.products =delivery.getGoods();// Main.kitchen.getProducts_of_kitchen();
+//                System.out.println("Товары успешно погружены в транспорт"+products);
+//            }
+//        }
+        PathWrapper pt2=FindPath(bas,delivery.getAddress());
+        bas.setX(delivery.getAddress().getX());
+        bas.setY(delivery.getAddress().getY());
+        return pt2;
     }
-    public void getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
+    public void getExecuteTime(BaseTransport bas,Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
                 try {
-                    // System.out.println("Main.map.productPoint = " + Main.map.productPoint);
-                    PathWrapper wrapper = FindPath(Main.map.productPoint);
-
+                    System.out.println("132");
+                     //System.out.println("Main.map.productPoint = " + Main.map.productPoint);
+                    PathWrapper wrapper = FindPath(Graph.productPoint);
+                    bas.products=Main.kitchen.getProducts_of_kitchen();//Загружаем товары в машину
 
                     var clone = clone();
-                    clone.setX(Main.map.productPoint.getX());
-                    clone.setY(Main.map.productPoint.getY());
+                    clone.setX(Graph.productPoint.getX());
+                    clone.setY(Graph.productPoint.getY());
                     PathWrapper wrapper2 = FindPath(clone, delivery.getAddress());
 
-                    wrapper.getPath().forEach((e) -> {
-                        // System.out.println(e.getName());
-                    });
-
-
-                    wrapper2.getPath().forEach((e) -> {
-                        //  System.out.println("Отсюда" + e.getName());
-                    });
+                    bas.setX(delivery.getAddress().getX());
+                    bas.setY(delivery.getAddress().getY());
                     //Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
                     Main.map.DrawPath(wrapper.MergePathsWrappers(wrapper2).getPath());
                     System.out.println("Для машины " + Count_time(wrapper.MergePathsWrappers(wrapper2)));
+
+
+
                 }
                 catch (NullPointerException e) {
                     throw new Exception("Машина " + this.toString() + " не может построить маршрут");
                 }
 
             } else {
-
+//                PathWrapper pt=FindPath(bas,delivery.getAddress());
+//                clone.setX(delivery.getAddress().getX());
+//                clone.setY(delivery.getAddress().getY());
+//                Main.map.DrawPath(pt.getPath());
+//                System.out.println("Для машины " + Count_time(pt));
                 throw new Exception("Машина " + this.toString() + " не может построить маршрут");
+
             }
 
         }

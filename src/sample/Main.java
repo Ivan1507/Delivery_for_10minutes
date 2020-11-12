@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.Light;
 import javafx.stage.Stage;
 import sample.Delivery.*;
 import sample.MapLogic.Graph;
@@ -26,11 +27,11 @@ public class Main extends Application {
         deliveryLogic.DeliveryData=FXCollections.observableArrayList();
 
 
-        BaseTransport Car = new BaseTransport(166+80,157+7);
+        BaseTransport Car = new Quadrocopter(166+80,157+7);
         Car.setName("Машина 2");
         Car.setPointType(PointType.Circle);
+        deliveryLogic.getDepartment().getVehicles().add(Car);
 
-        deliveryLogic.getDepartment().getVehicles().add( Car );
     }
 
     public static ObservableList<Delivery> DeliveryData;
@@ -114,6 +115,7 @@ public class Main extends Application {
           if(!current_ver.contains(dev.getAddress())) {
               current_ver.add(dev.getAddress());
               deliveryLogic.add_delivery(dev);
+              //map.AddPoint(dev.toString(),dev.getAddress().getX(),dev.getAddress().getY(), PointType.Triangle);
           }
       }
 

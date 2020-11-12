@@ -266,6 +266,7 @@ public class Graph implements Serializable {
         }
         path.add(start);
         Collections.reverse(path);
+
         return new PathWrapper( shortest_distances,path);
     }
 
