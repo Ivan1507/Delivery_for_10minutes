@@ -93,17 +93,32 @@ public class MapController implements Initializable {
         quadrocopter.placeTo(root);
 
 
-
-
-        for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
-            try {
-                PathWrapper path = quadrocopter.MakeDelivery(e);
-                System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
-                Main.map.DrawPath(path.getPath());
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+        Delivery current_del=Main.deliveryLogic.getDeliveryData().get(0);
+        PathWrapper path = null;
+        try {
+            path = quadrocopter.DrivetoProductPoint(quadrocopter, current_del);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
+        System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+        Main.map.DrawPath(path.getPath());
+//        for(int i=0;i<Main.deliveryLogic.getDeliveryData().size()-1;i++) {
+//            Delivery current_del=Main.deliveryLogic.getDeliveryData().get(0);
+//            Delivery next_del=Main.deliveryLogic.getDeliveryData().get(i+1);
+//            try {
+//                if(quadrocopter.products.size()==0) {
+//                    PathWrapper path = quadrocopter.DrivetoProductPoint(quadrocopter, current_del);
+//                    System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+//                    Main.map.DrawPath(path.getPath());
+//
+//                }
+//                else{
+//                    PathWrapper path = quadrocopter.MakeDelivery(quadrocopter,current_del,next_del);
+//                    System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
+//                    Main.map.DrawPath(path.getPath());
+//
+//                }
+
 
 
 

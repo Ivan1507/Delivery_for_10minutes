@@ -59,7 +59,9 @@ public class Main extends Application {
         map.AddPoint("12",760,150, PointType.TwoCricle);
 
         map.AddProduction("Production",760,250, PointType.TwoCricle);
-
+        kitchen.setName("Production");
+        kitchen.setX(760);
+        kitchen.setX(250);
 
 
         HashMap<Integer,Double> traffic = new HashMap<>();

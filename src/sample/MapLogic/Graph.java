@@ -8,6 +8,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import sample.Delivery.DeliveryEdgeInfo;
 import sample.Graphic.PointType;
+import sample.Kitchen;
 import sample.Transport.BaseTransport;
 import sample.Vector2D;
 
@@ -143,7 +144,7 @@ public class Graph implements Serializable {
                     }
                     Vector2D v = new Vector2D(e.getKey());
                     v.sub( new Vector2D(vehicle));
-                    System.out.println("v = " + v);
+
 
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(vehicle,e.getKey(),quality,traffic);
@@ -160,7 +161,7 @@ public class Graph implements Serializable {
                     }
                     Vector2D v = new Vector2D(e.getKey());
                     v.sub( new Vector2D(to));
-                    System.out.println("v = " + v);
+
 
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(to,e.getKey(),quality,traffic);
@@ -345,7 +346,7 @@ public class Graph implements Serializable {
     // Прорисовка минимального пути на графе
     public void DrawPath( ArrayList<Vertex> path){
 
-         DrawPath(path, Color.GOLD);
+        DrawPath(path, Color.GOLD);
 
     }
 

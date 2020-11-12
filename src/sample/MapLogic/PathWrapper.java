@@ -16,12 +16,12 @@ public class PathWrapper {
     public PathWrapper() {
     }
     //Слияние двух путей
-    public PathWrapper MergePathsWrappers(PathWrapper pt){
-        if(pt!=null)
-        for(Vertex v:pt.getPath()){
-            this.addToPath(v);
+    public PathWrapper MergePathsWrappers(PathWrapper pt,PathWrapper pt2){
+        if(pt2!=null)
+        for(Vertex v:pt2.getPath()){
+            pt.path.add(v);
         }
-        return this;
+        return pt;
     }
     public void addToPath(Vertex v){
         this.path.add(v);

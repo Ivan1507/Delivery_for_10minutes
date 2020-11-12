@@ -13,13 +13,13 @@ public class DeliveryLogic {
         System.out.println("Заказ успешно добавлен из таблицы!");
 
     }
-    public void testDeliveries() throws CloneNotSupportedException {
-        for( Delivery e: getDeliveryData()) {
-            for (BaseTransport baseTransport : department.getVehicles()) {
-                baseTransport.getExecuteTime(e);
-            }
-        }
-    }
+//    public void testDeliveries() throws CloneNotSupportedException {
+//        for( Delivery e: getDeliveryData()) {
+//            for (BaseTransport baseTransport : department.getVehicles()) {
+//                baseTransport.getExecuteTime(e);
+//            }
+//        }
+//    }
     public void remove_by_key(Integer id){
 
         for(int i=0;i<DeliveryData.size();i++){
