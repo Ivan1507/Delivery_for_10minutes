@@ -29,8 +29,17 @@ public class Main extends Application {
         BaseTransport Car = new BaseTransport(166+80,157+7);
         Car.setName("Машина 2");
         Car.setPointType(PointType.Circle);
-
         deliveryLogic.getDepartment().getVehicles().add( Car );
+
+
+//        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
+//
+//
+//        Car3.setPointType(PointType.Circle);
+//        Car3.setName("Машина 3");
+//        deliveryLogic.getDepartment().getVehicles().add( Car3 );
+
+
     }
 
     public static ObservableList<Delivery> DeliveryData;

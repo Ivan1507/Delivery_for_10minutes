@@ -12,7 +12,7 @@ public class Vertex implements Serializable,Cloneable {
    private double X;
    private double Y;
    private String Name; // Название вершины
-   private PointType pointType; // Какая будет иконка на карте
+   private PointType PointType; // Какая будет иконка на карте
    private boolean isSpecial = false; // Тип вершины: true - заказ, false - все остальное
 
     @Override
@@ -33,13 +33,13 @@ public class Vertex implements Serializable,Cloneable {
 
     public void setX(double x) {
         X = x;
-        //wrapper.changes(x,this.getY(),root);
+        wrapper.changes(x,this.getY(),root,this);
     }
 
     public void setY(double y) {
         Y = y;
         System.out.println("root = " + root);
-        //wrapper.changes(this.getX(),y,root);
+        wrapper.changes(this.getX(),y,root,this);
     }
 
     public void setRoot(Pane root) {
@@ -47,7 +47,7 @@ public class Vertex implements Serializable,Cloneable {
     }
 
     public void setPointType(PointType pointType) {
-        this.pointType = pointType;
+        this.PointType = pointType;
     }
 
 
@@ -64,7 +64,7 @@ public class Vertex implements Serializable,Cloneable {
     }
 
     public PointType getPointType() {
-        return pointType;
+        return PointType;
     }
 
     public boolean isSpecial() {
@@ -99,7 +99,7 @@ public class Vertex implements Serializable,Cloneable {
     }
 
     public void setName( String name){
-       Name = name;
+       this.Name = name;
     }
     public String getName(){
        return Name;
@@ -110,7 +110,7 @@ public class Vertex implements Serializable,Cloneable {
         return "Vertex{" +
                 "X=" + X +
                 ", Y=" + Y +
-                ", Name='" + Name + '\'' +
+                ", Name='" + getName() + '\'' +
                 '}';
     }
 

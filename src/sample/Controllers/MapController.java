@@ -7,17 +7,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import sample.Kitchen;
 import sample.LocalDateFormatted2;
 import sample.Delivery.Delivery;
 import sample.Main;
 import sample.Delivery.DeliveryStatus;
 import sample.Graphic.PointType;
-import sample.MapLogic.PathWrapper;
-import sample.MapLogic.Vertex;
 import sample.Product;
 import sample.Transport.BaseTransport;
-import sample.Transport.Quadrocopter;
 
 import java.net.URL;
 import java.util.*;
@@ -56,16 +52,6 @@ public class MapController implements Initializable {
         Main.map.setRoot( root );
         Main.map.DrawGraph();
         Main.map.Draw();
-//ArrayList<String> path
-//       PathWrapper pathWrapper= Main.map.find_min_path_with_vert("1","12", new BaseTransport());
-//        for(String s:pathWrapper.getPath()){
-//            System.out.println(s);
-//        }
-//        double ans=Main.map.Count_time(pathWrapper);
-//        System.out.println("Доставка заняла "+ans+" min");
-//
-//        Main.map.DrawPath( pathWrapper.getPath() );
-//        System.out.println("Добавилось");
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
         executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
@@ -79,11 +65,9 @@ public class MapController implements Initializable {
         for (BaseTransport vehicle : Main.deliveryLogic.getDepartment().getVehicles()) {
             vehicle.placeTo(root);
         }
-        for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
 
+        for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
             delivery.getAddress().placeTo(root);
-           // for(int i=0;i<delivery.getGoods().size();i++)
-               //Main.kitchen.add_products(delivery.getGoods().get(i));
         }
 
 
@@ -108,9 +92,14 @@ public class MapController implements Initializable {
 
 
         try {
-            Main.deliveryLogic.testDeliveries();
-        } catch (Exception e) {
-            e.printStackTrace();
+            for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
+                BaseTransport t =(Main.deliveryLogic.getExecuteTime(e));
+                System.out.println(t + " берет заказ " + e);
+                t.setActiveDelivery(e);
+               Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+            }
+        } catch (NullPointerException | CloneNotSupportedException e) {
+           // e.printStackTrace();x
         }
 
         //     PathWrapper path= null;

@@ -85,4 +85,17 @@ public class Delivery implements Serializable,Cloneable {
     public void setAddress(Vertex address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + id +
+                ", executor='" + executor + '\'' +
+                ", status=" + status +
+                ", time_start=" + time_start +
+                ", time_end=" + time_end +
+                ", goods=" + goods +
+                ", address=" + address +
+                '}';
+    }
 }
