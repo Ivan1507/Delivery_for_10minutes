@@ -110,6 +110,7 @@ public class BaseTransport extends Vertex {
         return Main.map.FindPath(from, to);
     }
     public double CountTime(PathWrapper pathWrapper){
+
         double time=0.0;
         for(Vertex s:pathWrapper.getPath()){
             time+=pathWrapper.getShortest_distance().get(s);
@@ -159,13 +160,17 @@ public class BaseTransport extends Vertex {
                 clone.setX(Main.map.productPoint.getX());
                 clone.setY(Main.map.productPoint.getY());
                 PathWrapper wrapper2 = FindPath(clone, delivery.getAddress());
+
+
                 clone.setX(x);
                 clone.setY(y);
                 PathWrapper full_path = wrapper.MergePathsWrappers(wrapper2);
+                System.out.println("wrapper2 = " + wrapper2.getPath());
+
+               // System.out.println("full_path = " + full_path.getPath());
                 return full_path;
             } else {
                 PathWrapper wrapper = FindPath(delivery.getAddress());
-
                 return wrapper;
             }
 
@@ -174,40 +179,14 @@ public class BaseTransport extends Vertex {
     }
 
     // Узнать время выполнения заказов для каждой машины
-    public double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
-        try {
-//            boolean hasProducts = hasProducts(delivery);
-//            if (!hasProducts) {
-//                PathWrapper wrapper = FindPath(Main.map.productPoint);
-//
-//
-//                double x = this.getX();
-//                double y = this.getY();
-//                BaseTransport clone = clone();
-//                clone.setX(Main.map.productPoint.getX());
-//                clone.setY(Main.map.productPoint.getY());
-//                PathWrapper wrapper2 = FindPath(clone,delivery.getAddress());
-//
-//                clone.setX(x);
-//                clone.setY(y);
-//
-//                PathWrapper full_path = wrapper.MergePathsWrappers( wrapper2);
-//                Main.map.DrawPath(full_path.getPath());
-//                return Count_time(full_path);
-//            } else {
-//
-//                PathWrapper wrapper = FindPath(delivery.getAddress());
-//
-//                Main.map.DrawPath(wrapper.getPath());
-//
-//                return Count_time(wrapper);
-//            }
-        return CountTime(getPathToDelivery(delivery));
-        }
-        catch (Exception e){
-            //System.out.println("Не построить маршрут!");
-            return 900000000;
-        }
+    public Double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
+
+
+        PathWrapper wrapper = getPathToDelivery(delivery);
+
+        return CountTime(wrapper);
+
+
 
     }
 
