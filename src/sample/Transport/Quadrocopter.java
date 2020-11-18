@@ -34,6 +34,7 @@ public class Quadrocopter extends BaseTransport {
         init();
     }
 
+
     @Override
     public double CountTime(PathWrapper pathWrapper) {
         ArrayList<Vertex> path = pathWrapper.getPath();

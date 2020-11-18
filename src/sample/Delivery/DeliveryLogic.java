@@ -19,7 +19,8 @@ public class DeliveryLogic {
             Double time=-1d;
 
             for (BaseTransport baseTransport : department.getVehicles()) {
-                if (baseTransport.getActiveDelivery() != null) continue;
+                    if (baseTransport.getActiveDelivery() != null) continue;
+
                 //if (baseTransport.getExecuteTime(e) == null) continue;
                 if (time == -1d) {
                     time = baseTransport.getExecuteTime(e);

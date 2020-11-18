@@ -32,6 +32,12 @@ public class Main extends Application {
         deliveryLogic.getDepartment().getVehicles().add( Car );
 
 
+//        BaseTransport Car3 = new Quadrocopter(46+80,147+7);
+//        Car3.setMaxSpeed(1);
+//        Car3.setPointType(PointType.Circle);
+//        deliveryLogic.getDepartment().getVehicles().add( Car3 );
+
+
 //        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
 //
 //
