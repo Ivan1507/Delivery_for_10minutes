@@ -91,16 +91,29 @@ public class MapController implements Initializable {
 
 
 
-        try {
+
             for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
-                BaseTransport t =(Main.deliveryLogic.getExecuteTime(e));
-                System.out.println(t + " берет заказ " + e);
-                t.setActiveDelivery(e);
-               Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+                System.out.println("e = " + e);
+            if (e.getAddress().getName() !="Заказ 47") continue;
+                try {
+                    System.out.println("Start");
+                    BaseTransport t;
+                     t = (Main.deliveryLogic.getBestExecutor(e));
+                    System.out.println("t = " + t);
+                    //if (t == null) throw new NullPointerException();
+                    System.out.println(t + " берет заказ " + e);
+                    Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+                    System.out.println("End");
+                }
+                catch (NullPointerException | CloneNotSupportedException tt){
+        tt.printStackTrace();
+                }
+
+                //t.setActiveDelivery(e);
+               //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+
             }
-        } catch (NullPointerException | CloneNotSupportedException e) {
-           // e.printStackTrace();x
-        }
+
 
         //     PathWrapper path= null;
 

@@ -38,7 +38,7 @@ public class Graph implements Serializable {
 
     // Рисует соединения между точками
     public void DrawGraph(){
-        for(Map.Entry<Vertex,HashSet<Vertex>> x:graph.entrySet()){
+        for(Map.Entry<Vertex,HashSet<Vertex>> x:edges.entrySet()){
             for(Vertex y:x.getValue()){
                 Line l=new Line(x.getKey().getX(),x.getKey().getY(),y.getX(),y.getY());
                 try {

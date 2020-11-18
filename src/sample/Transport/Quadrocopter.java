@@ -34,6 +34,7 @@ public class Quadrocopter extends BaseTransport {
         init();
     }
 
+
     @Override
     public double CountTime(PathWrapper pathWrapper) {
         ArrayList<Vertex> path = pathWrapper.getPath();
@@ -86,7 +87,7 @@ public class Quadrocopter extends BaseTransport {
     }
 
     @Override
-    public double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
+    public Double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
@@ -104,13 +105,13 @@ public class Quadrocopter extends BaseTransport {
 
 
                 PathWrapper full_path = wrapper.MergePathsWrappers(wrapper2);
-                Main.map.DrawPath(full_path.getPath());
+               // Main.map.DrawPath(full_path.getPath());
                 return CountTime(full_path);
             } else {
 
                 PathWrapper wrapper = FindPath(delivery.getAddress());
 
-                Main.map.DrawPath(wrapper.getPath());
+               // Main.map.DrawPath(wrapper.getPath());
 
                 return CountTime(wrapper);
 
@@ -118,12 +119,41 @@ public class Quadrocopter extends BaseTransport {
 
         } catch (Exception e) {
             //System.out.println("Не построить маршрут!");
-            return 900000000;
+            return null;
         }
 
     }
+@Override
+    public PathWrapper getPathToDelivery(Delivery delivery) throws CloneNotSupportedException {
+        try {
+            boolean hasProducts = hasProducts(delivery);
+            if (!hasProducts) {
+                PathWrapper wrapper = FindPath(Main.map.productPoint);
+
+                double x = this.getX();
+                double y = this.getY();
+                Quadrocopter clone = clone();
+                clone.setX(Main.map.productPoint.getX());
+                clone.setY(Main.map.productPoint.getY());
+                PathWrapper wrapper2 = clone.FindPath(delivery.getAddress());
+                PathWrapper full_path = wrapper.MergePathsWrappers(wrapper2);
+                //clone.setX(x);
+                //clone.setY(y);
+//                if (wrapper2.getPath().size() == 0) {
+//                return null;
+//                }
 
 
+                return full_path;
+            } else {
+                PathWrapper wrapper = FindPath(delivery.getAddress());
+
+                return wrapper;
+            }
+
+        }
+        catch (Exception r){ return null; }
+    }
 }
 //
 //

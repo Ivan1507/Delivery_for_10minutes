@@ -13,22 +13,27 @@ public class DeliveryLogic {
         System.out.println("Заказ успешно добавлен из таблицы!");
 
     }
-    public BaseTransport getExecuteTime(Delivery e) throws CloneNotSupportedException {
+    public BaseTransport getBestExecutor(Delivery e) throws CloneNotSupportedException {
 
             BaseTransport executor = null;
-            double time=-1;
+            Double time=-1d;
 
             for (BaseTransport baseTransport : department.getVehicles()) {
-                //if (baseTransport.getActiveDelivery() != null) continue;
-                if (time == -1) {
+                    if (baseTransport.getActiveDelivery() != null) continue;
+
+                //if (baseTransport.getExecuteTime(e) == null) continue;
+                if (time == -1d) {
                     time = baseTransport.getExecuteTime(e);
+                    //System.out.println("time = " + time);
                     executor = baseTransport;
                 }
                 if (time > baseTransport.getExecuteTime(e)){
                     time = baseTransport.getExecuteTime(e);
+                    //System.out.println("time = " + time);
                     executor = baseTransport;
                 }
             }
+        System.out.println("executor = " + executor + " and time = " + time);
         return executor;
     }
 
