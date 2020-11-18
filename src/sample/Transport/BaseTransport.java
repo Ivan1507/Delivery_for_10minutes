@@ -1,32 +1,31 @@
 package sample.Transport;
 
-import javafx.scene.Parent;
-import javafx.scene.paint.Color;
-import sample.Controllers.MapController;
 import sample.Delivery.Delivery;
-import sample.Kitchen;
 import sample.Main;
-import sample.MapLogic.Graph;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Vertex;
 import sample.Product;
 import sample.Vector2D;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 // Базовый класс для описания всех видов транспортых средств
 public class BaseTransport extends Vertex {
 
     private double maxSpeed=120;
     public ArrayList<Product> products=new ArrayList<>();
-    private Delivery activeDelivery;
-    private BaseTransport clone;
+    private Delivery activeDelivery=null;
     private double max_volume_baggage = 100;
     private double max_weight_baggage = 100;
 
-    private String Name;
+
+    public Delivery getActiveDelivery() {
+        return activeDelivery;
+    }
+
+    public void setActiveDelivery(Delivery activeDelivery) {
+        this.activeDelivery = activeDelivery;
+    }
 
     public double getMaxSpeed(){
         return maxSpeed;
@@ -43,7 +42,7 @@ public class BaseTransport extends Vertex {
     public BaseTransport(double x, double y, double maxSpeed, String name) {
         super(x, y);
         this.maxSpeed = maxSpeed;
-        Name = name;
+       setName(name);
     }
 
     public BaseTransport() {
@@ -76,33 +75,10 @@ public class BaseTransport extends Vertex {
 
     // Может ли транспорт взять заказ?
     public boolean hasSpace(Delivery delivery){
-
-        ArrayList<Product> A  = delivery.getGoods();
-        // вес в машине
-        double cur_volume = 0d;
-        double cur_weight = 0d;
-        for( Product a : products){
-            cur_volume+=a.getVolume();
-            cur_weight+=a.getWeight();
-        }
-
-        // взимаемый вес
-        double i_volume = 0d;
-        double i_weight = 0d;
-        for( Product a : A){
-            i_volume+=a.getVolume();
-            i_weight+=a.getWeight();
-        }
-        // Проверка на максимальный объем в транспорте
-        // или
-        // максимальной допустимой массы в транспорте
-        if ((cur_volume+i_volume)>max_volume_baggage || (cur_weight+i_weight)>max_weight_baggage) return false;
-
-        return true;
+       return  hasSpace(delivery.getGoods());
     }
     //Перегуженный метод hasSpace
     public boolean hasSpace(ArrayList<Product> goods){
-
 
         // вес в машине
         double cur_volume = 0d;
@@ -133,7 +109,7 @@ public class BaseTransport extends Vertex {
     public PathWrapper FindPath(BaseTransport from, Vertex to) throws CloneNotSupportedException {
         return Main.map.FindPath(from, to);
     }
-    public double Count_time(PathWrapper pathWrapper){
+    public double CountTime(PathWrapper pathWrapper){
         double time=0.0;
         for(Vertex s:pathWrapper.getPath()){
             time+=pathWrapper.getShortest_distance().get(s);
@@ -153,61 +129,84 @@ public class BaseTransport extends Vertex {
         }
         return hasProduct;
     }
-    public PathWrapper MakeDelivery(BaseTransport bas,Delivery delivery) throws CloneNotSupportedException {
-//        PathWrapper pt=new PathWrapper();
-//        if(products.size()==0) {
-//            pt = FindPath(Graph.productPoint);
-//            if(hasSpace(delivery.getGoods())){//Checking for space in Transport
-//                bas.products =delivery.getGoods();// Main.kitchen.getProducts_of_kitchen();
-//                System.out.println("Товары успешно погружены в транспорт"+products);
-//            }
-//        }
-        PathWrapper pt2=FindPath(bas,delivery.getAddress());
-        bas.setX(delivery.getAddress().getX());
-        bas.setY(delivery.getAddress().getY());
-        return pt2;
+        public boolean ShipProductsInCar(Delivery delivery) throws CloneNotSupportedException {
+            Vector2D distance  = new Vector2D(Main.map.productPoint);
+            distance.sub(new Vector2D(this));
+            if (distance.length() > 35) return false;
+
+            if(hasSpace(delivery.getGoods())){ //Checking for space in Transport
+                for (Product product : delivery.getGoods()){
+                    if (!products.contains(product)){
+                        products.add(product);
+                    }
+
+
+                }
+            }
+        return true;
     }
-    public void getExecuteTime(BaseTransport bas,Delivery delivery) throws CloneNotSupportedException {
+
+
+    public PathWrapper getPathToDelivery(Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
-                try {
-                    System.out.println("132");
-                     //System.out.println("Main.map.productPoint = " + Main.map.productPoint);
-                    PathWrapper wrapper = FindPath(Graph.productPoint);
-                    bas.products=Main.kitchen.getProducts_of_kitchen();//Загружаем товары в машину
+                PathWrapper wrapper = FindPath(Main.map.productPoint);
 
-                    var clone = clone();
-                    clone.setX(Graph.productPoint.getX());
-                    clone.setY(Graph.productPoint.getY());
-                    PathWrapper wrapper2 = FindPath(clone, delivery.getAddress());
-
-                    bas.setX(delivery.getAddress().getX());
-                    bas.setY(delivery.getAddress().getY());
-                    //Main.map.DrawPath(wrapper.getPath(), Color.rgb(255,25,25));
-                    Main.map.DrawPath(wrapper.MergePathsWrappers(wrapper2).getPath());
-                    System.out.println("Для машины " + Count_time(wrapper.MergePathsWrappers(wrapper2)));
-
-
-
-                }
-                catch (NullPointerException e) {
-                    throw new Exception("Машина " + this.toString() + " не может построить маршрут");
-                }
-
+                double x = this.getX();
+                double y = this.getY();
+                BaseTransport clone = clone();
+                clone.setX(Main.map.productPoint.getX());
+                clone.setY(Main.map.productPoint.getY());
+                PathWrapper wrapper2 = FindPath(clone, delivery.getAddress());
+                clone.setX(x);
+                clone.setY(y);
+                PathWrapper full_path = wrapper.MergePathsWrappers(wrapper2);
+                return full_path;
             } else {
-//                PathWrapper pt=FindPath(bas,delivery.getAddress());
-//                clone.setX(delivery.getAddress().getX());
-//                clone.setY(delivery.getAddress().getY());
-//                Main.map.DrawPath(pt.getPath());
-//                System.out.println("Для машины " + Count_time(pt));
-                throw new Exception("Машина " + this.toString() + " не может построить маршрут");
+                PathWrapper wrapper = FindPath(delivery.getAddress());
 
+                return wrapper;
             }
 
         }
+        catch (Exception r){ return null; }
+    }
+
+    // Узнать время выполнения заказов для каждой машины
+    public double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
+        try {
+//            boolean hasProducts = hasProducts(delivery);
+//            if (!hasProducts) {
+//                PathWrapper wrapper = FindPath(Main.map.productPoint);
+//
+//
+//                double x = this.getX();
+//                double y = this.getY();
+//                BaseTransport clone = clone();
+//                clone.setX(Main.map.productPoint.getX());
+//                clone.setY(Main.map.productPoint.getY());
+//                PathWrapper wrapper2 = FindPath(clone,delivery.getAddress());
+//
+//                clone.setX(x);
+//                clone.setY(y);
+//
+//                PathWrapper full_path = wrapper.MergePathsWrappers( wrapper2);
+//                Main.map.DrawPath(full_path.getPath());
+//                return Count_time(full_path);
+//            } else {
+//
+//                PathWrapper wrapper = FindPath(delivery.getAddress());
+//
+//                Main.map.DrawPath(wrapper.getPath());
+//
+//                return Count_time(wrapper);
+//            }
+        return CountTime(getPathToDelivery(delivery));
+        }
         catch (Exception e){
             //System.out.println("Не построить маршрут!");
+            return 900000000;
         }
 
     }
@@ -215,5 +214,17 @@ public class BaseTransport extends Vertex {
     @Override
     public BaseTransport clone() throws CloneNotSupportedException {
         return (BaseTransport)super.clone();
+    }
+
+    @Override
+    public String toString() {
+        return "BaseTransport{" +
+                "maxSpeed=" + maxSpeed +
+                ", products=" + products +
+                ", activeDelivery=" + activeDelivery +
+                ", max_volume_baggage=" + max_volume_baggage +
+                ", max_weight_baggage=" + max_weight_baggage +
+                ", Name='" + super.getName() + '\'' +
+                '}';
     }
 }

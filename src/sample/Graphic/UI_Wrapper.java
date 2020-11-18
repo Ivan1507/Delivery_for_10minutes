@@ -34,15 +34,17 @@ public class UI_Wrapper {
     public UI_Wrapper(){
         super();
     }
-    public void changes(double x, double y, Pane pane){
+    public void changes(double x, double y, Pane pane, Vertex source){
+
 
         for( Object o : pane.getChildren()) {
-            if (o instanceof Text) {
-                pane.getChildren().get(1).setTranslateX(x);
-                pane.getChildren().get(1).setTranslateY(y);
+
+            if (o instanceof Text && ((Text) o).getUserData().equals(source)) {
+                ((Text) o).setX(x-15);
+                ((Text) o).setY(y-10);
             }
 
-            if (o instanceof Circle) {
+            if (o instanceof Circle  && ((Circle) o).getUserData().equals(source)) {
                 ((Circle) o).setCenterX(x);
                 ((Circle) o).setCenterY(y);
                 System.out.println("Изменена");
@@ -59,16 +61,15 @@ public class UI_Wrapper {
         switch (self.getPointType()) {
             case Triangle:
                 Polygon polygon = new Polygon();
-                polygon.getPoints().addAll(new Double[]{
-                        -10.0, -10.0,
+                polygon.getPoints().addAll(-10.0, -10.0,
                         0.0, 10.0,
-                        10.0, -10.0 });
+                        10.0, -10.0);
                 polygon.setTranslateX(self.getX());
                 polygon.setTranslateY(self.getY());
                 polygon.setFill(Color.BLACK);
                 polygon.setStroke(Color.WHEAT);
                 polygon.setStrokeWidth(2);
-
+                polygon.setUserData(self);
                 pane.getChildren().addAll( polygon );
 
                 break;
@@ -76,6 +77,7 @@ public class UI_Wrapper {
                 Rectangle rectangle = new Rectangle(25,25,Color.RED);
                 rectangle.setX(self.getX()-12.5);
                 rectangle.setY(self.getY()-12.5);
+                rectangle.setUserData(self);
                 pane.getChildren().addAll(rectangle );
                 break;
             case TwoCricle:
@@ -85,12 +87,14 @@ public class UI_Wrapper {
                 circle.setCenterY(self.getY());
                 circle.setStroke(Color.BLUE);
                 circle.setFill(Color.WHITE);
+                circle.setUserData(self);
                 Circle mark = new Circle();
                 mark.setRadius(4);
                 mark.setCenterX(self.getX());
                 mark.setCenterY(self.getY());
                 mark.setFill(Color.BLACK);
                 mark.toFront();
+                mark.setUserData(self);
                 circle.toFront();
                 getPane().getChildren().add(circle );
                 getPane().getChildren().addAll(mark );
@@ -103,6 +107,7 @@ public class UI_Wrapper {
                 circle2.setCenterX(self.getX());
                 circle2.setCenterY(self.getY());
                 circle2.setStroke(Color.BLUE);
+                circle2.setUserData(self);
                 circle2.setFill(Color.WHITE);
 
                 getPane().getChildren().addAll(circle2 );
@@ -111,6 +116,7 @@ public class UI_Wrapper {
 
         Text Text1 = new Text(self.getX()-10,self.getY()-15,self.getName());
         Text1.setTextAlignment(TextAlignment.CENTER);
+        Text1.setUserData(self);
         Text1.setText(self.getName());
 
         pane.getChildren().addAll(Text1);

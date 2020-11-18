@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.effect.Light;
 import javafx.stage.Stage;
 import sample.Delivery.*;
 import sample.MapLogic.Graph;
@@ -27,10 +26,19 @@ public class Main extends Application {
         deliveryLogic.DeliveryData=FXCollections.observableArrayList();
 
 
-        BaseTransport Car = new Quadrocopter(166+80,157+7);
+        BaseTransport Car = new BaseTransport(166+80,157+7);
         Car.setName("Машина 2");
         Car.setPointType(PointType.Circle);
-        deliveryLogic.getDepartment().getVehicles().add(Car);
+        deliveryLogic.getDepartment().getVehicles().add( Car );
+
+
+//        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
+//
+//
+//        Car3.setPointType(PointType.Circle);
+//        Car3.setName("Машина 3");
+//        deliveryLogic.getDepartment().getVehicles().add( Car3 );
+
 
     }
 
@@ -60,9 +68,7 @@ public class Main extends Application {
         map.AddPoint("12",760,150, PointType.TwoCricle);
 
         map.AddProduction("Production",760,250, PointType.TwoCricle);
-        kitchen.setName("Production");
-        kitchen.setX(760);
-        kitchen.setX(250);
+
 
 
         HashMap<Integer,Double> traffic = new HashMap<>();
@@ -115,7 +121,6 @@ public class Main extends Application {
           if(!current_ver.contains(dev.getAddress())) {
               current_ver.add(dev.getAddress());
               deliveryLogic.add_delivery(dev);
-              //map.AddPoint(dev.toString(),dev.getAddress().getX(),dev.getAddress().getY(), PointType.Triangle);
           }
       }
 
