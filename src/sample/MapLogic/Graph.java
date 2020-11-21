@@ -145,7 +145,7 @@ public class Graph implements Serializable {
                     Vector2D v = new Vector2D(e.getKey());
                     v.sub( new Vector2D(vehicle));
 
-
+                    //System.out.println("vert" + vert);
                     FillGraph2(vert,e.getKey(),quality,traffic);
                     FillGraph2(vehicle,e.getKey(),quality,traffic);
                 }
@@ -223,12 +223,14 @@ public class Graph implements Serializable {
 
     // Нахождением мин. пути по алгоритму Дейстктры
     public PathWrapper Find_min_path_with_optimized(BaseTransport start, Vertex end){
+        System.out.println("graph = "+graph);
         Map<Vertex,Double> shortest_distances=new HashMap<>();
         Map<Vertex,Vertex> parents=new HashMap<>();
         parents.put(start,null);
         ArrayList<Vertex> path=new ArrayList<>();
         path.add(end);
         shortest_distances.put(start,0.0);
+
         ArrayDeque<Vertex> d=new ArrayDeque<>();
         d.add(start);
         while(d.size()!=0){
@@ -250,8 +252,12 @@ public class Graph implements Serializable {
                     quality = Quality_Road.Perfect.getStatus();
                 }
                 if(traffic == null) { traffic = 0d; };
+               // System.out.println("Vert " + u );
                 Double time = 0.38*length/(speed*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
-                if(shortest_distances.get(u)==null || shortest_distances.get(cur_v)+time < shortest_distances.get(u)){
+                if(shortest_distances.get(u)==null || (shortest_distances.get(cur_v)+time) < shortest_distances.get(u)){
+                //    System.out.println("Vert2 " + u);
+               //     System.out.println("Cuv " + cur_v);
+               //     System.out.println("T = "+shortest_distances.get(cur_v)+time);
                     shortest_distances.put(u,shortest_distances.get(cur_v)+time);
                     d.add(u);
                     parents.put(u,cur_v);

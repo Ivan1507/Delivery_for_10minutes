@@ -26,14 +26,14 @@ public class Main extends Application {
         deliveryLogic.DeliveryData=FXCollections.observableArrayList();
 
 
-        BaseTransport Car = new Quadrocopter(146+80,147+7);
+        BaseTransport Car = new BaseTransport(146+80,147+7);
         Car.setName("Машина 2");
         Car.setPointType(PointType.Circle);
         deliveryLogic.getDepartment().getVehicles().add( Car );
 
 
         BaseTransport Car3 = new Quadrocopter(46+80,147+7);
-        Car3.setMaxSpeed(1);
+        Car3.setMaxSpeed(100);
         Car3.setPointType(PointType.Circle);
         deliveryLogic.getDepartment().getVehicles().add( Car3 );
 

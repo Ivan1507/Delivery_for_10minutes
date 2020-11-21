@@ -2,6 +2,7 @@ package sample.Delivery;
 
 import javafx.collections.ObservableList;
 import sample.LocalDateFormatted2;
+import sample.Main;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
@@ -16,17 +17,18 @@ public class DeliveryLogic {
     public BaseTransport getBestExecutor(Delivery e) throws CloneNotSupportedException {
 
             BaseTransport executor = null;
-            Double time=-1d;
+            Double time=null;
 
             for (BaseTransport baseTransport : department.getVehicles()) {
                     if (baseTransport.getActiveDelivery() != null) continue;
 
                 //if (baseTransport.getExecuteTime(e) == null) continue;
-                if (time == -1d) {
+                if (time == null) {
                     time = baseTransport.getExecuteTime(e);
                     //System.out.println("time = " + time);
                     executor = baseTransport;
                 }
+
                 if (time > baseTransport.getExecuteTime(e)){
                     time = baseTransport.getExecuteTime(e);
                     //System.out.println("time = " + time);
@@ -36,6 +38,30 @@ public class DeliveryLogic {
         System.out.println("executor = " + executor + " and time = " + time);
         return executor;
     }
+    public void TakeDelivery( Delivery E ) {
+
+
+        for (Delivery e : DeliveryData) {
+            System.out.println("e = " + e);
+            if (e.getAddress().getName() != "Заказ 47") continue;
+            try {
+                //System.out.println("Start");
+                BaseTransport t;
+                t = (Main.deliveryLogic.getBestExecutor(e));
+                System.out.println("t = " + t);
+                //if (t == null) throw new NullPointerException();
+                System.out.println(t + " берет заказ " + e);
+                Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+                //System.out.println("End");
+            } catch (NullPointerException | CloneNotSupportedException tt) {
+                tt.printStackTrace();
+            }
+
+
+        }
+    }
+
+
 
     public void remove_by_key(Integer id){
 

@@ -102,6 +102,7 @@ public class MapController implements Initializable {
                     System.out.println("t = " + t);
                     //if (t == null) throw new NullPointerException();
                     System.out.println(t + " берет заказ " + e);
+                    t.GetWaypoints(t.getPathToDelivery(e));
                     Main.map.DrawPath(t.getPathToDelivery(e).getPath());
                     System.out.println("End");
                 }

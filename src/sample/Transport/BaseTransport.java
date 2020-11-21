@@ -3,15 +3,18 @@ package sample.Transport;
 import sample.Delivery.Delivery;
 import sample.Main;
 import sample.MapLogic.PathWrapper;
+import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
 import sample.Product;
 import sample.Vector2D;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Базовый класс для описания всех видов транспортых средств
 public class BaseTransport extends Vertex {
-
+    private List<Vertex> resultWaypoints;
+    private int currWaypoint=0;
     private double maxSpeed=120;
     public ArrayList<Product> products=new ArrayList<>();
     private Delivery activeDelivery=null;
@@ -109,12 +112,80 @@ public class BaseTransport extends Vertex {
     public PathWrapper FindPath(BaseTransport from, Vertex to) throws CloneNotSupportedException {
         return Main.map.FindPath(from, to);
     }
-    public double CountTime(PathWrapper pathWrapper){
 
-        double time=0.0;
-        for(Vertex s:pathWrapper.getPath()){
-            time+=pathWrapper.getShortest_distance().get(s);
+    public void GetWaypoints(PathWrapper pathWrapper){
+        List<Vertex> resultWaypoints = new ArrayList<>();
+        List<Vertex> vertexList = pathWrapper.getPath();
+        int size = vertexList.size();
+        for (int i =1; i<size; i++){
+            Vertex prev = vertexList.get(i-1);
+            Vertex next = vertexList.get(i);
+
+            Vector2D start = new Vector2D(prev);
+
+            Vector2D direction = new Vector2D(next);
+            direction.sub(new Vector2D(prev));
+
+
+            int div = (int) ((int)(direction.length() / 5)/(getAvgSpeed()/12));
+
+            direction.div(div);
+
+            for( int j = 0; j<div;j++){
+                Vector2D vector2D = new Vector2D(start);
+                for (int k = 0; k<j; k++) {
+                    vector2D.add(direction);
+                }
+                resultWaypoints.add(vector2D.convertToVertex());
+
+            }
+
+
         }
+        this.resultWaypoints = resultWaypoints;
+        System.out.println("Result = " + resultWaypoints);
+//        for(Vertex s:pathWrapper.getPath()){
+//            if (pathWrapper.getShortest_distance().get(s)==null){
+//                System.out.println("Skipped element with"+ s);
+//
+//                continue;
+//            }
+//            time+=pathWrapper.getShortest_distance().get(s);
+//        }
+    }
+
+
+
+    public double CountTime(PathWrapper pathWrapper){
+        Double speed = this.getAvgSpeed();
+        Double traffic = 0.0;//
+        double time=0.0;
+        List<Vertex> vertexList = pathWrapper.getPath();
+        int size = vertexList.size();
+        for (int i =0; i<size; i++){
+
+                if (pathWrapper.getShortest_distance().get(vertexList.get(i))==null){
+                    // TODO: try and catch
+                    System.out.println("Skipped element with"+ vertexList.get(i));
+                    Double length=Math.sqrt(Math.pow((vertexList.get(i-1).getX()-vertexList.get(i).getX()),2)+Math.pow((vertexList.get(i-1).getY()-vertexList.get(i).getY()),2));
+                    Double quality = Quality_Road.good.getStatus();
+                    // TODO: Walking speed
+                    Double time2 = 0.38*length/(speed*(1-traffic)*(quality));
+                    time+=time2;
+                    continue;
+                }else{
+                    time+=pathWrapper.getShortest_distance().get(vertexList.get(i));
+                }
+
+        }
+//        for(Vertex s:pathWrapper.getPath()){
+//            if (pathWrapper.getShortest_distance().get(s)==null){
+//                System.out.println("Skipped element with"+ s);
+//
+//                continue;
+//            }
+//            time+=pathWrapper.getShortest_distance().get(s);
+//        }
         return time;
     }
 
@@ -178,28 +249,12 @@ public class BaseTransport extends Vertex {
         catch (Exception r){ return null; }
     }
 
-    // Узнать время выполнения заказов для каждой машины
-//    public Double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
-//
-//try {
-//    PathWrapper wrapper = getPathToDelivery(delivery);
-//    System.out.println("Timed + " + CountTime(wrapper));
-//    return CountTime(wrapper);
-//
-//}
-//catch (NullPointerException ttt){
-//    return -1d;
-//}
-//
-//    }
-
-
 
     public Double getExecuteTime(Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
-                PathWrapper wrapper = FindPath(Main.map.productPoint);
+                PathWrapper wrapper = this.FindPath(Main.map.productPoint);
 
                 double x = this.getX();
                 double y = this.getY();
@@ -213,8 +268,10 @@ public class BaseTransport extends Vertex {
                 clone.setY(y);
                 PathWrapper full_path = wrapper.MergePathsWrappers(wrapper2);
                 System.out.println("wrapper2 = " + wrapper2.getPath());
-
+                System.out.println("wrapper2.sd = " + wrapper2.getShortest_distance());
+                System.out.println("wrapper.sd = " + wrapper.getShortest_distance());
                 // System.out.println("full_path = " + full_path.getPath());
+                System.out.println("Count" + CountTime(wrapper));
                 return CountTime(wrapper2)+CountTime(wrapper);
             } else {
                 PathWrapper wrapper = FindPath(delivery.getAddress());
@@ -222,7 +279,9 @@ public class BaseTransport extends Vertex {
             }
 
         }
-        catch (Exception r){ return null; }
+        catch (Exception r){
+            r.printStackTrace();
+            return null; }
 
     }
 
