@@ -6,6 +6,9 @@ import sample.Main;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class DeliveryLogic {
     public ObservableList<Delivery> DeliveryData; // Список заказов
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
@@ -23,6 +26,7 @@ public class DeliveryLogic {
                     if (baseTransport.getActiveDelivery() != null) continue;
 
                 //if (baseTransport.getExecuteTime(e) == null) continue;
+                if (baseTransport.getExecuteTime(e) == null){continue;}
                 if (time == null) {
                     time = baseTransport.getExecuteTime(e);
                     //System.out.println("time = " + time);
@@ -61,7 +65,28 @@ public class DeliveryLogic {
         }
     }
 
+    // Обновляет местоположение машин
+    public void UpdateLc(){
+        TimerTask task = new TimerTask() {
+            public void run() {
+                for (BaseTransport transport:department.getVehicles() ){
+                    if (transport == null){continue;}
+                    if (transport.resultWaypoints==null){continue;}
+                    if (transport.resultWaypoints.isEmpty()){continue;}
+                    if ( transport.indWaypoint  >= transport.resultWaypoints.size()){continue;}
+                    transport.setX( transport.resultWaypoints.get(transport.indWaypoint).getX());
+                    transport.setY( transport.resultWaypoints.get(transport.indWaypoint).getY());
+                  transport.indWaypoint++;
+                }
 
+                UpdateLc();
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 100L;
+        timer.schedule(task, delay);
+    }
 
     public void remove_by_key(Integer id){
 
@@ -90,6 +115,7 @@ public class DeliveryLogic {
         }
     }
     public void change_time_end(Integer id, LocalDateFormatted2 ld){
+
         for(Delivery del:DeliveryData){
             if(del.getId()==id) {
                 del.setTime_end(ld);

@@ -13,8 +13,8 @@ import java.util.List;
 
 // Базовый класс для описания всех видов транспортых средств
 public class BaseTransport extends Vertex {
-    private List<Vertex> resultWaypoints;
-    private int currWaypoint=0;
+    public List<Vertex> resultWaypoints;
+    public int indWaypoint=0;
     private double maxSpeed=120;
     public ArrayList<Product> products=new ArrayList<>();
     private Delivery activeDelivery=null;
@@ -127,7 +127,7 @@ public class BaseTransport extends Vertex {
             direction.sub(new Vector2D(prev));
 
 
-            int div = (int) ((int)(direction.length() / 5)/(getAvgSpeed()/12));
+            int div = (int) ((int)(direction.length() / 5)/(getAvgSpeed()/240));
 
             direction.div(div);
 
@@ -142,6 +142,7 @@ public class BaseTransport extends Vertex {
 
 
         }
+        resultWaypoints.add(vertexList.get(vertexList.size()-1));
         this.resultWaypoints = resultWaypoints;
         System.out.println("Result = " + resultWaypoints);
 //        for(Vertex s:pathWrapper.getPath()){
@@ -280,7 +281,7 @@ public class BaseTransport extends Vertex {
 
         }
         catch (Exception r){
-            r.printStackTrace();
+            //r.printStackTrace();
             return null; }
 
     }

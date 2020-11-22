@@ -54,7 +54,22 @@ public class Graph implements Serializable {
             }
         }
     }
+    public void ClearConnection(Vertex a){
+        for( Map.Entry<Vertex,HashSet<Vertex>> MapEntry:graph.entrySet()) {
+            if (a.equals(MapEntry.getKey())){
+                //graph.put(MapEntry.getKey(),null);
+                graph.remove(MapEntry.getKey());
+            }
+            if (!MapEntry.getValue().isEmpty()) {
+                for (Vertex vertex : MapEntry.getValue()) {
+                    if (vertex.equals(a)) {
+                        graph.get(MapEntry.getKey()).remove(vertex);
+                    }
 
+                }
+            }
+        }
+    }
 
     public DeliveryEdgeInfo getOrtogonalEdges(Vertex Delivery, boolean isCar){
         DeliveryEdgeInfo info = new DeliveryEdgeInfo();

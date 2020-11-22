@@ -38,7 +38,7 @@ public class Vertex implements Serializable,Cloneable {
 
     public void setY(double y) {
         Y = y;
-        System.out.println("root = " + root);
+
         wrapper.changes(this.getX(),y,root,this);
     }
 

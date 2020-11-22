@@ -27,13 +27,14 @@ public class Main extends Application {
 
 
         BaseTransport Car = new BaseTransport(146+80,147+7);
-        Car.setName("Машина 2");
+        Car.setName("Машина: Петров");
         Car.setPointType(PointType.Circle);
         deliveryLogic.getDepartment().getVehicles().add( Car );
 
 
         BaseTransport Car3 = new Quadrocopter(46+80,147+7);
-        Car3.setMaxSpeed(100);
+        Car3.setMaxSpeed(400);
+        Car3.setName("Квадрокоптер: Иванов");
         Car3.setPointType(PointType.Circle);
         deliveryLogic.getDepartment().getVehicles().add( Car3 );
 
@@ -141,7 +142,7 @@ public class Main extends Application {
         };
         Timer timer = new Timer("Timer");
 
-        long delay = 4000L;
+        long delay = 400L;
         timer.schedule(task, delay);
 
     }

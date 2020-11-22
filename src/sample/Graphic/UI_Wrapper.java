@@ -47,7 +47,7 @@ public class UI_Wrapper {
             if (o instanceof Circle  && ((Circle) o).getUserData().equals(source)) {
                 ((Circle) o).setCenterX(x);
                 ((Circle) o).setCenterY(y);
-                System.out.println("Изменена");
+
             }
 //            if (o instanceof Text && !(o instanceof Line)) {
 //                ((Text) pane.getChildren().get(10)).setX(x);
