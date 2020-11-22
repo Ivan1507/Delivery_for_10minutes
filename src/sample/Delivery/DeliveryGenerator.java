@@ -62,13 +62,13 @@ public class DeliveryGenerator {
                 setPointType(PointType.Triangle);
             }
         });
-        vertexes.add(new Vertex(230, 285) {
+        vertexes.add(new Vertex(240, 265) {
             {
                 setName("Заказ 27");
                 setPointType(PointType.Triangle);
             }
         });
-        vertexes.add(new Vertex(450, 155) {
+        vertexes.add(new Vertex(450, 145) {
             {
                 setName("Заказ 47");
                 setPointType(PointType.Triangle);
