@@ -3,10 +3,12 @@ package sample;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.Delivery.*;
 import sample.MapLogic.Graph;
 import sample.Graphic.PointType;
@@ -33,15 +35,13 @@ public class Main extends Application {
 
 
         BaseTransport Car3 = new Quadrocopter(46+80,147+7);
-        Car3.setMaxSpeed(400);
+        Car3.setMaxSpeed(10);
         Car3.setName("Квадрокоптер: Иванов");
         Car3.setPointType(PointType.Circle);
         deliveryLogic.getDepartment().getVehicles().add( Car3 );
 
 
 //        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
-//
-//
 //        Car3.setPointType(PointType.Circle);
 //        Car3.setName("Машина 3");
 //        deliveryLogic.getDepartment().getVehicles().add( Car3 );
@@ -135,15 +135,13 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
-        TimerTask task = new TimerTask() {
-            public void run() {
-               // Main.deliveryLogic.remove_by_key(0);
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                deliveryLogic.timer.cancel();
             }
-        };
-        Timer timer = new Timer("Timer");
+        });
 
-        long delay = 400L;
-        timer.schedule(task, delay);
 
     }
 

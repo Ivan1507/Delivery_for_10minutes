@@ -81,15 +81,10 @@ public class MapController implements Initializable {
 
         for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
             try {
-//                PathWrapper path = quadrocopter.FindPath(e.getAddress());
-//                System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
-//                Main.map.DrawPath(path.getPath());
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
-
-
 
 
             for( Delivery e: Main.deliveryLogic.getDeliveryData()) {

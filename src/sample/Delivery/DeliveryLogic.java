@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 public class DeliveryLogic {
     public ObservableList<Delivery> DeliveryData; // Список заказов
+    public Timer timer = new Timer("Timer");
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
     public void add_delivery(Delivery e) throws CloneNotSupportedException {
         DeliveryData.add(e);
@@ -82,7 +83,7 @@ public class DeliveryLogic {
                 UpdateLc();
             }
         };
-        Timer timer = new Timer("Timer");
+
 
         long delay = 100L;
         timer.schedule(task, delay);
