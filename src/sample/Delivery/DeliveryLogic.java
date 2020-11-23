@@ -10,6 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class DeliveryLogic {
+    public Double time_of_del;
     public ObservableList<Delivery> DeliveryData; // Список заказов
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
     public void add_delivery(Delivery e) throws CloneNotSupportedException {
@@ -40,6 +41,7 @@ public class DeliveryLogic {
                 }
             }
         System.out.println("executor = " + executor + " and time = " + time);
+
         return executor;
     }
     public void TakeDelivery( Delivery E ) {

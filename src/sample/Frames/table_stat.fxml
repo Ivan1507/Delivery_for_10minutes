@@ -5,14 +5,14 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ChartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ChartController">
    <children>
-      <BarChart fx:id="chart" layoutX="126.0" layoutY="93.0">
+      <BarChart fx:id="chart" layoutX="27.0" layoutY="42.0" prefHeight="558.0" prefWidth="718.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis label="Время Доставки" side="BOTTOM" fx:id="x" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="y" label="Кол-во Доставок" side="LEFT" />
         </yAxis>
       </BarChart>
    </children>

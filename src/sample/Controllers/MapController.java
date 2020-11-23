@@ -14,6 +14,7 @@ import sample.Delivery.DeliveryStatus;
 import sample.Graphic.PointType;
 import sample.Product;
 import sample.Transport.BaseTransport;
+import sample.Transport.Quadrocopter;
 
 import java.net.URL;
 import java.util.*;
@@ -49,7 +50,7 @@ public class MapController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Pane root = new Pane();
         Map1.setCenter(root);
-        Main.map.setRoot( root );
+        Main.map.setRoot(root);
         Main.map.DrawGraph();
         Main.map.Draw();
 
@@ -71,68 +72,25 @@ public class MapController implements Initializable {
         }
 
 
-        BaseTransport quadrocopter = new BaseTransport(470+60,25+25);
-        quadrocopter.setName("Квадрокотер");
-        quadrocopter.setPointType(PointType.Circle);
-        quadrocopter.placeTo(root);
+        BaseTransport t = new BaseTransport(470 + 60, 25 + 25);
+        t.setName("Квадрокотер");
+        t.setPointType(PointType.Circle);
+        t.placeTo(root);
 
 
-
-
-        for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
+        for (Delivery e : Main.deliveryLogic.getDeliveryData()) {
+            System.out.println("e = " + e);
+            if (!e.getAddress().getName().equals("Заказ 47")) continue;
             try {
-//                PathWrapper path = quadrocopter.FindPath(e.getAddress());
-//                System.out.println("Доставка займет " + quadrocopter.Count_time(path) + " мин ");
-//                Main.map.DrawPath(path.getPath());
-            } catch (Exception e1) {
-                e1.printStackTrace();
+                System.out.println("Start");
+                t = (Main.deliveryLogic.getBestExecutor(e));
+                System.out.println("t = " + t);
+                System.out.println(t + " берет заказ " + e);
+                Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+                System.out.println("End");
+            } catch (NullPointerException | CloneNotSupportedException tt) {
+                tt.printStackTrace();
             }
         }
-
-
-
-
-            for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
-                System.out.println("e = " + e);
-            if (e.getAddress().getName().equals("Заказ 47")) continue;
-                try {
-                    System.out.println("Start");
-                    BaseTransport t;
-                     t = (Main.deliveryLogic.getBestExecutor(e));
-                    System.out.println("t = " + t);
-                    //if (t == null) throw new NullPointerException();
-                    System.out.println(t + " берет заказ " + e);
-                    Main.map.DrawPath(t.getPathToDelivery(e).getPath());
-                    System.out.println("End");
-                }
-                catch (NullPointerException | CloneNotSupportedException tt){
-        tt.printStackTrace();
-                }
-
-                //t.setActiveDelivery(e);
-               //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
-
-            }
-
-
-        //     PathWrapper path= null;
-
-//        try {
-//            path = Main.map.FindPath(quadrocopter,A2);
-//        } catch (CloneNotSupportedException e) {
-//
-//            e.printStackTrace();
-//        }
-//    try {
-//        //path.getPath().forEach(System.out::println);
-//        double time = Main.map.Count_time(path);
-//        System.out.println("Доставка займет " + time + " мин ");
-//        Main.map.DrawPath(path.getPath());
-//
-//
-//    }catch (Exception r){
-//
-//    }
-
     }
 }

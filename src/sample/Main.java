@@ -18,7 +18,7 @@ import sample.Transport.Quadrocopter;
 import java.util.*;
 
 public class Main extends Application {
-
+    public static HashMap<Double,Integer> DoneDelivery=new HashMap<>();
     public static Graph map = new Graph();
     public static Kitchen kitchen=new Kitchen();
     public static DeliveryLogic deliveryLogic=new DeliveryLogic();
@@ -36,7 +36,7 @@ public class Main extends Application {
         Car3.setMaxSpeed(400);
         Car3.setName("Квадрокоптер: Иванов");
         Car3.setPointType(PointType.Circle);
-        deliveryLogic.getDepartment().getVehicles().add( Car3 );
+        //deliveryLogic.getDepartment().getVehicles().add( Car3 );
 
 
 //        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
