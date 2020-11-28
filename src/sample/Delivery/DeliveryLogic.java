@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import sample.Controllers.DeliveryController;
 import sample.LocalDateFormatted2;
 import sample.Main;
+import sample.MapLogic.Graph;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
@@ -60,17 +61,24 @@ public class DeliveryLogic {
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
+                        Main.map.delete(transport.getActiveDelivery().getAddress());
+                        System.out.println("Graph.Points.get(transport.getActiveDelivery().getAddress().getName()) = " + Graph.Points.get(transport.getActiveDelivery().getAddress().getName()));
+                        Graph.Points.remove(transport.getActiveDelivery().getAddress().getName());
+                        transport.getActiveDelivery().getAddress().setFinished(true);
                         transport.getActiveDelivery().setExecutor(null);
                         transport.getActiveDelivery().setStatus(DeliveryStatus.OK);
                         transport.setActiveDelivery(null);
 
+
                         for (Delivery d: getDeliveryData()){
                             if (d.getStatus() == DeliveryStatus.OK) continue;
-
+                            if (d.getExecutor() != null) continue;
                             SetDelivery(d);
                         }
                     }
-                    System.out.println(transport.products);
+
+                    //if (transport.getActiveDelivery().getExecutor() != transport){continue;}
+                    //System.out.println(transport.products);
                     transport.setX( transport.resultWaypoints.get(transport.indWaypoint).getX());
                     transport.setY( transport.resultWaypoints.get(transport.indWaypoint).getY());
                   transport.indWaypoint++;

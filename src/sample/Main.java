@@ -129,7 +129,7 @@ public class Main extends Application {
 
 
         HashSet<Vertex> current_ver=new HashSet<>();
-        for (int i = 0; i<5; i++){
+        for (int i = 0; i<7; i++){
             Delivery dev=DeliveryGenerator.generate();
             if(!current_ver.contains(dev.getAddress())) {
                 current_ver.add(dev.getAddress());

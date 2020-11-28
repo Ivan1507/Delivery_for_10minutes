@@ -14,6 +14,15 @@ public class Vertex implements Serializable,Cloneable {
    private String Name; // Название вершины
    private PointType PointType; // Какая будет иконка на карте
    private boolean isSpecial = false; // Тип вершины: true - заказ, false - все остальное
+    private boolean finished = false;
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 
     @Override
     public Vertex clone() throws CloneNotSupportedException {
@@ -98,6 +107,9 @@ public class Vertex implements Serializable,Cloneable {
 
     }
 
+    public  void delete(){
+        wrapper.delete(root,this);
+    }
     public void setName( String name){
        this.Name = name;
     }

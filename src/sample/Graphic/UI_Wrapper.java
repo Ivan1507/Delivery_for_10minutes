@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import sample.MapLogic.Graph;
 import sample.MapLogic.Vertex;
 
 import java.util.Timer;
@@ -56,6 +57,29 @@ public class UI_Wrapper {
         }
     }
 
+    public void delete(Pane pane, Vertex source){
+        if (pane == null)return;
+
+
+        for( Object o : pane.getChildren()) {
+
+            if (o instanceof Text && ((Text) o).getUserData().equals(source)) {
+                ((Text) o).setOpacity(0);
+                //pane.getChildren().remove(o);
+            }
+
+            if (o instanceof Circle && ((Circle) o).getUserData().equals(source)) {
+                ((Circle) o).setOpacity(0);
+                //pane.getChildren().remove(o);
+            }
+
+            if (o instanceof Polygon && ((Polygon) o).getUserData().equals(source)) {
+                ((Polygon) o).setOpacity(0);
+                //pane.getChildren().remove(o);
+            }
+
+        }
+    }
     public void Init(Vertex self){
 
         switch (self.getPointType()) {

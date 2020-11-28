@@ -69,6 +69,7 @@ public class MapController implements Initializable {
         }
 
         for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
+            if (delivery.getAddress().isFinished()) continue;
             delivery.getAddress().placeTo(root);
         }
 

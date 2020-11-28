@@ -4,7 +4,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sample.Delivery.DeliveryEdgeInfo;
 import sample.Graphic.PointType;
@@ -19,7 +21,7 @@ import java.util.*;
 // Основной класс хранения данных ребер и вершин
 public class Graph implements Serializable {
     private transient Pane root;
-    public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
+    public static HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     public static Vertex productPoint;
     public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public HashMap<Vertex,HashSet<Vertex>> edges=new HashMap<>();
@@ -35,6 +37,9 @@ public class Graph implements Serializable {
         this.root = root;
     }
     public Graph() { }
+    public void delete(Vertex source){
+     source.delete();
+    }
 
     // Рисует соединения между точками
     public void DrawGraph(){
