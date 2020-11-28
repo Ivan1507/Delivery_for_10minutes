@@ -2,19 +2,20 @@ package sample.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import sample.LocalDateFormatted2;
 import sample.Delivery.Delivery;
 import sample.Main;
 import sample.Delivery.DeliveryStatus;
-import sample.Graphic.PointType;
 import sample.Product;
 import sample.Transport.BaseTransport;
-import sample.Transport.Quadrocopter;
 
 import java.net.URL;
 import java.util.*;
@@ -45,52 +46,96 @@ public class MapController implements Initializable {
     @FXML
     private TableColumn goods;
 
+    public static Timer timer = new Timer("TimerRefreshMap");
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Pane root = new Pane();
         Map1.setCenter(root);
-        Main.map.setRoot(root);
+        Main.map.setRoot( root );
         Main.map.DrawGraph();
         Main.map.Draw();
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
-        executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
+        executor.setCellValueFactory(new PropertyValueFactory<Delivery, BaseTransport>("executor"));
         status.setCellValueFactory(new PropertyValueFactory<Delivery, DeliveryStatus>("status"));
         time_start.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_start"));
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_end"));
         goods.setCellValueFactory(new PropertyValueFactory<Delivery, ArrayList<Product>>("goods"));
         // заполняем таблицу данными
+        status.setCellFactory(tableColumn -> {
+            return new TableCell<Delivery,DeliveryStatus>(){
+                @Override
+                protected void updateItem(DeliveryStatus deliveryStatus, boolean b) {
+                    super.updateItem(deliveryStatus, b);
+                    if (deliveryStatus == null) return;
+                    String text = switch (deliveryStatus){
+                        case OK -> "ok";
+                        case NOT_OK -> "not_ok";
+                        case WAITING -> "waiting";
+                        default -> "unknown";
+                    };
+                    setText(text);
+                    if (text.equals("ok")) {
+                        //setText(deliveryStatus.toString());
+                        setTextFill(Color.GREEN); //The text in red
+                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+                    } else {
+                            //setText(deliveryStatus.toString());
+                            //setTextFill(Color.BLACK);
 
-        table.setItems(Main.deliveryLogic.getDeliveryData());
+                    }
+                }
+            };
+        });
+
+        executor.setCellFactory(tableColumn -> {
+            return new TableCell<Delivery,BaseTransport>(){
+                @Override
+                protected void updateItem(BaseTransport baseTransport, boolean b) {
+                    super.updateItem(baseTransport, b);
+                   // if (baseTransport == null) return;
+
+
+                    if (baseTransport == null) {
+                        setText("=====");
+                        setTextFill(Color.PURPLE); //The text in red
+                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+                    } else {
+                        //setText(deliveryStatus.toString());
+                        //setTextFill(Color.BLACK);
+                        setTextFill(Color.GREEN);
+                        setText(baseTransport.toString());
+                    }
+                }
+            };
+        });
+
+                table.setItems(Main.deliveryLogic.getDeliveryData());
         for (BaseTransport vehicle : Main.deliveryLogic.getDepartment().getVehicles()) {
             vehicle.placeTo(root);
         }
 
         for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
+            if (delivery.getAddress().isFinished()) continue;
             delivery.getAddress().placeTo(root);
         }
 
 
-        BaseTransport t = new BaseTransport(470 + 60, 25 + 25);
-        t.setName("Квадрокотер");
-        t.setPointType(PointType.Circle);
-        t.placeTo(root);
+        UpdateLc();
+    }
 
-
-        for (Delivery e : Main.deliveryLogic.getDeliveryData()) {
-            System.out.println("e = " + e);
-            if (!e.getAddress().getName().equals("Заказ 47")) continue;
-            try {
-                System.out.println("Start");
-                t = (Main.deliveryLogic.getBestExecutor(e));
-                System.out.println("t = " + t);
-                System.out.println(t + " берет заказ " + e);
-                Main.map.DrawPath(t.getPathToDelivery(e).getPath());
-                System.out.println("End");
-            } catch (NullPointerException | CloneNotSupportedException tt) {
-                tt.printStackTrace();
+    public void UpdateLc(){
+        TimerTask task = new TimerTask() {
+            public void run() {
+                table.refresh();
+                UpdateLc();
             }
-        }
+        };
+
+
+        long delay = 100L;
+        timer.schedule(task, delay);
     }
 }

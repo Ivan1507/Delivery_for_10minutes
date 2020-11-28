@@ -4,7 +4,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sample.Delivery.DeliveryEdgeInfo;
 import sample.Graphic.PointType;
@@ -19,7 +21,7 @@ import java.util.*;
 // Основной класс хранения данных ребер и вершин
 public class Graph implements Serializable {
     private transient Pane root;
-    public HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
+    public static HashMap<String, Vertex> Points = new HashMap<>(200,0.75f);
     public static Vertex productPoint;
     public HashMap<Vertex,HashSet<Vertex>> graph=new HashMap<>();
     public HashMap<Vertex,HashSet<Vertex>> edges=new HashMap<>();
@@ -35,6 +37,9 @@ public class Graph implements Serializable {
         this.root = root;
     }
     public Graph() { }
+    public void delete(Vertex source){
+     source.delete();
+    }
 
     // Рисует соединения между точками
     public void DrawGraph(){
@@ -109,16 +114,16 @@ public class Graph implements Serializable {
                 if (test.length() > length_par) { continue;}
 
 
-                Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());
+                //Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());
                 Vertex PointOnEdge = ProjectionVector.convertToVertex();
                 PointOnEdge.setName("Точка"+ Math.abs(projection)+24);
                 roads.add(PointOnEdge);
 
 
-                l.setStroke(Color.FUCHSIA);
-                l.setStrokeWidth(1.7);
+                //l.setStroke(Color.FUCHSIA);
+                //l.setStrokeWidth(1.7);
 
-                root.getChildren().addAll(l);
+                //root.getChildren().addAll(l);
 
 
                 HashSet<Vertex> hashSet = new HashSet();
@@ -238,7 +243,7 @@ public class Graph implements Serializable {
 
     // Нахождением мин. пути по алгоритму Дейстктры
     public PathWrapper Find_min_path_with_optimized(BaseTransport start, Vertex end){
-        System.out.println("graph = "+graph);
+        //System.out.println("graph = "+graph);
         Map<Vertex,Double> shortest_distances=new HashMap<>();
         Map<Vertex,Vertex> parents=new HashMap<>();
         parents.put(start,null);

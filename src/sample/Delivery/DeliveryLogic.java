@@ -1,8 +1,10 @@
 package sample.Delivery;
 
 import javafx.collections.ObservableList;
+import sample.Controllers.DeliveryController;
 import sample.LocalDateFormatted2;
 import sample.Main;
+import sample.MapLogic.Graph;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
@@ -12,22 +14,23 @@ import java.util.TimerTask;
 public class DeliveryLogic {
     public Double time_of_del;
     public ObservableList<Delivery> DeliveryData; // Список заказов
+    public Timer timer = new Timer("Timer");
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
     public void add_delivery(Delivery e) throws CloneNotSupportedException {
         DeliveryData.add(e);
         System.out.println("Заказ успешно добавлен из таблицы!");
-
+        SetDelivery(e);
     }
     public BaseTransport getBestExecutor(Delivery e) throws CloneNotSupportedException {
-
             BaseTransport executor = null;
             Double time=null;
-
             for (BaseTransport baseTransport : department.getVehicles()) {
                     if (baseTransport.getActiveDelivery() != null) continue;
-
+                    if (!baseTransport.hasSpace(e))continue;
                 //if (baseTransport.getExecuteTime(e) == null) continue;
+                System.out.println("baseTransport.getExecuteTime(e)  = " + baseTransport.getExecuteTime(e) );
                 if (baseTransport.getExecuteTime(e) == null){continue;}
+
                 if (time == null) {
                     time = baseTransport.getExecuteTime(e);
                     //System.out.println("time = " + time);
@@ -44,28 +47,6 @@ public class DeliveryLogic {
 
         return executor;
     }
-    public void TakeDelivery( Delivery E ) {
-
-
-        for (Delivery e : DeliveryData) {
-            System.out.println("e = " + e);
-            if (e.getAddress().getName() != "Заказ 47") continue;
-            try {
-                //System.out.println("Start");
-                BaseTransport t;
-                t = (Main.deliveryLogic.getBestExecutor(e));
-                System.out.println("t = " + t);
-                //if (t == null) throw new NullPointerException();
-                System.out.println(t + " берет заказ " + e);
-                Main.map.DrawPath(t.getPathToDelivery(e).getPath());
-                //System.out.println("End");
-            } catch (NullPointerException | CloneNotSupportedException tt) {
-                tt.printStackTrace();
-            }
-
-
-        }
-    }
 
     // Обновляет местоположение машин
     public void UpdateLc(){
@@ -76,6 +57,30 @@ public class DeliveryLogic {
                     if (transport.resultWaypoints==null){continue;}
                     if (transport.resultWaypoints.isEmpty()){continue;}
                     if ( transport.indWaypoint  >= transport.resultWaypoints.size()){continue;}
+                    if ( transport.indWaypoint  == transport.resultWaypoints.size()-1){
+                        try {
+                            transport.UnShipProductsInCar(transport.getActiveDelivery());
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
+                        Main.map.delete(transport.getActiveDelivery().getAddress());
+                        //System.out.println("Graph.Points.get(transport.getActiveDelivery().getAddress().getName()) = " + Graph.Points.get(transport.getActiveDelivery().getAddress().getName()));
+                        Graph.Points.remove(transport.getActiveDelivery().getAddress().getName());
+                        transport.getActiveDelivery().getAddress().setFinished(true);
+                        transport.getActiveDelivery().setExecutor(null);
+                        transport.getActiveDelivery().setStatus(DeliveryStatus.OK);
+                        transport.setActiveDelivery(null);
+
+
+                        for (Delivery d: getDeliveryData()){
+                            if (d.getStatus() == DeliveryStatus.OK) continue;
+                            if (d.getExecutor() != null) continue;
+                            SetDelivery(d);
+                        }
+                    }
+
+                    //if (transport.getActiveDelivery().getExecutor() != transport){continue;}
+                    //System.out.println(transport.products);
                     transport.setX( transport.resultWaypoints.get(transport.indWaypoint).getX());
                     transport.setY( transport.resultWaypoints.get(transport.indWaypoint).getY());
                   transport.indWaypoint++;
@@ -84,12 +89,34 @@ public class DeliveryLogic {
                 UpdateLc();
             }
         };
-        Timer timer = new Timer("Timer");
+
 
         long delay = 100L;
         timer.schedule(task, delay);
     }
 
+    public boolean SetDelivery(Delivery delivery){
+
+            try {
+                BaseTransport t;
+                t = (Main.deliveryLogic.getBestExecutor(delivery));
+                if (t == null) throw new NullPointerException();
+                t.setActiveDelivery(delivery);
+                delivery.setExecutor( t );
+
+                t.GetWaypoints(t.getPathToDelivery(delivery));
+                t.indWaypoint = 0;
+                t.ShipProductsInCar(delivery);
+                System.out.println(t + " берет заказ " + delivery);
+
+                return t != null;
+                //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+            }
+            catch (NullPointerException | CloneNotSupportedException tt){
+                //tt.printStackTrace();
+                return false;
+            }
+    }
     public void remove_by_key(Integer id){
 
         for(int i=0;i<DeliveryData.size();i++){
@@ -108,7 +135,7 @@ public class DeliveryLogic {
             }
         }
     }
-    public void change_executor(Integer id, String executor){
+    public void change_executor(Integer id, BaseTransport executor){
         for(Delivery del:DeliveryData){
             if(del.getId()==id) {
                 del.setExecutor(executor);

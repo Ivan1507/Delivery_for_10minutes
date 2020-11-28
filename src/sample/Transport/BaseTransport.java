@@ -2,6 +2,7 @@ package sample.Transport;
 
 import sample.Delivery.Delivery;
 import sample.Main;
+import sample.MapLogic.Graph;
 import sample.MapLogic.PathWrapper;
 import sample.MapLogic.Quality_Road;
 import sample.MapLogic.Vertex;
@@ -9,6 +10,7 @@ import sample.Product;
 import sample.Vector2D;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 // Базовый класс для описания всех видов транспортых средств
@@ -205,7 +207,7 @@ public class BaseTransport extends Vertex {
         public boolean ShipProductsInCar(Delivery delivery) throws CloneNotSupportedException {
             Vector2D distance  = new Vector2D(Main.map.productPoint);
             distance.sub(new Vector2D(this));
-            if (distance.length() > 35) return false;
+            //if (distance.length() > 35) return false;
 
             if(hasSpace(delivery.getGoods())){ //Checking for space in Transport
                 for (Product product : delivery.getGoods()){
@@ -219,7 +221,20 @@ public class BaseTransport extends Vertex {
         return true;
     }
 
+    public void UnShipProductsInCar(Delivery delivery) throws CloneNotSupportedException {
+        Vector2D distance  = new Vector2D(Main.map.productPoint);
+        distance.sub(new Vector2D(this));
+        //if (distance.length() > 35) return false;
+        //if(hasSpace(delivery.getGoods())){ //Checking for space in Transport
+            for (Product product : delivery.getGoods()){
+                if (products.contains(product)){
+                    products.remove(product);
+                }
 
+            }
+        //}
+
+    }
     public PathWrapper getPathToDelivery(Delivery delivery) throws CloneNotSupportedException {
         try {
             boolean hasProducts = hasProducts(delivery);
@@ -255,13 +270,13 @@ public class BaseTransport extends Vertex {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
-                PathWrapper wrapper = this.FindPath(Main.map.productPoint);
+                PathWrapper wrapper = this.FindPath(Graph.productPoint);
 
                 double x = this.getX();
                 double y = this.getY();
                 BaseTransport clone = clone();
-                clone.setX(Main.map.productPoint.getX());
-                clone.setY(Main.map.productPoint.getY());
+                clone.setX(Graph.productPoint.getX());
+                clone.setY(Graph.productPoint.getY());
                 PathWrapper wrapper2 = clone.FindPath(delivery.getAddress());
 
 
@@ -295,15 +310,21 @@ public class BaseTransport extends Vertex {
         return (BaseTransport)super.clone();
     }
 
+//    @Override
+//    public String toString() {
+//        return "BaseTransport{" +
+//                "maxSpeed=" + maxSpeed +
+//                ", products=" + products +
+//                ", activeDelivery=" + activeDelivery +
+//                ", max_volume_baggage=" + max_volume_baggage +
+//                ", max_weight_baggage=" + max_weight_baggage +
+//                ", Name='" + super.getName() + '\'' +
+//                '}';
+//    }
+
     @Override
     public String toString() {
-        return "BaseTransport{" +
-                "maxSpeed=" + maxSpeed +
-                ", products=" + products +
-                ", activeDelivery=" + activeDelivery +
-                ", max_volume_baggage=" + max_volume_baggage +
-                ", max_weight_baggage=" + max_weight_baggage +
-                ", Name='" + super.getName() + '\'' +
-                '}';
+        return getName();
     }
+
 }
