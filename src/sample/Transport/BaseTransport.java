@@ -207,15 +207,13 @@ public class BaseTransport extends Vertex {
         public boolean ShipProductsInCar(Delivery delivery) throws CloneNotSupportedException {
             Vector2D distance  = new Vector2D(Main.map.productPoint);
             distance.sub(new Vector2D(this));
-            //if (distance.length() > 35) return false;
+            
 
             if(hasSpace(delivery.getGoods())){ //Checking for space in Transport
                 for (Product product : delivery.getGoods()){
                     if (!products.contains(product)){
                         products.add(product);
                     }
-
-
                 }
             }
         return true;

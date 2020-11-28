@@ -120,14 +120,6 @@ public class Main extends Application {
         deliveryLogic.getDepartment().getVehicles().add( Car3 );
 
 
-//        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
-//        Car3.setPointType(PointType.Circle);
-//        Car3.setName("Машина 3");
-//        deliveryLogic.getDepartment().getVehicles().add( Car3 );
-
-
-
-
         HashSet<Vertex> current_ver=new HashSet<>();
         for (int i = 0; i<7; i++){
             Delivery dev=DeliveryGenerator.generate();
@@ -136,7 +128,6 @@ public class Main extends Application {
                 try {
                     deliveryLogic.add_delivery(dev);
                 } catch (CloneNotSupportedException e) {
-                    //e.printStackTrace();
                 }
             }
         }
@@ -144,8 +135,7 @@ public class Main extends Application {
 
 
 
-        //t.setActiveDelivery(e);
-            //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+
 
 
         Main.deliveryLogic.UpdateLc();

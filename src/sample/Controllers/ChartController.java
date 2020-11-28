@@ -34,9 +34,12 @@ public class ChartController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        chart.setTitle("Статистика заказов");
+        addData(4);
        addData(5);
        addData(10);
+       addData(11);
        addData(5);
+        addData(7);
         System.out.println("time_for_histogramm = " + time_for_histogramm);
 
        set1.getData().add(new XYChart.Data("Jan", 23));
@@ -44,19 +47,46 @@ public class ChartController implements Initializable {
        chart.getData().addAll(set,set1,set2);
 
     }
-    public void addData(Integer time){
+    //Метод для добавления статистики
+    public void addData(Integer time) {
+        if (time <= 5) {
+            if (time_for_histogramm.get(time.toString()) != null) {
+                time_for_histogramm.put(time.toString(), 1 + time_for_histogramm.get(time.toString()));
+            } else time_for_histogramm.put(time.toString(), 1);
 
-       if(time_for_histogramm.get(time.toString())!=null){
-           time_for_histogramm.put(time.toString(),1+time_for_histogramm.get(time.toString()));
-       }
-       else time_for_histogramm.put(time.toString(),1);
+            set2.getData().clear();
 
-       set.getData().clear();
+            for (Map.Entry<String, Integer> entry : time_for_histogramm.entrySet()) {
+                XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
+                set2.getData().add(data);
+            }
 
-       for(Map.Entry<String,Integer> entry:time_for_histogramm.entrySet()){
-           XYChart.Data data=new XYChart.Data(entry.getKey(),entry.getValue());
-           set.getData().add(data);
-       }
+        }
+        else if (time > 5 && time<=10) {
+            if (time_for_histogramm.get(time.toString()) != null) {
+                time_for_histogramm.put(time.toString(), 1 + time_for_histogramm.get(time.toString()));
+            } else time_for_histogramm.put(time.toString(), 1);
 
+            set1.getData().clear();
+
+            for (Map.Entry<String, Integer> entry : time_for_histogramm.entrySet()) {
+                XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
+                set1.getData().add(data);
+            }
+
+        }
+        else if (time > 10) {
+            if (time_for_histogramm.get(time.toString()) != null) {
+                time_for_histogramm.put(time.toString(), 1 + time_for_histogramm.get(time.toString()));
+            } else time_for_histogramm.put(time.toString(), 1);
+
+            set.getData().clear();
+
+            for (Map.Entry<String, Integer> entry : time_for_histogramm.entrySet()) {
+                XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
+                set.getData().add(data);
+            }
+
+        }
     }
 }

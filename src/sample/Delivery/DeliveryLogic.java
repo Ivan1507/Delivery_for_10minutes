@@ -27,7 +27,6 @@ public class DeliveryLogic {
             for (BaseTransport baseTransport : department.getVehicles()) {
                     if (baseTransport.getActiveDelivery() != null) continue;
                     if (!baseTransport.hasSpace(e))continue;
-                //if (baseTransport.getExecuteTime(e) == null) continue;
                 System.out.println("baseTransport.getExecuteTime(e)  = " + baseTransport.getExecuteTime(e) );
                 if (baseTransport.getExecuteTime(e) == null){continue;}
 
@@ -39,7 +38,7 @@ public class DeliveryLogic {
 
                 if (time > baseTransport.getExecuteTime(e)){
                     time = baseTransport.getExecuteTime(e);
-                    //System.out.println("time = " + time);
+
                     executor = baseTransport;
                 }
             }

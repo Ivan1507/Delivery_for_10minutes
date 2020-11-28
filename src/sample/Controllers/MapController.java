@@ -95,16 +95,13 @@ public class MapController implements Initializable {
                 @Override
                 protected void updateItem(BaseTransport baseTransport, boolean b) {
                     super.updateItem(baseTransport, b);
-                   // if (baseTransport == null) return;
 
 
                     if (baseTransport == null) {
                         setText("=====");
-                        setTextFill(Color.PURPLE); //The text in red
-                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+                        setTextFill(Color.PURPLE);
                     } else {
-                        //setText(deliveryStatus.toString());
-                        //setTextFill(Color.BLACK);
+
                         setTextFill(Color.GREEN);
                         setText(baseTransport.toString());
                     }
@@ -118,11 +115,8 @@ public class MapController implements Initializable {
         }
 
         for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
-            if (delivery.getAddress().isFinished()) continue;
-            delivery.getAddress().placeTo(root);
+            if (!delivery.getAddress().isFinished()) delivery.getAddress().placeTo(root);
         }
-
-
         UpdateLc();
     }
 

@@ -20,7 +20,7 @@ public class Kitchen extends Vertex {
     }
 
     public void add_products(Product pr){
-        System.out.println("Кухня приступила к приготовлению пищи "+pr.getName());
+        //System.out.println("Кухня приступила к приготовлению пищи "+pr.getName());
         products_of_kitchen.add(pr);
     }
 
