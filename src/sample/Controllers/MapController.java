@@ -44,6 +44,8 @@ public class MapController implements Initializable {
     @FXML
     private TableColumn goods;
 
+    public static Timer timer = new Timer("TimerRefreshMap");
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,7 +56,7 @@ public class MapController implements Initializable {
         Main.map.Draw();
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
-        executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
+        executor.setCellValueFactory(new PropertyValueFactory<Delivery, BaseTransport>("executor"));
         status.setCellValueFactory(new PropertyValueFactory<Delivery, DeliveryStatus>("status"));
         time_start.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_start"));
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_end"));
@@ -71,70 +73,19 @@ public class MapController implements Initializable {
         }
 
 
-        BaseTransport quadrocopter = new BaseTransport(470+60,25+25);
-        quadrocopter.setName("Квадрокотер");
-        quadrocopter.setPointType(PointType.Circle);
-        quadrocopter.placeTo(root);
+        UpdateLc();
+    }
 
-
-
-
-        for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
-            try {
-            } catch (Exception e1) {
-                e1.printStackTrace();
+    public void UpdateLc(){
+        TimerTask task = new TimerTask() {
+            public void run() {
+                table.refresh();
+                UpdateLc();
             }
-        }
+        };
 
 
-            for( Delivery e: Main.deliveryLogic.getDeliveryData()) {
-                System.out.println("e = " + e);
-          //  if (e.getAddress().getName() !="Заказ 47") continue;
-                try {
-                    System.out.println("Start");
-                    BaseTransport t;
-                     t = (Main.deliveryLogic.getBestExecutor(e));
-
-                    System.out.println("t = " + t);
-                    if (t == null) throw new NullPointerException();
-                    t.setActiveDelivery(e);
-
-                    System.out.println(t + " берет заказ " + e);
-                    t.GetWaypoints(t.getPathToDelivery(e));
-                    //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
-                    System.out.println("End");
-
-                }
-                catch (NullPointerException | CloneNotSupportedException tt){
-        //tt.printStackTrace();
-                }
-
-
-                //t.setActiveDelivery(e);
-               //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
-
-            }
-        Main.deliveryLogic.UpdateLc();
-
-
-        //     PathWrapper path= null;
-
-//        try {
-//            path = Main.map.FindPath(quadrocopter,A2);
-//        } catch (CloneNotSupportedException e) {
-//
-//            e.printStackTrace();
-//        }
-//    try {
-//        //path.getPath().forEach(System.out::println);
-//        double time = Main.map.Count_time(path);
-//        System.out.println("Доставка займет " + time + " мин ");
-//        Main.map.DrawPath(path.getPath());
-//
-//
-//    }catch (Exception r){
-//
-//    }
-
+        long delay = 100L;
+        timer.schedule(task, delay);
     }
 }

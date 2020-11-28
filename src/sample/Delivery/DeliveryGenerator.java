@@ -87,7 +87,7 @@ public class DeliveryGenerator {
 //    Delivery dev=new Delivery();
 //    if (!nonRepeats.contains(vertexes.get(j))) {
 //        nonRepeats.add(vertexes.get(j));
-        return new Delivery(curInt++, "", DeliveryStatus.WAITING, new LocalDateFormatted2(LocalDateTime.now()), new LocalDateFormatted2(LocalDateTime.now().plusMinutes(15)), products.get(new Random().nextInt(products.size() - 1))
+        return new Delivery(curInt++, null, DeliveryStatus.WAITING, new LocalDateFormatted2(LocalDateTime.now()), new LocalDateFormatted2(LocalDateTime.now().plusMinutes(15)), products.get(new Random().nextInt(products.size() - 1))
                 , vertexes.get(new Random().nextInt(vertexes.size() - 1)));
 
 

@@ -15,8 +15,8 @@ public class Quadrocopter extends BaseTransport {
     }
 
     public void init(boolean set_speed) {
-        setVolume_baggage(5);
-        setMax_weight_baggage(4);
+        setVolume_baggage(50);
+        setMax_weight_baggage(40);
         if (set_speed) setMaxSpeed(90);
     }
 

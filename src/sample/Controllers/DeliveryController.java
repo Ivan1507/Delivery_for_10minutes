@@ -9,9 +9,12 @@ import javafx.scene.layout.BorderPane;
 import sample.Main;
 import sample.Delivery.Delivery;
 import sample.Delivery.DeliveryStatus;
+import sample.Transport.BaseTransport;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DeliveryController implements Initializable {
     @FXML
@@ -33,6 +36,7 @@ public class DeliveryController implements Initializable {
     @FXML
     private TableColumn time_end;
 
+    public static Timer timer = new Timer("TimerRefresh");
 
 
 
@@ -40,7 +44,7 @@ public class DeliveryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         id.setCellValueFactory(new PropertyValueFactory<Delivery, Integer>("id"));
-        executor.setCellValueFactory(new PropertyValueFactory<Delivery, String>("executor"));
+        executor.setCellValueFactory(new PropertyValueFactory<Delivery, BaseTransport>("executor"));
         status.setCellValueFactory(new PropertyValueFactory<Delivery, DeliveryStatus>("status"));
         time_start.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_start"));
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, String>("time_end"));
@@ -48,5 +52,26 @@ public class DeliveryController implements Initializable {
         // заполняем таблицу данными
 
         table.setItems(Main.deliveryLogic.getDeliveryData());
+
+
+        UpdateLc();
+
+
+
     }
+
+
+    public void UpdateLc(){
+        TimerTask task = new TimerTask() {
+            public void run() {
+                table.refresh();
+                UpdateLc();
+            }
+        };
+
+
+        long delay = 100L;
+        timer.schedule(task, delay);
+    }
+
 }

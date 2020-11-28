@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import sample.Controllers.DeliveryController;
+import sample.Controllers.MapController;
 import sample.Delivery.*;
 import sample.MapLogic.Graph;
 import sample.Graphic.PointType;
@@ -25,37 +27,6 @@ public class Main extends Application {
     public static Kitchen kitchen=new Kitchen();
     public static DeliveryLogic deliveryLogic=new DeliveryLogic();
     static {
-        deliveryLogic.DeliveryData=FXCollections.observableArrayList();
-
-
-        BaseTransport Car = new BaseTransport(146+80,147+7);
-        Car.setName("Машина: Петров");
-        Car.setPointType(PointType.Circle);
-        deliveryLogic.getDepartment().getVehicles().add( Car );
-
-
-        BaseTransport Car3 = new Quadrocopter(46+80,147+7);
-        Car3.setMaxSpeed(10);
-        Car3.setName("Квадрокоптер: Иванов");
-        Car3.setPointType(PointType.Circle);
-        deliveryLogic.getDepartment().getVehicles().add( Car3 );
-
-
-//        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
-//        Car3.setPointType(PointType.Circle);
-//        Car3.setName("Машина 3");
-//        deliveryLogic.getDepartment().getVehicles().add( Car3 );
-
-
-    }
-
-    public static ObservableList<Delivery> DeliveryData;
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Frames/MainScene.fxml"));
-        Parent root = loader.load();
-        primaryStage.setTitle("Delivery for 10 minutes");
-
 
         // Создаем точки на карте
         map.AddPoint("1",400,200, PointType.Triangle);
@@ -76,7 +47,7 @@ public class Main extends Application {
 
         map.AddProduction("Production",760,250, PointType.TwoCricle);
 
-
+        System.out.println("Graph.productPoint = " + Graph.productPoint);
 
         HashMap<Integer,Double> traffic = new HashMap<>();
         for( int i =1; i<=24;i++ ){
@@ -114,7 +85,7 @@ public class Main extends Application {
         map.Connect("9","10",Quality_Road.average,traffic);
         map.Connect("2","11",Quality_Road.average,traffic);
         map.Connect("11","12",Quality_Road.average,traffic);
-        map.Connect("9","12",Quality_Road.average,traffic);
+        map.Connect("9","12", Quality_Road.average,traffic);
         map.Connect("10","11",Quality_Road.average,traffic);
         map.Connect("1","4",Quality_Road.average,traffic);
 
@@ -122,14 +93,87 @@ public class Main extends Application {
         map.Connect("Production","11",Quality_Road.average,traffic);
 
 
+
+
+
+
+
+
+
+
+
+
+
+        deliveryLogic.DeliveryData=FXCollections.observableArrayList();
+
+
+        BaseTransport Car = new BaseTransport(146+80,147+7);
+        Car.setName("Машина: Петров");
+        Car.setPointType(PointType.Circle);
+        deliveryLogic.getDepartment().getVehicles().add( Car );
+
+
+        BaseTransport Car3 = new Quadrocopter(46+80,147+7);
+        Car3.setMaxSpeed(200);
+        Car3.setName("Квадрокоптер: Иванов");
+        Car3.setPointType(PointType.Circle);
+        deliveryLogic.getDepartment().getVehicles().add( Car3 );
+
+
+//        BaseTransport Car3 = new Quadrocopter(206+80,157+25);
+//        Car3.setPointType(PointType.Circle);
+//        Car3.setName("Машина 3");
+//        deliveryLogic.getDepartment().getVehicles().add( Car3 );
+
+
+
+
         HashSet<Vertex> current_ver=new HashSet<>();
         for (int i = 0; i<5; i++){
             Delivery dev=DeliveryGenerator.generate();
-          if(!current_ver.contains(dev.getAddress())) {
-              current_ver.add(dev.getAddress());
-              deliveryLogic.add_delivery(dev);
-          }
-      }
+            if(!current_ver.contains(dev.getAddress())) {
+                current_ver.add(dev.getAddress());
+                try {
+                    deliveryLogic.add_delivery(dev);
+                } catch (CloneNotSupportedException e) {
+                    //e.printStackTrace();
+                }
+            }
+        }
+
+
+
+
+        //t.setActiveDelivery(e);
+            //Main.map.DrawPath(t.getPathToDelivery(e).getPath());
+
+
+        Main.deliveryLogic.UpdateLc();
+
+
+
+
+    }
+
+    public static ObservableList<Delivery> DeliveryData;
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Frames/MainScene.fxml"));
+        Parent root = loader.load();
+        primaryStage.setTitle("Delivery for 10 minutes");
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         primaryStage.setScene(new Scene(root));
@@ -139,6 +183,8 @@ public class Main extends Application {
             @Override
             public void handle(WindowEvent event) {
                 deliveryLogic.timer.cancel();
+                DeliveryController.timer.cancel();
+                MapController.timer.cancel();
             }
         });
 

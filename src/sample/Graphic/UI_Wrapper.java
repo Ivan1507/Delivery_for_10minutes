@@ -35,7 +35,7 @@ public class UI_Wrapper {
         super();
     }
     public void changes(double x, double y, Pane pane, Vertex source){
-
+        if (pane == null) return;
 
         for( Object o : pane.getChildren()) {
 

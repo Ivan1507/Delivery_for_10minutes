@@ -3,6 +3,7 @@ package sample.Delivery;
 import sample.LocalDateFormatted2;
 import sample.MapLogic.Vertex;
 import sample.Product;
+import sample.Transport.BaseTransport;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,14 +12,14 @@ import java.util.ArrayList;
 public class Delivery implements Serializable,Cloneable {
 
     private int id;
-    private String executor; // Исполнитель
+    private BaseTransport executor; // Исполнитель
     private DeliveryStatus status; // Статус заказа
     private LocalDateFormatted2 time_start; // Начало
     private LocalDateFormatted2 time_end; // Конец
     private ArrayList<Product> goods; // Список товаров
     private Vertex address; // Адрес, куда нужно доставлять заказ
 
-    public Delivery(int id , String executor, DeliveryStatus status, LocalDateFormatted2 time_start, LocalDateFormatted2 time_end, ArrayList<Product> goods, Vertex address) {
+    public Delivery(int id , BaseTransport executor, DeliveryStatus status, LocalDateFormatted2 time_start, LocalDateFormatted2 time_end, ArrayList<Product> goods, Vertex address) {
         this.id = id;
         this.executor = executor;
         this.status = status;
@@ -38,11 +39,11 @@ public class Delivery implements Serializable,Cloneable {
         this.id = id;
     }
 
-    public String getExecutor() {
+    public BaseTransport getExecutor() {
         return executor;
     }
 
-    public void setExecutor(String executor) {
+    public void setExecutor(BaseTransport executor) {
         this.executor = executor;
     }
 
@@ -90,7 +91,7 @@ public class Delivery implements Serializable,Cloneable {
     public String toString() {
         return "Delivery{" +
                 "id=" + id +
-                ", executor='" + executor + '\'' +
+                ", executor='" + executor.getName() + '\'' +
                 ", status=" + status +
                 ", time_start=" + time_start +
                 ", time_end=" + time_end +
@@ -98,4 +99,5 @@ public class Delivery implements Serializable,Cloneable {
                 ", address=" + address +
                 '}';
     }
+
 }

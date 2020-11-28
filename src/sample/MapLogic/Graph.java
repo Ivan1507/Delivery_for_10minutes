@@ -109,16 +109,16 @@ public class Graph implements Serializable {
                 if (test.length() > length_par) { continue;}
 
 
-                Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());
+                //Line l = new Line(Delivery.getX(), Delivery.getY(), ProjectionVector.getX(), ProjectionVector.getY());
                 Vertex PointOnEdge = ProjectionVector.convertToVertex();
                 PointOnEdge.setName("Точка"+ Math.abs(projection)+24);
                 roads.add(PointOnEdge);
 
 
-                l.setStroke(Color.FUCHSIA);
-                l.setStrokeWidth(1.7);
+                //l.setStroke(Color.FUCHSIA);
+                //l.setStrokeWidth(1.7);
 
-                root.getChildren().addAll(l);
+                //root.getChildren().addAll(l);
 
 
                 HashSet<Vertex> hashSet = new HashSet();
@@ -238,7 +238,7 @@ public class Graph implements Serializable {
 
     // Нахождением мин. пути по алгоритму Дейстктры
     public PathWrapper Find_min_path_with_optimized(BaseTransport start, Vertex end){
-        System.out.println("graph = "+graph);
+        //System.out.println("graph = "+graph);
         Map<Vertex,Double> shortest_distances=new HashMap<>();
         Map<Vertex,Vertex> parents=new HashMap<>();
         parents.put(start,null);
