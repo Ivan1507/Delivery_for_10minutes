@@ -62,7 +62,7 @@ public class DeliveryLogic {
                             e.printStackTrace();
                         }
                         Main.map.delete(transport.getActiveDelivery().getAddress());
-                        System.out.println("Graph.Points.get(transport.getActiveDelivery().getAddress().getName()) = " + Graph.Points.get(transport.getActiveDelivery().getAddress().getName()));
+                        //System.out.println("Graph.Points.get(transport.getActiveDelivery().getAddress().getName()) = " + Graph.Points.get(transport.getActiveDelivery().getAddress().getName()));
                         Graph.Points.remove(transport.getActiveDelivery().getAddress().getName());
                         transport.getActiveDelivery().getAddress().setFinished(true);
                         transport.getActiveDelivery().setExecutor(null);
@@ -89,7 +89,7 @@ public class DeliveryLogic {
         };
 
 
-        long delay = 50L;
+        long delay = 100L;
         timer.schedule(task, delay);
     }
 

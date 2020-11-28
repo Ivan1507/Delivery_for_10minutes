@@ -2,16 +2,18 @@ package sample.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import sample.LocalDateFormatted2;
 import sample.Delivery.Delivery;
 import sample.Main;
 import sample.Delivery.DeliveryStatus;
-import sample.Graphic.PointType;
 import sample.Product;
 import sample.Transport.BaseTransport;
 
@@ -62,8 +64,55 @@ public class MapController implements Initializable {
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_end"));
         goods.setCellValueFactory(new PropertyValueFactory<Delivery, ArrayList<Product>>("goods"));
         // заполняем таблицу данными
+        status.setCellFactory(tableColumn -> {
+            return new TableCell<Delivery,DeliveryStatus>(){
+                @Override
+                protected void updateItem(DeliveryStatus deliveryStatus, boolean b) {
+                    super.updateItem(deliveryStatus, b);
+                    if (deliveryStatus == null) return;
+                    String text = switch (deliveryStatus){
+                        case OK -> "ok";
+                        case NOT_OK -> "not_ok";
+                        case WAITING -> "waiting";
+                        default -> "unknown";
+                    };
+                    setText(text);
+                    if (text.equals("ok")) {
+                        //setText(deliveryStatus.toString());
+                        setTextFill(Color.GREEN); //The text in red
+                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+                    } else {
+                            //setText(deliveryStatus.toString());
+                            //setTextFill(Color.BLACK);
 
-        table.setItems(Main.deliveryLogic.getDeliveryData());
+                    }
+                }
+            };
+        });
+
+        executor.setCellFactory(tableColumn -> {
+            return new TableCell<Delivery,BaseTransport>(){
+                @Override
+                protected void updateItem(BaseTransport baseTransport, boolean b) {
+                    super.updateItem(baseTransport, b);
+                   // if (baseTransport == null) return;
+
+
+                    if (baseTransport == null) {
+                        setText("=====");
+                        setTextFill(Color.PURPLE); //The text in red
+                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+                    } else {
+                        //setText(deliveryStatus.toString());
+                        //setTextFill(Color.BLACK);
+                        setTextFill(Color.GREEN);
+                        setText(baseTransport.toString());
+                    }
+                }
+            };
+        });
+
+                table.setItems(Main.deliveryLogic.getDeliveryData());
         for (BaseTransport vehicle : Main.deliveryLogic.getDepartment().getVehicles()) {
             vehicle.placeTo(root);
         }
