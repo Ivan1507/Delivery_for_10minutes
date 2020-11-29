@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,14 +18,22 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 public class ChartController implements Initializable {
     private  XYChart.Series set=new XYChart.Series();
     private XYChart.Series set1=new XYChart.Series();
     private XYChart.Series set2=new XYChart.Series();
-    private HashMap<String,Integer> time_for_histogramm=new HashMap<>();
+    private Map<String,Integer> time_for_histogramm=new TreeMap<>();
     @FXML
     private BarChart<?, ?> chart;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private void click(){
+        chart.setTitle("Статистика заказов за "+datePicker.getValue());
+        chart.getData().addAll(set,set1,set2);
+    }
 
     @FXML
     private CategoryAxis x;
@@ -33,60 +43,42 @@ public class ChartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       chart.setTitle("Статистика заказов");
+       //chart.setTitle("Статистика заказов");
         addData(4);
        addData(5);
        addData(10);
+       addData(8);
        addData(11);
-       addData(5);
-        addData(7);
         System.out.println("time_for_histogramm = " + time_for_histogramm);
 
-       set1.getData().add(new XYChart.Data("Jan", 23));
-       set2.getData().add(new XYChart.Data("Feb", 14));
-       chart.getData().addAll(set,set1,set2);
+       //chart.getData().addAll(set,set1,set2);
 
     }
     //Метод для добавления статистики
     public void addData(Integer time) {
-        if (time <= 5) {
+
             if (time_for_histogramm.get(time.toString()) != null) {
                 time_for_histogramm.put(time.toString(), 1 + time_for_histogramm.get(time.toString()));
             } else time_for_histogramm.put(time.toString(), 1);
-
-            set2.getData().clear();
-
+            int a=0,b=0,c=0;
             for (Map.Entry<String, Integer> entry : time_for_histogramm.entrySet()) {
-                XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
-                set2.getData().add(data);
-            }
-
-        }
-        else if (time > 5 && time<=10) {
-            if (time_for_histogramm.get(time.toString()) != null) {
-                time_for_histogramm.put(time.toString(), 1 + time_for_histogramm.get(time.toString()));
-            } else time_for_histogramm.put(time.toString(), 1);
-
-            set1.getData().clear();
-
-            for (Map.Entry<String, Integer> entry : time_for_histogramm.entrySet()) {
-                XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
-                set1.getData().add(data);
-            }
-
-        }
-        else if (time > 10) {
-            if (time_for_histogramm.get(time.toString()) != null) {
-                time_for_histogramm.put(time.toString(), 1 + time_for_histogramm.get(time.toString()));
-            } else time_for_histogramm.put(time.toString(), 1);
-
-            set.getData().clear();
-
-            for (Map.Entry<String, Integer> entry : time_for_histogramm.entrySet()) {
-                XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
-                set.getData().add(data);
+                //XYChart.Data data = new XYChart.Data(entry.getKey(), entry.getValue());
+                if(Integer.parseInt(entry.getKey())<=5) {
+                    a++;
+                    XYChart.Data data = new XYChart.Data("до 5 мин", a);
+                    set2.getData().add(data);
+                }
+                else if(Integer.parseInt(entry.getKey())>5 && Integer.parseInt(entry.getKey())<=10) {
+                    b++;
+                    XYChart.Data data = new XYChart.Data("от 5 до 10 мин", b);
+                    set1.getData().add(data);
+                }
+                else if(Integer.parseInt(entry.getKey())>10) {
+                    c++;
+                    XYChart.Data data = new XYChart.Data("от 10 мин", c);
+                    set.getData().add(data);
+                }
             }
 
         }
     }
-}

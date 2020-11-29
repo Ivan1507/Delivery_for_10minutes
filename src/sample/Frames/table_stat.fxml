@@ -18,8 +18,8 @@
           <NumberAxis fx:id="y" label="Кол-во Доставок" side="LEFT" />
         </yAxis>
       </BarChart>
-      <DatePicker layoutX="212.0" layoutY="33.0" />
+      <DatePicker fx:id="datePicker" layoutX="212.0" layoutY="33.0" />
       <Label layoutX="66.0" layoutY="37.0" text="Выберите дату" />
-      <Button layoutX="428.0" layoutY="33.0" mnemonicParsing="false" text="OK" />
+      <Button layoutX="428.0" layoutY="33.0" mnemonicParsing="false" onAction="#click" text="OK" />
    </children>
 </AnchorPane>
