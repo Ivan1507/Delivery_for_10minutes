@@ -24,10 +24,14 @@ public class DeliveryLogic {
             BaseTransport executor = null;
             Double time=null;
             for (BaseTransport baseTransport : department.getVehicles()) {
-                    if (baseTransport.getActiveDelivery() != null) continue;
-                    if (!baseTransport.hasSpace(e))continue;
+                    if (baseTransport.getActiveDelivery() != null) {
+                        System.out.println("Continued, slot is busy: " + baseTransport);
+                        continue;};
+                    if (!baseTransport.hasSpace(e)){
+                        System.out.println("Continued, vehicle doesnt have space: " + baseTransport);
+                        continue;};
                 //if (baseTransport.getExecuteTime(e) == null) continue;
-                System.out.println("baseTransport.getExecuteTime(e)  = " + baseTransport.getExecuteTime(e) );
+
                 if (baseTransport.getExecuteTime(e) == null){continue;}
 
                 if (time == null) {
@@ -67,12 +71,15 @@ public class DeliveryLogic {
                         transport.getActiveDelivery().getAddress().setFinished(true);
                         transport.getActiveDelivery().setExecutor(null);
                         transport.getActiveDelivery().setStatus(DeliveryStatus.OK);
-                        transport.setActiveDelivery(null);
 
+                        transport.setActiveDelivery(null);
+                        System.out.println("transport.products = " + transport.products);
 
                         for (Delivery d: getDeliveryData()){
                             if (d.getStatus() == DeliveryStatus.OK) continue;
                             if (d.getExecutor() != null) continue;
+                            System.out.println(" Testing= " +d.getAddress());
+                            //System.out.println("Delivery + " + d.get);
                             SetDelivery(d);
                         }
                     }
@@ -89,7 +96,7 @@ public class DeliveryLogic {
         };
 
 
-        long delay = 100L;
+        long delay = 10L;
         timer.schedule(task, delay);
     }
 

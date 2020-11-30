@@ -226,6 +226,7 @@ public class BaseTransport extends Vertex {
         distance.sub(new Vector2D(this));
         //if (distance.length() > 35) return false;
         //if(hasSpace(delivery.getGoods())){ //Checking for space in Transport
+        //products.clear();
             for (Product product : delivery.getGoods()){
                 if (products.contains(product)){
                     products.remove(product);
