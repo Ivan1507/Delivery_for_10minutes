@@ -9,17 +9,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="665.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ChartController">
-   <children>
-      <BarChart fx:id="chart" layoutX="33.0" layoutY="69.0" prefHeight="556.0" prefWidth="707.0">
-        <xAxis>
-          <CategoryAxis label="Время Доставки" side="BOTTOM" fx:id="x" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="y" label="Кол-во Доставок" side="LEFT" />
-        </yAxis>
-      </BarChart>
-      <DatePicker fx:id="datePicker" layoutX="212.0" layoutY="33.0" />
-      <Label layoutX="66.0" layoutY="37.0" text="Выберите дату" />
-      <Button layoutX="428.0" layoutY="33.0" mnemonicParsing="false" onAction="#click" text="OK" />
-   </children>
+    <children>
+        <BarChart fx:id="chart" layoutX="33.0" layoutY="69.0" prefHeight="556.0" prefWidth="707.0">
+            <xAxis>
+                <CategoryAxis label="Время Доставки" side="BOTTOM" fx:id="x" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="y" label="Кол-во Доставок" side="LEFT" />
+            </yAxis>
+        </BarChart>
+        <DatePicker fx:id="datePicker" layoutX="212.0" layoutY="33.0" />
+        <Label layoutX="66.0" layoutY="37.0" text="Выберите дату" />
+        <Button layoutX="428.0" layoutY="33.0" mnemonicParsing="false" onAction="#click" text="OK" />
+    </children>
 </AnchorPane>

@@ -1,7 +1,6 @@
 package sample.Delivery;
 
 import javafx.collections.ObservableList;
-import sample.Controllers.ChartController;
 import sample.Controllers.DeliveryController;
 import sample.LocalDateFormatted2;
 import sample.Main;
@@ -9,17 +8,11 @@ import sample.MapLogic.Graph;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class DeliveryLogic {
-    public Double time_of_del;
-    public ObservableList<Delivery> DeliveryData;
-    public double exectime;// Список заказов
+    public ObservableList<Delivery> DeliveryData; // Список заказов
     public Timer timer = new Timer("Timer");
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
     public void add_delivery(Delivery e) throws CloneNotSupportedException {
@@ -31,25 +24,29 @@ public class DeliveryLogic {
             BaseTransport executor = null;
             Double time=null;
             for (BaseTransport baseTransport : department.getVehicles()) {
-                    if (baseTransport.getActiveDelivery() != null) continue;
-                    if (!baseTransport.hasSpace(e))continue;
-                System.out.println("baseTransport.getExecuteTime(e)  = " + baseTransport.getExecuteTime(e) );
-                exectime=baseTransport.getExecuteTime(e);
+                    if (baseTransport.getActiveDelivery() != null) {
+                        System.out.println("Continued, slot is busy: " + baseTransport);
+                        continue;};
+                    if (!baseTransport.hasSpace(e)){
+                        System.out.println("Continued, vehicle doesnt have space: " + baseTransport);
+                        continue;};
+                //if (baseTransport.getExecuteTime(e) == null) continue;
+
                 if (baseTransport.getExecuteTime(e) == null){continue;}
 
                 if (time == null) {
                     time = baseTransport.getExecuteTime(e);
+                    //System.out.println("time = " + time);
                     executor = baseTransport;
                 }
 
                 if (time > baseTransport.getExecuteTime(e)){
                     time = baseTransport.getExecuteTime(e);
-
+                    //System.out.println("time = " + time);
                     executor = baseTransport;
                 }
             }
         System.out.println("executor = " + executor + " and time = " + time);
-
         return executor;
     }
 
@@ -69,24 +66,20 @@ public class DeliveryLogic {
                             e.printStackTrace();
                         }
                         Main.map.delete(transport.getActiveDelivery().getAddress());
-                        System.out.println("vremya sey4 = " + exectime);
-                        try {
-                            ChartController.saveData((int)exectime);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
+                        //System.out.println("Graph.Points.get(transport.getActiveDelivery().getAddress().getName()) = " + Graph.Points.get(transport.getActiveDelivery().getAddress().getName()));
                         Graph.Points.remove(transport.getActiveDelivery().getAddress().getName());
                         transport.getActiveDelivery().getAddress().setFinished(true);
                         transport.getActiveDelivery().setExecutor(null);
                         transport.getActiveDelivery().setStatus(DeliveryStatus.OK);
-                        transport.setActiveDelivery(null);
 
+                        transport.setActiveDelivery(null);
+                        System.out.println("transport.products = " + transport.products);
 
                         for (Delivery d: getDeliveryData()){
                             if (d.getStatus() == DeliveryStatus.OK) continue;
                             if (d.getExecutor() != null) continue;
+                            System.out.println(" Testing= " +d.getAddress());
+                            //System.out.println("Delivery + " + d.get);
                             SetDelivery(d);
                         }
                     }
@@ -103,7 +96,7 @@ public class DeliveryLogic {
         };
 
 
-        long delay = 100L;
+        long delay = 10L;
         timer.schedule(task, delay);
     }
 
