@@ -1,6 +1,7 @@
 package sample.Delivery;
 
 import javafx.collections.ObservableList;
+import sample.Controllers.ChartController;
 import sample.Controllers.DeliveryController;
 import sample.LocalDateFormatted2;
 import sample.Main;
@@ -8,12 +9,17 @@ import sample.MapLogic.Graph;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class DeliveryLogic {
     public Double time_of_del;
-    public ObservableList<Delivery> DeliveryData; // Список заказов
+    public ObservableList<Delivery> DeliveryData;
+    public double exectime;// Список заказов
     public Timer timer = new Timer("Timer");
     private TransportDepartment department = new TransportDepartment(); // Список транспорта
     public void add_delivery(Delivery e) throws CloneNotSupportedException {
@@ -28,11 +34,11 @@ public class DeliveryLogic {
                     if (baseTransport.getActiveDelivery() != null) continue;
                     if (!baseTransport.hasSpace(e))continue;
                 System.out.println("baseTransport.getExecuteTime(e)  = " + baseTransport.getExecuteTime(e) );
+                exectime=baseTransport.getExecuteTime(e);
                 if (baseTransport.getExecuteTime(e) == null){continue;}
 
                 if (time == null) {
                     time = baseTransport.getExecuteTime(e);
-                    //System.out.println("time = " + time);
                     executor = baseTransport;
                 }
 
@@ -63,7 +69,14 @@ public class DeliveryLogic {
                             e.printStackTrace();
                         }
                         Main.map.delete(transport.getActiveDelivery().getAddress());
-                        //System.out.println("Graph.Points.get(transport.getActiveDelivery().getAddress().getName()) = " + Graph.Points.get(transport.getActiveDelivery().getAddress().getName()));
+                        System.out.println("vremya sey4 = " + exectime);
+                        try {
+                            ChartController.saveData((int)exectime);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
                         Graph.Points.remove(transport.getActiveDelivery().getAddress().getName());
                         transport.getActiveDelivery().getAddress().setFinished(true);
                         transport.getActiveDelivery().setExecutor(null);
