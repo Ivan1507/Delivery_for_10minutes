@@ -9,5 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
+    <orderEntry type="library" name="javax.mail-api-1.6.2" level="project" />
+    <orderEntry type="library" name="smtp-1.5.2" level="project" />
   </component>
 </module>
