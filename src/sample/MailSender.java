@@ -37,7 +37,7 @@ public class MailSender {
         final String password = "Ivanap1507";
 
         // Receiver's email ID
-        String receiver = "luckyghost33@gmail.com";
+        String receiver = "delivery1523@gmail.com";
 
         // Sender's email ID
         String sender = "delivery1523@gmail.com";
@@ -74,10 +74,12 @@ public class MailSender {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 
             // Subject of the email
-            message.setSubject("Java Send Email Gmail SMTP with TLS Authentication");
+            message.setSubject("NASA MESSAGE FOR ANDRIANOV");
 
             // Body of the email
-            message.setText("Welcome to Java Interviewpoint");
+            message.setText("Welcome to NASA!\n" +
+                    "with best wishes, " +
+                    "Andrey Mihaylovich");
             System.out.println("Send");
             // Send email.
             Transport.send(message);
