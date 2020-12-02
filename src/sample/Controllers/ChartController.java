@@ -3,6 +3,7 @@ package sample.Controllers;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -34,6 +35,7 @@ public class ChartController implements Initializable {
     private DatePicker datePicker;
     @FXML
     private void click() throws IOException, ClassNotFoundException {
+        clear();
         chart.setTitle("Статистика заказов за "+datePicker.getValue());
         File  file = new File("./date.txt");
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -41,19 +43,25 @@ public class ChartController implements Initializable {
         HashMap<String, Map<String, Integer>> map =(HashMap<String,Map<String,Integer>>) objectInputStream.readObject();
         System.out.println("datePicker = " + datePicker.getValue().toString());
         XYChart.Data data = new XYChart.Data("до 5", map.get(datePicker.getValue().toString()).get("<"));
-        if(data!=null)
         set2.getData().add(data);
         XYChart.Data data1 = new XYChart.Data("от 5 до 10 мин", map.get(datePicker.getValue().toString()).get("="));
-        if(data1!=null)
         set1.getData().add(data1);
         XYChart.Data data2 = new XYChart.Data("от 10 мин", map.get(datePicker.getValue().toString()).get(">"));
-        if(data2!=null)
         set.getData().add(data2);
-        chart.getData().addAll(set,set1,set2);
-
+        chart.getData().addAll(set2,set1,set);
+        Node nl = chart.lookup(".default-color0.chart-bar");
+        Node ns = chart.lookup(".default-color1.chart-bar");
+        Node nsl = chart.lookup(".default-color2.chart-bar");
+        nl.setStyle("-fx-bar-fill:green");
+        ns.setStyle("-fx-bar-fill:orange;");
+        nsl.setStyle("-fx-bar-fill:red;");
     }
     @FXML
     private void clear(){
+        set.getData().clear();
+        set1.getData().clear();
+        set2.getData().clear();
+        chart.getData().removeAll(set2,set1,set);
         chart.getData().clear();
     }
 
@@ -68,6 +76,7 @@ public class ChartController implements Initializable {
         //chart.setTitle("Статистика заказов");
         addData(4);
         addData(7);
+        addData(8);
         addData(11);
 
         //chart.getData().addAll(set,set1,set2);
@@ -89,6 +98,9 @@ public class ChartController implements Initializable {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             HashMap<String, Map<String, Integer>> map = (HashMap<String, Map<String, Integer>>) objectInputStream.readObject();
+            if(map.get(formatDateTime)==null){
+                map.put(formatDateTime,new HashMap<>());
+            }
             if (map.get(formatDateTime).get(category) != null) {
                 map.get(formatDateTime).put(category, map.get(formatDateTime).get(category) + 1);
             } else {
