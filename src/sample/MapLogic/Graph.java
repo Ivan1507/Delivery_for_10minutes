@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import sample.Delivery.DeliveryEdgeInfo;
 import sample.Graphic.PointType;
-import sample.Kitchen;
+
 import sample.Transport.BaseTransport;
 import sample.Vector2D;
 

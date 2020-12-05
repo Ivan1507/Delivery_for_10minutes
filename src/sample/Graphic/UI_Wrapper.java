@@ -43,6 +43,7 @@ public class UI_Wrapper {
             if (o instanceof Text && ((Text) o).getUserData().equals(source)) {
                 ((Text) o).setX(x-15);
                 ((Text) o).setY(y-10);
+
             }
 
             if (o instanceof Circle  && ((Circle) o).getUserData().equals(source)) {

@@ -77,11 +77,18 @@
                         <Font name="AR BERKLEY" size="13.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" onAction="#OnClicked" prefHeight="66.0" prefWidth="130.0" text="Карта" />
-                  <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Объекты" />
-                  <Button mnemonicParsing="false" onAction="#button_delivery_clicked" prefHeight="34.0" prefWidth="130.0" text="Заказы" />
-                  <Button mnemonicParsing="false" onAction="#button_stat_clicked" prefHeight="34.0" prefWidth="130.0" text="Статистика" />
-                  <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="130.0" text="Настройки" />
+                  <Button mnemonicParsing="false" onAction="#OnClicked" prefHeight="66.0" prefWidth="130.0" style="-fx-background-color: #40a7db;" text="Карта" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#button_delivery_clicked" prefHeight="39.0" prefWidth="130.0" style="-fx-background-color: #40a7db;" text="Заказы" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#button_stat_clicked" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #40a7db;" text="Статистика" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Button>
                </children>
             </VBox>
          </children>

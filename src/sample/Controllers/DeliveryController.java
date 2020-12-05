@@ -2,10 +2,12 @@ package sample.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import sample.Main;
 import sample.Delivery.Delivery;
 import sample.Delivery.DeliveryStatus;
@@ -53,7 +55,32 @@ public class DeliveryController implements Initializable {
 
         table.setItems(Main.deliveryLogic.getDeliveryData());
 
+        status.setCellFactory(tableColumn -> {
+            return new TableCell<Delivery,DeliveryStatus>(){
+                @Override
+                protected void updateItem(DeliveryStatus deliveryStatus, boolean b) {
+                    super.updateItem(deliveryStatus, b);
+                    if (deliveryStatus == null) return;
+                    String text = switch (deliveryStatus){
+                        case OK -> "Готов";
+                        case NOT_OK -> "Не готов";
+                        case WAITING -> "Ожидает";
+                        case DELAYED -> "С задержкой";
+                        default -> "unknown";
+                    };
+                    setText(text);
+                    if (text.equals("Готов")) {
+                        //setText(deliveryStatus.toString());
+                        setTextFill(Color.GREEN); //The text in red
+                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+                    } else {
+                        //setText(deliveryStatus.toString());
+                        //setTextFill(Color.BLACK);
 
+                    }
+                }
+            };
+        });
         UpdateLc();
 
 

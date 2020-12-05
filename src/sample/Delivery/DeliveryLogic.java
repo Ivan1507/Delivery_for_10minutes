@@ -1,6 +1,8 @@
 package sample.Delivery;
 
 import javafx.collections.ObservableList;
+import sample.Config;
+import sample.Controllers.ChartController;
 import sample.Controllers.DeliveryController;
 import sample.LocalDateFormatted2;
 import sample.Main;
@@ -8,6 +10,9 @@ import sample.MapLogic.Graph;
 import sample.Transport.BaseTransport;
 import sample.Transport.TransportDepartment;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -70,15 +75,29 @@ public class DeliveryLogic {
                         Graph.Points.remove(transport.getActiveDelivery().getAddress().getName());
                         transport.getActiveDelivery().getAddress().setFinished(true);
                         transport.getActiveDelivery().setExecutor(null);
-                        transport.getActiveDelivery().setStatus(DeliveryStatus.OK);
 
+
+                        LocalDateTime time =  LocalDateTime.now();
+
+                        LocalDateFormatted2 dateFormatted2 = new LocalDateFormatted2(time);
+
+                        transport.getActiveDelivery().setTime_end(dateFormatted2);
+                   long min  = Duration.between(time, transport.getActiveDelivery().getTime_start().getLocalDateTime()).toMinutes();
+                        ChartController.addData((int) min);
+                   if (min > Config.TIME_DELIVERY){
+                       transport.getActiveDelivery().setStatus(DeliveryStatus.DELAYED);
+                   }
+                   else
+                   {
+                       transport.getActiveDelivery().setStatus(DeliveryStatus.OK);
+                   }
                         transport.setActiveDelivery(null);
-                        System.out.println("transport.products = " + transport.products);
+
 
                         for (Delivery d: getDeliveryData()){
                             if (d.getStatus() == DeliveryStatus.OK) continue;
                             if (d.getExecutor() != null) continue;
-                            System.out.println(" Testing= " +d.getAddress());
+                            //System.out.println(" Testing= " +d.getAddress());
                             //System.out.println("Delivery + " + d.get);
                             SetDelivery(d);
                         }
@@ -96,7 +115,7 @@ public class DeliveryLogic {
         };
 
 
-        long delay = 10L;
+        long delay = 50L;
         timer.schedule(task, delay);
     }
 

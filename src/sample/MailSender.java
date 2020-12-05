@@ -37,7 +37,7 @@ public class MailSender {
         final String password = "Ivanap1507";
 
         // Receiver's email ID
-        String receiver = "luckyghost33@gmail.com";
+        String receiver = "lucky-pa777@yandex.ru";
 
         // Sender's email ID
         String sender = "delivery1523@gmail.com";
