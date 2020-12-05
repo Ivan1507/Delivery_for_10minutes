@@ -129,7 +129,7 @@ public class BaseTransport extends Vertex {
             direction.sub(new Vector2D(prev));
 
 
-            int div = (int) ((int)(direction.length() / 5)/(getAvgSpeed()/240));
+            int div = (int) ((int)(direction.length() / 5)/(getAvgSpeed()/540));
 
             direction.div(div);
 

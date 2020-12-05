@@ -71,13 +71,14 @@ public class MapController implements Initializable {
                     super.updateItem(deliveryStatus, b);
                     if (deliveryStatus == null) return;
                     String text = switch (deliveryStatus){
-                        case OK -> "ok";
-                        case NOT_OK -> "not_ok";
-                        case WAITING -> "waiting";
+                        case OK -> "Готов";
+                        case NOT_OK -> "Не готов";
+                        case WAITING -> "Ожидает";
+                        case DELAYED -> "С задержкой";
                         default -> "unknown";
                     };
                     setText(text);
-                    if (text.equals("ok")) {
+                    if (text.equals("Готов")) {
                         //setText(deliveryStatus.toString());
                         setTextFill(Color.GREEN); //The text in red
                         //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
@@ -90,33 +91,39 @@ public class MapController implements Initializable {
             };
         });
 
-        executor.setCellFactory(tableColumn -> {
-            return new TableCell<Delivery,BaseTransport>(){
-                @Override
-                protected void updateItem(BaseTransport baseTransport, boolean b) {
-                    super.updateItem(baseTransport, b);
+//        executor.setCellFactory(tableColumn -> {
+//            return new TableCell<Delivery,BaseTransport>(){
+//                @Override
+//                protected void updateItem(BaseTransport baseTransport, boolean b) {
+//                    super.updateItem(baseTransport, b);
+//                   // if (baseTransport == null) return;
+//
+//
+//                    if (baseTransport == null) {
+//                        //setText("=====");
+//                        setTextFill(Color.PURPLE); //The text in red
+//                        //("-fx-background-color: #5bf55b"); //The background of the cell in yellow
+//                    } else {
+//                        //setText(deliveryStatus.toString());
+//                        //setTextFill(Color.BLACK);
+//                        setTextFill(Color.GREEN);
+//                        setText(baseTransport.toString());
+//                    }
+//                }
+//            };
+//        });
 
-
-                    if (baseTransport == null) {
-                        setText("=====");
-                        setTextFill(Color.PURPLE);
-                    } else {
-
-                        setTextFill(Color.GREEN);
-                        setText(baseTransport.toString());
-                    }
-                }
-            };
-        });
-
-                table.setItems(Main.deliveryLogic.getDeliveryData());
+        table.setItems(Main.deliveryLogic.getDeliveryData());
         for (BaseTransport vehicle : Main.deliveryLogic.getDepartment().getVehicles()) {
             vehicle.placeTo(root);
         }
 
         for (Delivery delivery : Main.deliveryLogic.getDeliveryData()) {
-            if (!delivery.getAddress().isFinished()) delivery.getAddress().placeTo(root);
+            if (delivery.getAddress().isFinished()) continue;
+            delivery.getAddress().placeTo(root);
         }
+
+
         UpdateLc();
     }
 
