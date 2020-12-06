@@ -26,6 +26,7 @@ public class Main extends Application {
     public static Graph map = new Graph();
 
     public static DeliveryLogic deliveryLogic=new DeliveryLogic();
+    public static MailChecker mailChecker = new MailChecker();
     static {
 
         // Создаем точки на карте
@@ -169,10 +170,16 @@ public class Main extends Application {
 
 
 
-       // MailSender.send4();
+        //MailSender.sendUrl();
 
 
+        try {
+            throw new RuntimeException("ERROR");
+        }
+        catch (Exception e) {
+            mailChecker.Errors(Arrays.toString(e.getStackTrace()));
 
+        }
 
 
 
@@ -185,7 +192,9 @@ public class Main extends Application {
                 deliveryLogic.timer.cancel();
                 DeliveryController.timer.cancel();
                 MapController.timer.cancel();
+                mailChecker.CheckErrors();
             }
+
         });
 
 

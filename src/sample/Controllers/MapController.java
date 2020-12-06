@@ -63,6 +63,7 @@ public class MapController implements Initializable {
         time_start.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_start"));
         time_end.setCellValueFactory(new PropertyValueFactory<Delivery, LocalDateFormatted2>("time_end"));
         goods.setCellValueFactory(new PropertyValueFactory<Delivery, ArrayList<Product>>("goods"));
+
         // заполняем таблицу данными
         status.setCellFactory(tableColumn -> {
             return new TableCell<Delivery,DeliveryStatus>(){

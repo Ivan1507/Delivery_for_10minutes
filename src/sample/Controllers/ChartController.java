@@ -25,9 +25,9 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class ChartController implements Initializable {
-    private  XYChart.Series set=new XYChart.Series();
-    private XYChart.Series set1=new XYChart.Series();
-    private XYChart.Series set2=new XYChart.Series();
+    private  XYChart.Series<String,Number> set=new XYChart.Series();
+    private XYChart.Series<String,Number> set1=new XYChart.Series();
+    private XYChart.Series<String,Number> set2=new XYChart.Series();
     private Map<String,Integer> time_for_histogramm=new TreeMap<>();
     @FXML
     private BarChart<String,Number> chart;
@@ -46,18 +46,19 @@ public class ChartController implements Initializable {
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         HashMap<String, Map<String, Integer>> map =(HashMap<String,Map<String,Integer>>) objectInputStream.readObject();
         System.out.println("datePicker = " + datePicker.getValue().toString());
-        XYChart.Data data = new XYChart.Data("<5 минут", map.get(datePicker.getValue().toString()).get("<"));
+        XYChart.Data<String,Number> data = new XYChart.Data<String,Number>("<5 минут", map.get(datePicker.getValue().toString()).get("<"));
         set2.getData().add(data);
-        set2.setName("До 5 минут");
-        XYChart.Data data1 = new XYChart.Data(">5 & <10 минут", map.get(datePicker.getValue().toString()).get("="));
+
+        XYChart.Data<String,Number> data1 = new XYChart.Data<String,Number>(">5 & <10 минут", map.get(datePicker.getValue().toString()).get("="));
         set1.getData().add(data1);
-        set1.setName("От 5 до 10 минут");
 
-        XYChart.Data data2 = new XYChart.Data(">10 минут", map.get(datePicker.getValue().toString()).get(">"));
+
+        XYChart.Data<String,Number> data2 = new XYChart.Data<String,Number>(">10 минут", map.get(datePicker.getValue().toString()).get(">"));
+
         set.getData().add(data2);
-        set.setName("от 10 минут");
 
-        chart.getData().addAll(set2,set1,set);
+
+
 
         Node nl = chart.lookup(".default-color0.chart-bar");
         Node ns = chart.lookup(".default-color1.chart-bar");
@@ -74,8 +75,8 @@ public class ChartController implements Initializable {
         set.getData().clear();
         set1.getData().clear();
         set2.getData().clear();
-        chart.getData().removeAll(set2,set1,set);
-        chart.getData().clear();
+        //chart.getData().removeAll(set2,set1,set);
+        //chart.getData().clear();
     }
 
     @FXML
@@ -91,7 +92,11 @@ public class ChartController implements Initializable {
         addData(7);
         addData(8);
         addData(11);
-
+        chart.getData().addAll(set2,set1,set);
+        chart.setLegendVisible(false);
+        set1.setName("От 5 до 10 минут");
+        set2.setName("До 5 минут");
+        set.setName("от 10 минут");
         //chart.getData().addAll(set,set1,set2);
 
     }
