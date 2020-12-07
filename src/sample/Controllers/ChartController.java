@@ -39,11 +39,15 @@ public class ChartController implements Initializable {
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         HashMap<String, Map<String, Integer>> map =(HashMap<String,Map<String,Integer>>) objectInputStream.readObject();
         System.out.println("datePicker = " + datePicker.getValue().toString());
+        //Получить инфу о доставках
         if(map.get(datePicker.getValue().toString())!=null) {
+            Integer a=map.get(datePicker.getValue().toString()).get("<");
             XYChart.Data data = new XYChart.Data("до 5", map.get(datePicker.getValue().toString()).get("<"));
             set2.getData().add(data);
+            Integer b=map.get(datePicker.getValue().toString()).get("=");
             XYChart.Data data1 = new XYChart.Data("от 5 до 10 мин", map.get(datePicker.getValue().toString()).get("="));
             set1.getData().add(data1);
+            Integer c=map.get(datePicker.getValue().toString()).get(">");
             XYChart.Data data2 = new XYChart.Data("от 10 мин", map.get(datePicker.getValue().toString()).get(">"));
             set.getData().add(data2);
             chart.getData().addAll(set2, set1, set);
@@ -53,12 +57,31 @@ public class ChartController implements Initializable {
             nl.setStyle("-fx-bar-fill:green");
             ns.setStyle("-fx-bar-fill:orange;");
             nsl.setStyle("-fx-bar-fill:red;");
+            //Получить рекомендации
+            if(c>=(a+b)*0.5){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Инфорация от администратора");
+                alert.setHeaderText("Необходимо добавить количество транспортных связей!");
+                alert.show();
+            }
+            else if(a>=(b+c)*0.5){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Инфорация от администратора");
+                alert.setHeaderText("Можно уменшить количество транспортных связей!");
+                alert.show();
+            }
+            else if(b>=(c+a)*0.5){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Инфорация от администратора");
+                alert.setHeaderText("Ваша Доставка нормально справляется с заказами!");
+                alert.show();
+            }
+
         }
         else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("INFO");
+            alert.setTitle("Информация от администратора");
             alert.setHeaderText("В этот день не было доставок!");
-            //alert.setContentText("I have a great message for you!");
             alert.show();
         }
 
@@ -81,10 +104,10 @@ public class ChartController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //chart.setTitle("Статистика заказов");
-        addData(4);
-        addData(7);
-        addData(8);
-        addData(11);
+//        addData(4);
+//        addData(7);
+//        addData(8);
+//        addData(11);
         chart.setLegendVisible(false);
         //chart.getData().addAll(set,set1,set2);
 
