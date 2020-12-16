@@ -34,6 +34,7 @@ public class ChartController implements Initializable {
     @FXML
     private void click() throws IOException, ClassNotFoundException {
         boolean f=false;
+        boolean del=false;
         clear();
         File  file = new File("./date.txt");
         FileInputStream fileInputStream = new FileInputStream(file);
@@ -77,14 +78,22 @@ public class ChartController implements Initializable {
         if(!f&&go) {
             chart.setTitle("Статистика заказов с "+datePicker.getValue()+" по "+datePicker1.getValue());
             //Получить инфу о доставках
-            if (map.get(datePicker.getValue().toString()) != null) {
                 Integer a=0;
                 Integer b=0;
                 Integer c=0;
-                a=map.get(datePicker.getValue().toString()).get("<");
-                b=map.get(datePicker.getValue().toString()).get("=");
-                c=map.get(datePicker.getValue().toString()).get(">");
-                System.out.println("values" + a+"/"+b+"/"+c);
+                if (map.get(datePicker.getValue().toString()) != null) {
+                    del=true;
+                    if (map.get(datePicker.getValue().toString()).get("<") != null) {
+                        a = map.get(datePicker.getValue().toString()).get("<");
+                    }
+                    if (map.get(datePicker.getValue().toString()).get("=") != null) {
+                        b = map.get(datePicker.getValue().toString()).get("=");
+                    }
+                    if (map.get(datePicker.getValue().toString()).get(">") != null) {
+                        c = map.get(datePicker.getValue().toString()).get(">");
+                    }
+                }
+            System.out.println("values" + a + "/" + b + "/" + c);
 
                 ZoneId defaultZoneId = ZoneId.systemDefault();
                 Calendar cal = Calendar.getInstance();
@@ -100,6 +109,7 @@ public class ChartController implements Initializable {
                     System.out.println("lm = " + lm);
                     System.out.println("ly = " + ly);
                     if(map.get(next.toString())!=null) {
+                        del=true;
                         if (map.get(next.toString()).get("<") != null)
                             a += map.get(next.toString()).get("<");
                         if (map.get(next.toString()).get("=") != null)
@@ -109,7 +119,8 @@ public class ChartController implements Initializable {
                     }
                     System.out.println("values" + a+"/"+b+"/"+c);
                 }
-                
+
+                if(del){
                 
                 XYChart.Data data = new XYChart.Data("до 5", a);
                 if (a != null)
@@ -140,17 +151,17 @@ public class ChartController implements Initializable {
 
                 //Получить рекомендации
                 if (a != null && b != null && c != null) {
-                    if (c >= (a + b) * 0.5) {
+                    if (c >= (a + b) * 0.4) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Инфорация от администратора");
                         alert.setHeaderText("Необходимо добавить количество транспортных связей!");
                         alert.show();
-                    } else if (a >= (b + c) * 0.5) {
+                    } else if (a >= (b + c) * 0.4) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Инфорация от администратора");
                         alert.setHeaderText("Можно уменшить количество транспортных связей!");
                         alert.show();
-                    } else if (b >= (c + a) * 0.5) {
+                    } else if (b >= (c + a) * 0.4) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Инфорация от администратора");
                         alert.setHeaderText("Ваша Доставка нормально справляется с заказами!");
