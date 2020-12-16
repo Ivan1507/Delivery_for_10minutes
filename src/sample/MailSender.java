@@ -1,11 +1,22 @@
 package sample;
 
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Date;
-import java.util.Properties;
+import javax.net.ssl.HttpsURLConnection;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.http.HttpClient;
+import java.util.*;
 
 public class MailSender {
 
@@ -30,7 +41,7 @@ public class MailSender {
 
     }
 
-    public static void send4(){
+    public static void SendMail(String topic, String text){
         final String username = "delivery1523@gmail.com";
 
         // Gmail password
@@ -74,17 +85,43 @@ public class MailSender {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 
             // Subject of the email
-            message.setSubject("Java Send Email Gmail SMTP with TLS Authentication");
+            message.setSubject(topic);
 
             // Body of the email
-            message.setText("Welcome to Java Interviewpoint");
-            System.out.println("Send");
+            message.setText(text);
+
             // Send email.
             Transport.send(message);
-            System.out.println("Mail sent successfully");
+
         } catch (Exception r){
     r.printStackTrace();
         }
+
+    }
+
+    public static void sendUrl() throws IOException {
+
+        String url = "http://localhost:8080/test";
+        URL urlObj = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
+
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+
+        DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+
+        String urlPostParameters = "userID=250&userName=Mike";
+        outputStream.writeBytes(urlPostParameters);
+
+        outputStream.flush();
+        outputStream.close();
+
+        System.out.println("Send 'HTTP GET' request to : " + url);
+
+        Integer responseCode = connection.getResponseCode();
+        System.out.println("Response Code : " + responseCode);
+
 
     }
 }
