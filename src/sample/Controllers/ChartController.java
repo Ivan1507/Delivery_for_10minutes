@@ -119,7 +119,6 @@ public class ChartController implements Initializable {
                     }
                     System.out.println("values" + a+"/"+b+"/"+c);
                 }
-
                 if(del){
                 
                 XYChart.Data data = new XYChart.Data("до 5", a);

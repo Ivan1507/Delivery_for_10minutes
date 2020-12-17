@@ -250,7 +250,7 @@ public class Graph implements Serializable {
         ArrayList<Vertex> path=new ArrayList<>();
         path.add(end);
         shortest_distances.put(start,0.0);
-
+        
         ArrayDeque<Vertex> d=new ArrayDeque<>();
         d.add(start);
         while(d.size()!=0){
@@ -272,7 +272,7 @@ public class Graph implements Serializable {
                     quality = Quality_Road.Perfect.getStatus();
                 }
                 if(traffic == null) { traffic = 0d; };
-               // System.out.println("Vert " + u );
+
                 Double time = 0.38*length/(speed*(1-traffic)*(quality));// Вычисляем время доставки учитывая загруженность и качество дороги,
                 if(shortest_distances.get(u)==null || (shortest_distances.get(cur_v)+time) < shortest_distances.get(u)){
                 //    System.out.println("Vert2 " + u);
@@ -293,7 +293,7 @@ public class Graph implements Serializable {
         path.add(start);
         Collections.reverse(path);
 
-        return new PathWrapper( shortest_distances,path);
+        return new PathWrapper(shortest_distances,path);
     }
 
     // Подсчет время-затрат на путь path
