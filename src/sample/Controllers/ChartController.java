@@ -28,6 +28,8 @@ public class ChartController implements Initializable {
     @FXML
     private BarChart<?, ?> chart;
     @FXML
+    private Label recommend;
+    @FXML
     private DatePicker datePicker;
     @FXML
     private DatePicker datePicker1;
@@ -151,31 +153,19 @@ public class ChartController implements Initializable {
                 //Получить рекомендации
                 if (a != null && b != null && c != null) {
                     if (c >= (a + b) * 0.4) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Инфорация от администратора");
-                        alert.setHeaderText("Необходимо добавить количество транспортных связей!");
-                        alert.show();
+                        recommend.setText("Необходимо добавить количество транспортных средств!");
                     } else if (a >= (b + c) * 0.4) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Инфорация от администратора");
-                        alert.setHeaderText("Можно уменшить количество транспортных связей!");
-                        alert.show();
+                        recommend.setText("Можно уменшить количество транспортных средств!");
                     } else if (b >= (c + a) * 0.4) {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Инфорация от администратора");
-                        alert.setHeaderText("Ваша Доставка нормально справляется с заказами!");
-                        alert.show();
+                        recommend.setText("Ваша Доставка нормально справляется с заказами!");
                     }
                 } else if (a == null) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Инфорация от администратора");
-                    alert.setHeaderText("Необходимо добавить количество транспортных связей!");
-                    alert.show();
+
+                    recommend.setText("Необходимо добавить количество транспортных средств!");
+
                 } else if (c == null) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Инфорация от администратора");
-                    alert.setHeaderText("Можно уменшить количество транспортных связей!");
-                    alert.show();
+                    recommend.setText("Можно уменшить количество транспортных средств!");
+
                 }
 
 
@@ -197,6 +187,7 @@ public class ChartController implements Initializable {
         set2.getData().clear();
         chart.getData().removeAll(set2,set1,set);
         chart.getData().clear();
+        recommend.setText("");
     }
 
     @FXML

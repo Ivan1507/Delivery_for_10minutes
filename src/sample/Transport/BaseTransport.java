@@ -9,6 +9,7 @@ import sample.MapLogic.Vertex;
 import sample.Product;
 import sample.Vector2D;
 
+import javax.lang.model.SourceVersion;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -109,7 +110,10 @@ public class BaseTransport extends Vertex {
     }
 
     public PathWrapper FindPath(Vertex to) throws CloneNotSupportedException {
-       return Main.map.FindPath(this, to);
+
+        PathWrapper pathWrapper=Main.map.FindPath(this,to);
+
+       return pathWrapper;
     }
     public PathWrapper FindPath(BaseTransport from, Vertex to) throws CloneNotSupportedException {
         return Main.map.FindPath(from, to);
@@ -245,13 +249,14 @@ public class BaseTransport extends Vertex {
                 BaseTransport clone = clone();
                 clone.setX(Main.map.productPoint.getX());
                 clone.setY(Main.map.productPoint.getY());
+                long start=System.nanoTime();
                 PathWrapper wrapper2 = clone.FindPath(delivery.getAddress());
-
+                System.out.println("(System.nanoTime()-start) = " + (System.nanoTime()-start));
 
                 clone.setX(x);
                 clone.setY(y);
                 PathWrapper full_path = wrapper.MergePathsWrappers(wrapper2);
-                System.out.println("wrapper2 = " + wrapper2.getPath());
+                System.out.println("Path to dev= " + wrapper2.getPath());
 
                // System.out.println("full_path = " + full_path.getPath());
                 return full_path;
@@ -269,15 +274,18 @@ public class BaseTransport extends Vertex {
         try {
             boolean hasProducts = hasProducts(delivery);
             if (!hasProducts) {
+                long start=System.nanoTime();
                 PathWrapper wrapper = this.FindPath(Graph.productPoint);
-
+                System.out.println("time to product point = " + (System.nanoTime()-start));
                 double x = this.getX();
                 double y = this.getY();
                 BaseTransport clone = clone();
                 clone.setX(Graph.productPoint.getX());
                 clone.setY(Graph.productPoint.getY());
-                PathWrapper wrapper2 = clone.FindPath(delivery.getAddress());
 
+                long start1=System.nanoTime();
+                PathWrapper wrapper2 = clone.FindPath(delivery.getAddress());
+                System.out.println("time to dev = " + (System.nanoTime()-start1));
 
                 clone.setX(x);
                 clone.setY(y);

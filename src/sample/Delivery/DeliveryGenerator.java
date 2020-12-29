@@ -81,12 +81,7 @@ public class DeliveryGenerator {
                 setPointType(PointType.Triangle);
             }
         });
-//    int i, j;
-//    i = new Random().nextInt(products.size() - 1);
-//    j = new Random().nextInt(vertexes.size() - 1);
-//    Delivery dev=new Delivery();
-//    if (!nonRepeats.contains(vertexes.get(j))) {
-//        nonRepeats.add(vertexes.get(j));
+
         return new Delivery(curInt++, null, DeliveryStatus.WAITING, new LocalDateFormatted2(LocalDateTime.now()), new LocalDateFormatted2(LocalDateTime.now().plusMinutes(15)), products.get(new Random().nextInt(products.size() - 1))
                 , vertexes.get(new Random().nextInt(vertexes.size() - 1)));
 

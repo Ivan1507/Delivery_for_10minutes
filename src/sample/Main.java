@@ -33,10 +33,22 @@ public class Main extends Application {
         map.AddPoint("1",400,200, PointType.Triangle);
         map.AddPoint("13",200,200, PointType.TwoCricle);
         map.AddPoint("2",500,240, PointType.TwoCricle);
-        map.AddPoint("3",460,300, PointType.Circle);
+        map.AddPoint("3",460,300, PointType.TwoCricle);
         map.AddPoint("4",350,230, PointType.TwoCricle);
         map.AddPoint("5",320,300, PointType.TwoCricle);
         map.AddPoint("6",280,125, PointType.TwoCricle);
+        map.AddPoint("15",420,340, PointType.TwoCricle);
+        map.AddPoint("16",328,230, PointType.TwoCricle);
+        map.AddPoint("17",320,360, PointType.TwoCricle);
+        map.AddPoint("18",280,200, PointType.TwoCricle);
+        map.AddPoint("19",500,400, PointType.TwoCricle);
+
+
+        map.AddPoint("20",500,300, PointType.TwoCricle);
+        map.AddPoint("21",450,100, PointType.TwoCricle);
+        map.AddPoint("22",480,180, PointType.TwoCricle);
+        map.AddPoint("23",228,344, PointType.TwoCricle);
+
 
         map.AddPoint("7",350,100, PointType.TwoCricle);
         map.AddPoint("8",470,80, PointType.TwoCricle);
@@ -45,6 +57,8 @@ public class Main extends Application {
         map.AddPoint("10",545,140, PointType.TwoCricle);
         map.AddPoint("11",625,210, PointType.TwoCricle);
         map.AddPoint("12",760,150, PointType.TwoCricle);
+
+
 
         map.AddProduction("Production",760,250, PointType.TwoCricle);
 
@@ -89,6 +103,31 @@ public class Main extends Application {
         map.Connect("9","12", Quality_Road.average,traffic);
         map.Connect("10","11",Quality_Road.average,traffic);
         map.Connect("1","4",Quality_Road.average,traffic);
+        map.Connect("15","3",Quality_Road.average,traffic);
+        map.Connect("15","7",Quality_Road.average,traffic);
+        map.Connect("15","9",Quality_Road.average,traffic);
+        map.Connect("16","8.5",Quality_Road.average,traffic);
+        map.Connect("16","5",Quality_Road.average,traffic);
+        map.Connect("16","9",Quality_Road.average,traffic);
+        map.Connect("17","4",Quality_Road.average,traffic);
+        map.Connect("17","10",Quality_Road.average,traffic);
+        map.Connect("17","1",Quality_Road.average,traffic);
+
+        map.Connect("18","8",Quality_Road.average,traffic);
+        map.Connect("18","12",Quality_Road.average,traffic);
+        map.Connect("18","Production",Quality_Road.average,traffic);
+
+        map.Connect("19","8",Quality_Road.average,traffic);
+        map.Connect("19","6",Quality_Road.average,traffic);
+        map.Connect("19","5",Quality_Road.average,traffic);
+
+        map.Connect("20","18",Quality_Road.average,traffic);
+        map.Connect("20","16",Quality_Road.average,traffic);
+        map.Connect("20","24",Quality_Road.average,traffic);
+
+
+
+
 
         map.Connect("Production","12",Quality_Road.average,traffic);
         map.Connect("Production","11",Quality_Road.average,traffic);
@@ -114,29 +153,17 @@ public class Main extends Application {
         deliveryLogic.getDepartment().getVehicles().add( Car );
 
 
-        BaseTransport Car3 = new Quadrocopter(46+80,147+7);
-        Car3.setMaxSpeed(200);
-        Car3.setName("Квадрокоптер: Иванов");
-        Car3.setPointType(PointType.Circle);
-        deliveryLogic.getDepartment().getVehicles().add( Car3 );
 
 
-        HashSet<Vertex> current_ver=new HashSet<>();
-        for (int i = 0; i<7; i++){
+
+
             Delivery dev=DeliveryGenerator.generate();
-            if(!current_ver.contains(dev.getAddress())) {
-                current_ver.add(dev.getAddress());
-                try {
-                    deliveryLogic.add_delivery(dev);
-                } catch (CloneNotSupportedException e) {
-                }
-            }
+
+        try {
+            deliveryLogic.add_delivery(dev);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
-
-
-
-
-
 
 
         Main.deliveryLogic.UpdateLc();

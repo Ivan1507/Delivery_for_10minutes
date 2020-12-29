@@ -143,6 +143,7 @@ public class Graph implements Serializable {
     }
 
     public PathWrapper FindPath(BaseTransport vehicleOriginal, Vertex to) throws CloneNotSupportedException {
+
         try{
             BaseTransport vehicle = vehicleOriginal.clone();
             DeliveryEdgeInfo veh = getOrtogonalEdges(vehicle,false);
